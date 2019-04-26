@@ -56,5 +56,6 @@
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
     @stack('after-scripts')
+    @yield('most-bottom')
 </body>
 </html>

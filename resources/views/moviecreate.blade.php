@@ -89,3 +89,10 @@
 {{ html()->form()->close() }}
 @endsection
 
+@push('after-scripts')
+
+<script>
+ 
+</script>
+
+@endpush

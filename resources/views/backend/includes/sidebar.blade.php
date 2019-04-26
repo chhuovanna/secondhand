@@ -79,6 +79,29 @@
                     Add Movie
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/movie/showrate')) }}" href="{{ url('admin/movie/showrate') }}">
+                    View Rating
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/movie/rate')) }}" href="{{ url('admin/movie/rate') }}">
+                    Rate Movie
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/reviewer')) }}" href="{{ url('admin/reviewer') }}">
+                    List Reviewer
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/reviewer/create')) }}" href="{{ url('admin/reviewer/create') }}">
+                    Add Reviewer
+                </a>
+            </li>
 
         </ul>
     </nav>

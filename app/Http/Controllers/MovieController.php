@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\movie;
 use App\reviewer;
+use App\rating;
 
 class MovieController extends Controller
 {
@@ -26,7 +27,6 @@ class MovieController extends Controller
 			return redirect()->route('movie.index')->withFlashSuccess('Movie is added');
 		}
 		catch (\Exception $e) {
-			print_r($request->all());
 			return redirect()
             ->back()
             ->withInput($request->all())
@@ -55,10 +55,75 @@ class MovieController extends Controller
 	public function getform(){
 		$movies = movie::all();
 		$reviewers = reviewer::all();
-		return view('ratemovie', [ 'movies' => $movies, 'reviewers' => $reviewers  ]);
+		return view('movierate', [ 'movies' => $movies, 'reviewers' => $reviewers  ]);
 	}
 
-	public function saverating(){
-		echo 'saverating';
+	public function saverating(Request $request){
+		
+		$rating = new Rating();
+		$rating->mID = $request->get('mid');
+		$rating->rID = $request->get('rid');
+		$rating->stars = $request->get('stars');
+		$rating->ratingDate = date('Y-m-d');
+		try {
+			$rating->save();
+			return redirect()->route('movie.rate')->withFlashSuccess('Rating is added');
+		}
+		catch (\Exception $e) {
+			return redirect()
+            ->back()
+            ->withInput($request->all())
+            ->withFlashDanger("Rating can't be added. ". $e->getMessage());
+		}
 	}
+
+
+
+	public function showrate(){
+		$movies = movie::all();
+		return view('movieshowrate', [ 'movies' => $movies]);
+	}
+
+	public function getrating(Request $request){
+		$mid = $request->input('mid');
+		$ratings = Rating::getRating($mid);
+		if (sizeof($ratings) > 0){
+			$stars = 0;
+			$body = "";
+
+			foreach ($ratings as $rating) {
+				$stars += $rating->stars;
+				$body .= <<<EOF
+	<tr>
+		
+		<td>$rating->name</td>
+		<td>$rating->stars</td>
+		<td>$rating->ratingDate</td>
+	</tr>
+EOF;
+			}
+
+			$stars = $stars/sizeof($ratings);
+			$html = <<<EOF
+<br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
+<table clas="table">
+	<thead>
+		<tr>
+			<th scope="col">reviewer</th>
+			<th scope="col">stars</th>
+			<th scope="col">ratingDate</th>
+		</tr>
+	</thead>
+	<tbody>
+	$body
+	</tdbody>
+</table>
+
+EOF;
+			return $html;
+		}else{
+			return "No Rating";
+		}
+	}
+
 }

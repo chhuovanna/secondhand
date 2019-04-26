@@ -9,4 +9,6 @@ class reviewer extends Model
     //
     protected $table ='reviewer';
     protected $primaryKey = 'rid';
+    public $timestamps = false;
+
 }

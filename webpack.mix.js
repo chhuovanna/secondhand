@@ -22,7 +22,7 @@ mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
         'resources/js/backend/after.js'
     ], 'js/backend.js')
     .extract([
-        'jquery',
+        //'jquery',
         'bootstrap',
         'popper.js/dist/umd/popper',
         'axios',
