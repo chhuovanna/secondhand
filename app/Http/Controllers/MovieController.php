@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\movie;
 use App\reviewer;
 use App\rating;
+use Datatables;
+
+use DB;
+
 
 class MovieController extends Controller
 {
@@ -31,12 +35,7 @@ class MovieController extends Controller
             ->back()
             ->withInput($request->all())
             ->withFlashDanger("Movie can't be added. ". $e->getMessage());
-			//print_r($request->session('_flash')->all());
-            //return back()->withInput()->withErrors("Movie can't be added. ". $e->getMessage());
-			//return back()->with('flash_danger',"Movie can't be added. ". $e->getMessage())->withInput($request->all());
-			//return back()->withInput()->withErrors("Movie can't be added. ". $e->getMessage());
-			 
-            // return redirect()->back()->withInput();
+
 		}
 	}
 	public function show($id) {
@@ -124,6 +123,12 @@ EOF;
 		}else{
 			return "No Rating";
 		}
+	}
+
+	public function getmovie(){
+		$movies = DB::table('movie')->select('*');
+
+        return Datatables::of($movies)->make(true);
 	}
 
 }

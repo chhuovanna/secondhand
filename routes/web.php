@@ -39,12 +39,9 @@ Route::get('admin/movie/rate','MovieController@getform')->name('movie.rate');
 Route::post('admin/movie/saverating','MovieController@saverating');
 Route::get('admin/movie/showrate','MovieController@showrate')->name('movie.showrate');
 Route::get('admin/movie/getrating','MovieController@getrating');
+Route::get('admin/movie/getmovie', 'MovieController@getmovie')->name('movie.getmovie');
 
 Route::resource('admin/movie','MovieController');
 Route::resource('admin/reviewer','ReviewerController');
 
-
-Route::get('datatable', ['uses'=>'PostController@datatable']);
-
-Route::get('datatable/getposts', ['as'=>'datatable.getposts','uses'=>'PostController@getPosts']);
 

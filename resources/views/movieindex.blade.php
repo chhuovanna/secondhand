@@ -46,7 +46,7 @@ $(document).ready(function() {
 
         "serverSide": true,
 
-        "ajax": "{{ route('datatable.getposts') }}",
+        "ajax": "{{ route('movie.getmovie') }}",
 
         "columns": [
 
