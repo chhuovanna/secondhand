@@ -43,3 +43,8 @@ Route::get('admin/movie/getrating','MovieController@getrating');
 Route::resource('admin/movie','MovieController');
 Route::resource('admin/reviewer','ReviewerController');
 
+
+Route::get('datatable', ['uses'=>'PostController@datatable']);
+
+Route::get('datatable/getposts', ['as'=>'datatable.getposts','uses'=>'PostController@getPosts']);
+
