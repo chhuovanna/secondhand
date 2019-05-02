@@ -34,14 +34,3 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
     include_route_files(__DIR__.'/backend/');
 });
 
-
-Route::get('admin/movie/rate','MovieController@getform')->name('movie.rate');
-Route::post('admin/movie/saverating','MovieController@saverating');
-Route::get('admin/movie/showrate','MovieController@showrate')->name('movie.showrate');
-Route::get('admin/movie/getrating','MovieController@getrating');
-Route::get('admin/movie/getmovie', 'MovieController@getmovie')->name('movie.getmovie');
-
-Route::resource('admin/movie','MovieController');
-Route::resource('admin/reviewer','ReviewerController');
-
-
