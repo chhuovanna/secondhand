@@ -33,4 +33,16 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      */
     include_route_files(__DIR__.'/backend/');
 });
+//Route::get ('edit','EditcategoryController@editcategory');
+//Route::get('delete','DeletecategoryController@deletecategory');
+//Route::get('category','CategoryController@category');
 
+
+Route::get('admin/category/rate','CategoryController@getform')->name('category.rate');
+Route::post('admin/category/saveseller','CategoryController@saveseller');
+Route::get('admin/category/showrate','CategoryController@showrate')->name('category.showrate');
+Route::get('admin/category/getseller','CategoryController@getseller');
+Route::get('admin/category/getcategory', 'CategoryController@getcategory')->name('category.getcategory');
+
+Route::resource('admin/category','CategoryController');
+Route::resource('admin/product','ProductController');
