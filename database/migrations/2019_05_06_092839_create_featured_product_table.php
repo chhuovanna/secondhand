@@ -14,7 +14,7 @@ class CreateFeaturedProductTable extends Migration
     public function up()
     {
         Schema::create('featured_product', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id');//product_id fk int not increment
             $table->date('stard_date_time');
             $table->date('end_date_time');
             $table->text('status');

@@ -14,12 +14,12 @@ class CreateSellerTable extends Migration
     public function up()
     {
         Schema::create('seller', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id');// seller_id
             $table->string('name');
             $table->string('address');
-            $table->string('email');
-            $table->integer('phone');
-            $table->text('image');
+            $table->string('email'); 
+            $table->integer('phone'); //string
+            $table->text('image'); // fk int
             $table->string('instant_massage_account');
             $table->string('type');
             $table->dateTime('created_at');
@@ -27,7 +27,7 @@ class CreateSellerTable extends Migration
         });
     }
 
-    /**
+    /** // fk int
      * Reverse the migrations.
      *
      * @return void
