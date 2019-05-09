@@ -58,6 +58,7 @@
   "dependencies": {
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
-    "decimal.js": "^10.1.1"
+    "decimal.js": "^10.1.1",
+    "select2": "^4.0.7-rc.0"
   }
 }
