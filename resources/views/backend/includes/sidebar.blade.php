@@ -63,6 +63,40 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-title">
+                App
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category')) }}" href="{{ url('admin/category') }}">
+                    List Category
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category/showrate')) }}" href="{{ url('admin/category/showrate') }}">
+                    View Seller
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category/rate')) }}" href="{{ url('admin/category/rate') }}">
+                    Rate Category
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product')) }}" href="{{ url('admin/product') }}">
+                    List Product
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product/create')) }}" href="{{ url('admin/product/create') }}">
+                    Add Product
+                </a>
+            </li>
+
 
         </ul>
     </nav>
