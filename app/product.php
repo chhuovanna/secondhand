@@ -11,4 +11,13 @@ class product extends Model
     protected $primaryKey = 'ID';
     public $timestamps = false;
 
+    public function post()
+    {
+        return $this->belongsTo('App\post');
+        return $this->belongsTo('App\category');
+
+    }
+
+
+
 }
