@@ -9,7 +9,7 @@ class CreateProductTable extends Migration
 
     public function up()
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('seller', function (Blueprint $table) {
             $table->increments('product_id');
             $table->string('name')->unique();
             $table->decimal('price');
@@ -36,6 +36,6 @@ class CreateProductTable extends Migration
      */
     public function down()
     {
-        Schema::drop('product');
+        Schema::drop('seller');
     }
 }

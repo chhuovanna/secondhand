@@ -18,7 +18,7 @@ class CreateFeaturedProductTable extends Migration
             $table->date('stard_date_time')->nullable();
             $table->date('end_date_time')->nullable();
             $table->text('status')->nullable();
-            $table->foreign('product_id')->references('product_id')->on('product');
+            $table->foreign('product_id')->references('product_id')->on('seller');
 
         });
     }

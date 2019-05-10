@@ -3,23 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\product;
+use App\Product;
+use App\Seller;
+use App\Category;
+
 
 class ProductController extends Controller
 {
     public function index() {
-        echo "index";
+        echo 'index';
     }
     public function create() {
-        return view('productcreate');
+        $categorys = category::all();
+        $sellers = seller::all();
+        return view('productcreate',['categorys'=>$categorys,'sellers'=>$sellers]);
     }
     public function store(Request $request) {
         $product = new Product();
-        $product->ID = $request->get('id');
+        $product->product_id = $request->get('product_id');
         $product->name = $request->get('name');
         $product->price = $request->get('price');
-        $product->image = $request->get('image');
-        $product->categories = $request->get('categories');
         $product->description = $request->get('description');
         $product->view_number = $request->get('view_number');
         $product->status = $request->get('status');
@@ -27,19 +30,23 @@ class ProductController extends Controller
         $product->pickup_time = $request->get('pickup_time');
         $product->created_at = $request->get('created_at');
         $product->updated_at = $request->get('updated_at');
+        $product->post_id = $request->get('post_id');
+        $product->image_id = $request->get('image_id');
+        $product->ratingDate = now();
         try {
             $product->save();
-            return redirect()->route('product.index')->withFlashSuccess('product is added');
+            return redirect()->route('product.index')->withFlashSuccess('Category is added');
         }
         catch (\Exception $e) {
+            // print_r($request->all());
             return redirect()
                 ->back()
                 ->withInput($request->all())
-                ->withFlashDanger("Product can't be added. ". $e->getMessage());
+                ->withFlashDanger("can't rate. ". $e->getMessage());
         }
     }
     public function show($id) {
-        echo "show";
+        echo ' show';
     }
     public function edit($id) {
         echo 'save edit';
@@ -50,6 +57,4 @@ class ProductController extends Controller
     public function destroy($id) {
         echo 'destroy';
     }
-
-
 }

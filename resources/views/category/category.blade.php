@@ -20,14 +20,14 @@
             <div class="row mt-4">
                 <div class="col">
                     <div class="form-group row">
-                        {{ html()->label('Id')
+                        {{ html()->label('category_ID')
                             ->class('col-md-1 form-control-label')
-                            ->for('id') }}
+                            ->for('category_id') }}
 
                         <div class="col-md-3">
-                            {{ html()->input('number','id')
+                            {{ html()->input('number','category_id')
                                 ->class('form-control')
-                                ->placeholder('id')
+                                ->placeholder('category_id')
                                 ->attribute('min', 1)
                                 ->required()
                                 ->autofocus() }}

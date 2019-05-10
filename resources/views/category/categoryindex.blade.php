@@ -56,13 +56,18 @@
 
                 "columns": [
 
-                    {data: 'ID', name: 'ID'},
+                    {data: 'category_id', name: 'ID'},
 
                     {data: 'name', name: 'name'},
 
-                    {data: 'description', name: 'description'},
+                    {data: 'description', name: 'description',
+                        "render": function ( data, type, row, meta ) {
+                            return  data.length > 40 ?
+                                '<span title="'+data+'">'+data.substr( 0, 38 )+'...</span>' :
+                                data;
+                        }},
 
-                    {data: 'image', name: 'image'},
+                    {data: 'image_id', name: 'image'},
 
                     {data:'action', name: 'action', orderable: false, searchable: false}
 

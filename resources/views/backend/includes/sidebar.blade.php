@@ -75,7 +75,7 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category/showrate')) }}" href="{{ url('admin/category/showrate') }}">
-                    View Seller
+                    View Product
                 </a>
             </li>
             <li class="nav-item">
@@ -87,13 +87,13 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product')) }}" href="{{ url('admin/product') }}">
-                    List Product
+                    List Seller
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product/create')) }}" href="{{ url('admin/product/create') }}">
-                    Add Product
+                <a class="nav-link {{ active_class(Active::checkUriPattern('seller')) }}" href="{{ url('admin/product/create') }}">
+                    Add Seller
                 </a>
             </li>
 

@@ -4,8 +4,6 @@
 
 @section('content')
 
-
-
     <form  method="post">
         @csrf
         <div class="card">
@@ -24,9 +22,9 @@
                 <div class="row mt-4">
                     <div class="col">
                         <div class="form-group row">
-                            {{ html()->label('Category')
+                            {{ html()->label('category_ID')
                                 ->class('col-md-1 form-control-label')
-                                ->for('id') }}
+                                ->for('category_id') }}
 
                             <div class="col-md-3">
                                 <select name="id" id="id" class="form-control" >
@@ -55,13 +53,13 @@
 
             <script>
 
-                $('#id').off('change');
-                $('#id').on('change', function(){
+                $('#category_id').off('change');
+                $('#category_id').on('change', function(){
                     //alert('change');
                     $.ajax({
                         type:"GET",
                         url:"getseller",
-                        data:{id: parseInt($('#id').val())},
+                        data:{id: parseInt($('#category_id').val())},
                         success: function (data) {
                             console.log(data);
                             $('#result').html(data);
@@ -71,7 +69,6 @@
                         }
                     });
                 });
-
             </script>
 
-    @endpush
+        @endpush
