@@ -20,14 +20,14 @@
             <div class="row mt-4">
                 <div class="col">
                     <div class="form-group row">
-                        {{ html()->label('Add')
+                        {{ html()->label('Id')
                             ->class('col-md-1 form-control-label')
-                            ->for('add') }}
+                            ->for('id') }}
 
                         <div class="col-md-3">
-                            {{ html()->input('number','add')
+                            {{ html()->input('number','id')
                                 ->class('form-control')
-                                ->placeholder('add')
+                                ->placeholder('id')
                                 ->attribute('min', 1)
                                 ->required()
                                 ->autofocus() }}
@@ -35,26 +35,38 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        {{ html()->label('Update')
+                        {{ html()->label('Name')
                             ->class('col-md-1 form-control-label')
-                            ->for('update') }}
+                            ->for('name') }}
 
                         <div class="col-md-3">
-                            {{ html()->text('update')
+                            {{ html()->text('name')
                                 ->class('form-control')
-                                ->placeholder('update')
+                                ->placeholder('name')
                                 ->required() }}
                         </div><!--col-->
                     </div><!--form-group-->
                     <div class="form-group row">
-                        {{ html()->label('Delete')
+                        {{ html()->label('Description')
                             ->class('col-md-1 form-control-label')
-                            ->for('delete') }}
+                            ->for('description') }}
 
                         <div class="col-md-3">
-                            {{ html()->text('delete')
+                            {{ html()->text('description')
                                 ->class('form-control')
-                                ->placeholder('delete') }}
+                                ->placeholder('description') }}
+                        </div><!--col-->
+                    </div><!--form-group-->
+                    <div class="form-group row">
+                        {{ html()->label('Image')
+                            ->class('col-md-1 form-control-label')
+                            ->for('image') }}
+
+                        <div class="col-md-3">
+                            {{ html()->text('image')
+                                ->class('form-control')
+                                ->placeholder('image')
+                                ->required() }}
                         </div><!--col-->
                     </div><!--form-group-->
                 </div><!--col-->

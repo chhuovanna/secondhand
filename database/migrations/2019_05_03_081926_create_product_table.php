@@ -14,20 +14,23 @@ class CreateProductTable extends Migration
     public function up()
     {
         Schema::create('product', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->float('price');
-            $table->text('image');
-            $table->string('categories');
-            $table->text('description');
-            $table->integer('view_number');
+            $table->increments('product_id');
+            $table->string('name')->unique();
+            $table->decimal('price');
+            $table->text('description')->nullable();
+            $table->integer('view_number')->nullable();
             $table->text('status');
-            $table->text('pickup_address');
-            $table->text('pickup_time');
+            $table->text('pickup_address')->nullable();
+            $table->text('pickup_time')->nullable();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+            $table->integer('post_id')->unsigned();
+            $table->foreign('post_id')->references('post_id')->on('post');
+            $table->integer('image_id')->unsigned();
+            $table->foreign('image_id')->references('image_id')->on('image');
         });
     }
+
 
     /**
      * Reverse the migrations.

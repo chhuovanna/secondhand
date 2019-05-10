@@ -14,10 +14,12 @@ class CreateFeaturedProductTable extends Migration
     public function up()
     {
         Schema::create('featured_product', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedInteger('product_id');
             $table->date('stard_date_time');
             $table->date('end_date_time');
             $table->text('status');
+            $table->foreign('product_id')->references('product_id')->on('product');
+
         });
     }
 

@@ -64,7 +64,7 @@
                 </ul>
             </li>
             <li class="nav-title">
-                App
+                APP
             </li>
 
             <li class="nav-item">

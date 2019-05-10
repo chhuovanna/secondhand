@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSellerTable extends Migration
+class CreatePostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateSellerTable extends Migration
      */
     public function up()
     {
-        Schema::create('seller', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('address');
-            $table->string('email');
-            $table->integer('phone');
-            $table->text('image');
-            $table->string('instant_massage_account');
-            $table->string('type');
+        Schema::create('post', function (Blueprint $table) {
+            $table->increments('post_id');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+            $table->integer('postedby')->unsigned();
+            $table->foreign('postedby')->references('seller_id')->on('seller');
         });
     }
 
@@ -34,6 +29,6 @@ class CreateSellerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seller');
+        Schema::dropIfExists('post');
     }
 }
