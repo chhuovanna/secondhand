@@ -17,4 +17,13 @@ class product extends Model
 
     }
 
+    public function post()
+    {
+        return $this->belongsTo('App\post');
+        return $this->belongsTo('App\category');
+
+    }
+
+
+
 }

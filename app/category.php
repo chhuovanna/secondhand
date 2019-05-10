@@ -11,4 +11,9 @@ class category extends Model
     protected $primaryKey = 'ID';
     public $timestamps = false;
 
+    public function product()
+    {
+        return $this->belongsToMany('App\product');
+    }
+
 }

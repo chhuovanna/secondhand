@@ -11,4 +11,9 @@ class seller extends Model
     protected $primaryKey = 'ID';
     public $timestamps = false;
 
+    public function image()
+    {
+        return $this->belongsTo('App\image');
+    }
+
 }
