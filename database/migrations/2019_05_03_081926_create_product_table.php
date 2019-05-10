@@ -6,11 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateProductTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('product', function (Blueprint $table) {
@@ -19,15 +15,16 @@ class CreateProductTable extends Migration
             $table->decimal('price');
             $table->text('description')->nullable();
             $table->integer('view_number')->nullable();
-            $table->text('status');
+            $table->text('status')->nullable();
             $table->text('pickup_address')->nullable();
             $table->text('pickup_time')->nullable();
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-            $table->integer('post_id')->unsigned();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->integer('post_id')->unsigned()->nullable();
             $table->foreign('post_id')->references('post_id')->on('post');
-            $table->integer('image_id')->unsigned();
+            $table->integer('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('image_id')->on('image');
+
         });
     }
 
@@ -39,6 +36,6 @@ class CreateProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product');
+        Schema::drop('product');
     }
 }

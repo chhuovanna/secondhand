@@ -6,17 +6,13 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateImageTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('image', function (Blueprint $table) {
-            $table->increments('image_id');
-            $table->text('location');
-            $table->text('file_name');
+            $table->increments('image_id')->nullable();
+            $table->text('location')->nullable();
+            $table->text('file_name')->nullable();
             $table->integer('product_id')->unsigned();
 
         });
@@ -29,6 +25,6 @@ class CreateImageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('image');
+        Schema::drop('image');
     }
 }

@@ -27,6 +27,6 @@ class AddForeignKeyTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('image');
     }
 }

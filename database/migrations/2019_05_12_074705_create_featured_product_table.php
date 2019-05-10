@@ -15,9 +15,9 @@ class CreateFeaturedProductTable extends Migration
     {
         Schema::create('featured_product', function (Blueprint $table) {
             $table->unsignedInteger('product_id');
-            $table->date('stard_date_time');
-            $table->date('end_date_time');
-            $table->text('status');
+            $table->date('stard_date_time')->nullable();
+            $table->date('end_date_time')->nullable();
+            $table->text('status')->nullable();
             $table->foreign('product_id')->references('product_id')->on('product');
 
         });
@@ -30,6 +30,6 @@ class CreateFeaturedProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('featured_product');
+        Schema::drop('featured_product');
     }
 }

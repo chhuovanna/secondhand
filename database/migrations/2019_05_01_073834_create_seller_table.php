@@ -6,11 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateSellerTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('seller', function (Blueprint $table) {
@@ -21,20 +17,14 @@ class CreateSellerTable extends Migration
             $table->string('phone')->nullable();
             $table->string('instant_massage_account')->nullable();
             $table->string('type')->nullable();
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
             $table->integer('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('image_id')->on('image');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('seller');
+        Schema::drop('seller');
     }
 }

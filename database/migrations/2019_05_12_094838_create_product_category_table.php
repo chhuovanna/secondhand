@@ -16,8 +16,8 @@ class CreateProductCategoryTable extends Migration
         Schema::create('product_category', function (Blueprint $table) {
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('category_id');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->foreign('category_id')->references('category_id')->on('category');
 
@@ -31,6 +31,6 @@ class CreateProductCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_category');
+        Schema::drop('product_category');
     }
 }

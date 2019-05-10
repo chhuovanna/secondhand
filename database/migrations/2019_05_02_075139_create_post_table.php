@@ -14,10 +14,10 @@ class CreatePostTable extends Migration
     public function up()
     {
         Schema::create('post', function (Blueprint $table) {
-            $table->increments('post_id');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-            $table->integer('postedby')->unsigned();
+            $table->increments('post_id')->nullable();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->integer('postedby')->unsigned()->nullable();
             $table->foreign('postedby')->references('seller_id')->on('seller');
         });
     }
@@ -29,6 +29,6 @@ class CreatePostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post');
+        Schema::drop('post');
     }
 }
