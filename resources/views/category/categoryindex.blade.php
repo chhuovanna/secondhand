@@ -56,13 +56,13 @@
 
                 "columns": [
 
-                    {data: 'category_id', name: 'ID'},
+                    {data: 'category_id', name: 'category_id'},
 
                     {data: 'name', name: 'name'},
 
                     {data: 'description', name: 'description',
-                        render:function ( data, type, row ) {
-                            return type === 'display' && data.length > 20 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data; 
+                        render:function ( data, type, row, meta ) {
+                                return type === 'display' && data && data.length > 20 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data; 
                         }
                     },
 
