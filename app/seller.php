@@ -8,9 +8,6 @@ class seller extends Model
 {
     //
     protected $table ='seller';
-
-
-
     protected $primaryKey = 'seller_id';
 
 

@@ -20,6 +20,10 @@ class product extends Model
 
 
 
+
+
+
+
     }
 
 
