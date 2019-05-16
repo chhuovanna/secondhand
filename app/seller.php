@@ -9,17 +9,13 @@ class seller extends Model
 {
     //
     protected $table ='seller';
-    public $timestamps = false;
-    public static function getSeller($id){
-        $sql = "select * from seller natural join product where id = $id;";
-        return DB::select($sql);
-        //return $sql;
 
-    }
 
-    public function image()
+
+
+    public function post()
     {
-        return $this->belongsTo('App\image');
+        return $this->hasMany('App\post');
     }
 
 }

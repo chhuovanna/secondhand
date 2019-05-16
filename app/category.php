@@ -8,12 +8,17 @@ class category extends Model
 {
     //
     protected $table ='category';
-    protected $primaryKey = 'ID';
-    public $timestamps = false;
+    protected $primaryKey = 'category_id';
+    //public $timestamps = false;
 
     public function product()
     {
         return $this->belongsToMany('App\product');
+    }
+
+    public function thumbnail()
+    {
+        return $this->belongsTo('App\image');
     }
 
 }

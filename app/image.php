@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class image extends Model
 {
-    public function seller()
+    protected $table ='image';
+    protected $primaryKey = 'image_id';
+
+    public function product()
     {
-        return $this->hasOne('App\seller');
+        return $this->belongsTo('App\product');
     }
 }
