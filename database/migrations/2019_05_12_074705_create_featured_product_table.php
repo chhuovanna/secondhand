@@ -15,10 +15,12 @@ class CreateFeaturedProductTable extends Migration
     {
         Schema::create('featured_product', function (Blueprint $table) {
             $table->unsignedInteger('product_id');
-            $table->date('stard_date_time')->nullable();
+            $table->date('start_date_time')->nullable();
             $table->date('end_date_time')->nullable();
             $table->text('status')->nullable();
-            $table->foreign('product_id')->references('product_id')->on('product');
+            $table->foreign('product_id')->references('product_id')->on('product'); //on product not seller
+            //add primary key
+            $table->primary(['product_id', 'start_date_time']);
 
         });
     }

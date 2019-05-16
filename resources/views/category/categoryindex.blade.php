@@ -56,13 +56,17 @@
 
                 "columns": [
 
-                    {data: 'ID', name: 'ID'},
+                    {data: 'category_id', name: 'ID'},
 
                     {data: 'name', name: 'name'},
 
-                    {data: 'description', name: 'description'},
+                    {data: 'description', name: 'description',
+                        render:function ( data, type, row ) {
+                            return type === 'display' && data.length > 20 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data; 
+                        }
+                    },
 
-                    {data: 'image', name: 'image'},
+                    {data: 'image_id', name: 'image'},
 
                     {data:'action', name: 'action', orderable: false, searchable: false}
 

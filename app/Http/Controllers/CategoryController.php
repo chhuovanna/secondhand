@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\category;
-use App\product;
 use App\seller;
+use App\product;
 use Datatables;
 
 use DB;
@@ -21,7 +21,7 @@ class CategoryController extends Controller
     }
     public function store(Request $request) {
         $category = new Category();
-        $category->ID = $request->get('ID');
+        $category->category_ID = $request->get('category_ID');
         $category->name = $request->get('name');
         $category->description = $request->get('description');
         $category->image = $request->get('image');
@@ -48,7 +48,7 @@ class CategoryController extends Controller
     }
     public function update(Request $request, $id) {
         $category= Category::find($id);
-        $category->Id = $request->get('ID');
+        $category->category_ID = $request->get('category_ID');
         $category->name = $request->get('name');
         $category->description = $request->get('description');
         $category->image = $request->get('image');
@@ -79,26 +79,27 @@ class CategoryController extends Controller
 
     public function getform(){
         $category = category::all();
-        $products = product::all();
-        return view('categoryrate', [ 'category' => $category, 'products' => $products  ]);
+        $sellers = product::all();
+        return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
     }
 
-    public function saveseller(Request $request){
+    public function saveseller_signup(Request $request){
 
-        $seller = new Seller();
-        $seller->ID = $request->get('ID');
-        $seller->name = $request->get('name');
-        $seller->address = $request->get('address');
-        $seller->email = $request->get('email');
-        $seller->phone = $request->get('phone');
-        $seller->instant_massage_account = $request->get('instant_message_account');
-        $seller->type = $request->get('type');
-        $seller->image = $request->get('image');
-        $seller->created_at = $request->get('created_at');
-        $seller->updated_at = $request->get('updated_at');
-        $seller->sellerDate = date('Y-m-d');
+        $seller_signup = new product();
+        $seller_signup->seller_signup_ID = $request->get('seller_signup_ID');
+        $seller_signup->name = $request->get('name');
+        $seller_signup->address = $request->get('address');
+        $seller_signup->email = $request->get('email');
+        $seller_signup->phone = $request->get('phone');
+        $seller_signup->instant_massage_account = $request->get('instant_message_account');
+        $seller_signup->type = $request->get('type');
+        $seller_signup->image = $request->get('image');
+        $seller_signup->created_at = $request->get('created_at');
+        $seller_signup->updated_at = $request->get('updated_at');
+        $seller_signup->image = $request->get('image');
+        $seller_signup->sellerDate = date('Y-m-d');
         try {
-            $seller->save();
+            $seller_signup->save();
             return redirect()->route('category.rate')->withFlashSuccess('Seller is added');
         }
         catch (\Exception $e) {
@@ -115,32 +116,32 @@ class CategoryController extends Controller
         return view('categoryshowrate', [ 'category' => $category]);
     }
 
-    public function getseller(Request $request){
+    public function getseller_signup(Request $request){
         $add = $request->input('add');
-        $sellers = seller::getSeller($add);
-        if (sizeof($sellers) > 0){
+        $sellers_signup = seller::getSeller_signup($add);
+        if (sizeof($sellers_signup) > 0){
             $stars = 0;
             $body = "";
 
-            foreach ($sellers as $seller) {
-                $stars += $seller->stars;
+            foreach ($sellers_signup as $seller_signup) {
+                $stars += $seller_signup->stars;
                 $body .= <<<EOF
 	<tr>
 		
-		<td>$seller->name</td>
-		<td>$seller->stars</td>
-		<td>$seller->sellerDate</td>
+		<td>$seller_signup->name</td>
+		<td>$seller_signup->stars</td>
+		<td>$seller_signup->sellerDate</td>
 	</tr>
 EOF;
             }
 
-            $stars = $stars/sizeof($sellers);
+            $stars = $stars/sizeof($sellers_signup);
             $html = <<<EOF
 <br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
 <table clas="table">
 	<thead>
 		<tr>
-			<th scope="col">product</th>
+			<th scope="col">seller</th>
 			<th scope="col">stars</th>
 			<th scope="col">sellerDate</th>
 		</tr>
@@ -153,17 +154,17 @@ EOF;
 EOF;
             return $html;
         }else{
-            return "No Seller";
+            return "No Seller_signup";
         }
     }
 
     public function getcategory(){
-        $categorys = Category::select(['ID', 'name', 'description', 'image'])->get();
+        $categorys = Category::select(['category_id', 'name', 'description' , 'image_id'])->get();
 
         return Datatables::of($categorys)
             ->addColumn('action', function ($category) {
-                $html = '<a href="'.route('category.edit', ['id' => $category->ID]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
-                $html .= '<a data-id="'.$category->ID.'" class="btn btn-danger btn-sm movie-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
+                $html = '<a href="'.route('category.edit', ['category_id' => $category->category_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
+                $html .= '<a data-id="'.$category->category_ids.'" class="btn btn-danger btn-sm movie-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
                 return $html;
             })
             ->make(true);

@@ -6111,7 +6111,7 @@ var faPlaystation = {
 };
 var faProductHunt = {
   prefix: 'fab',
-  iconName: 'product-hunt',
+  iconName: 'seller-hunt',
   icon: [512, 512, [], "f288", "M326.3 218.8c0 20.5-16.7 37.2-37.2 37.2h-70.3v-74.4h70.3c20.5 0 37.2 16.7 37.2 37.2zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-128.1-37.2c0-47.9-38.9-86.8-86.8-86.8H169.2v248h49.6v-74.4h70.3c47.9 0 86.8-38.9 86.8-86.8z"]
 };
 var faPushed = {
@@ -32880,29 +32880,29 @@ var __WEBPACK_AMD_DEFINE_RESULT__;;(function (globalScope) {
               k = rem0 / yd0 | 0;
 
               //  Algorithm:
-              //  1. product = divisor * trial digit (k)
-              //  2. if product > remainder: product -= divisor, k--
-              //  3. remainder -= product
-              //  4. if product was < remainder at 2:
+              //  1. seller = divisor * trial digit (k)
+              //  2. if seller > remainder: seller -= divisor, k--
+              //  3. remainder -= seller
+              //  4. if seller was < remainder at 2:
               //    5. compare new remainder and divisor
               //    6. If remainder > divisor: remainder -= divisor, k++
 
               if (k > 1) {
                 if (k >= base) k = base - 1;
 
-                // product = divisor * trial digit.
+                // seller = divisor * trial digit.
                 prod = multiplyInteger(yd, k, base);
                 prodL = prod.length;
                 remL = rem.length;
 
-                // Compare product and remainder.
+                // Compare seller and remainder.
                 cmp = compare(prod, rem, prodL, remL);
 
-                // product > remainder.
+                // seller > remainder.
                 if (cmp == 1) {
                   k--;
 
-                  // Subtract divisor from product.
+                  // Subtract divisor from seller.
                   subtract(prod, yL < prodL ? yz : yd, prodL, base);
                 }
               } else {
@@ -32917,10 +32917,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;;(function (globalScope) {
               prodL = prod.length;
               if (prodL < remL) prod.unshift(0);
 
-              // Subtract product from remainder.
+              // Subtract seller from remainder.
               subtract(rem, prod, remL, base);
 
-              // If product was < previous remainder.
+              // If seller was < previous remainder.
               if (cmp == -1) {
                 remL = rem.length;
 
@@ -39525,7 +39525,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		while ( maxIterations-- ) {
 
 			// Evaluate and update our best guess (doubling guesses that zero out).
-			// Finish if the scale equals or crosses 1 (making the old*new product non-positive).
+			// Finish if the scale equals or crosses 1 (making the old*new seller non-positive).
 			jQuery.style( elem, prop, initialInUnit + unit );
 			if ( ( 1 - scale ) * ( 1 - ( scale = currentValue() / initial || 0.5 ) ) <= 0 ) {
 				maxIterations = 0;

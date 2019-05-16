@@ -15,7 +15,7 @@ class AddForeignKeyTable extends Migration
     {
         Schema::table('image', function (Blueprint $table) {
 
-            $table->foreign('product_id')->references('product_id')->on('product');
+            $table->foreign('product_id')->references('product_id')->on('product'); //on product not seller
         });
 
     }

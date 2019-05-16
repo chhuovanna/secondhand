@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seller;
-use App\Category;
-use App\Product;
+use App\seller;
 
 class SellerController extends Controller
-
 {
     public function index() {
-        echo 'index';
+        echo "index";
     }
     public function create() {
-
-        $categorys = category::all();
-        $products = product::all();
-        return view('sellercreate',['categorys'=>$categorys,'products'=>$products]);
+        return view('productcreate');
     }
     public function store(Request $request) {
         $seller = new Seller();
@@ -31,25 +25,21 @@ class SellerController extends Controller
         $seller->image = $request->get('image');
         $seller->created_at = $request->get('created_at');
         $seller->updated_at = $request->get('updated_at');
+        $seller->image = $request->get('image');
         $seller->ratingDate = now();
-
-
-
         try {
             $seller->save();
-            return redirect()->route('seller.index')->withFlashSuccess('Category is added');
+            return redirect()->route('product.index')->withFlashSuccess('product is added');
         }
         catch (\Exception $e) {
-            // print_r($request->all());
             return redirect()
                 ->back()
                 ->withInput($request->all())
-                ->withFlashDanger("can't rate. ". $e->getMessage());
-
+                ->withFlashDanger("Product can't be added. ". $e->getMessage());
         }
     }
     public function show($id) {
-        echo ' show';
+        echo "show";
     }
     public function edit($id) {
         echo 'save edit';
@@ -60,4 +50,6 @@ class SellerController extends Controller
     public function destroy($id) {
         echo 'destroy';
     }
+
+
 }

@@ -11,10 +11,10 @@
         @endforeach
 
     </select>
-    <label>Product:</label>
+    <label>Seller:</label>
     <select name="id">
-        @foreach ($products as $product)
-            <option value='{{$product->rid}}'>{{$product->name }}</option>
+        @foreach ($sellers as $seller)
+            <option value='{{$seller->rid}}'>{{$seller->name }}</option>
         @endforeach
     </select>
     <label>Stars:</label><input type="number" min='1' max='5' name="stars" required>
