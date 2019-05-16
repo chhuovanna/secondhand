@@ -21,7 +21,7 @@ class CategoryController extends Controller
     }
     public function store(Request $request) {
         $category = new Category();
-        $category->category_ID = $request->get('category_ID');
+        $category->category_id = $request->get('category_id'); //id not ID
         $category->name = $request->get('name');
         $category->description = $request->get('description');
         $category->image = $request->get('image');
@@ -164,7 +164,7 @@ EOF;
         return Datatables::of($categorys)
             ->addColumn('action', function ($category) {
                 $html = '<a href="'.route('category.edit', ['category_id' => $category->category_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
-                $html .= '<a data-id="'.$category->category_ids.'" class="btn btn-danger btn-sm movie-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
+                $html .= '<a data-id="'.$category->category_id.'" class="btn btn-danger btn-sm movie-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
                 return $html;
             })
             ->make(true);
