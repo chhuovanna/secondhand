@@ -20,6 +20,8 @@ class CreateProductCategoryTable extends Migration
             $table->dateTime('updated_at')->nullable();
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->foreign('category_id')->references('category_id')->on('category');
+            //add primary key
+            $table->primary(['product_id','category_id']);
 
         });
     }

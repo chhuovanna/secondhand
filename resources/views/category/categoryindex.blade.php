@@ -61,11 +61,10 @@
                     {data: 'name', name: 'name'},
 
                     {data: 'description', name: 'description',
-                        "render": function ( data, type, row, meta ) {
-                            return  data.length > 40 ?
-                                '<span title="'+data+'">'+data.substr( 0, 38 )+'...</span>' :
-                                data;
-                        }},
+                        render:function ( data, type, row ) {
+                            return type === 'display' && data.length > 20 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data; 
+                        }
+                    },
 
                     {data: 'image_id', name: 'image'},
 
