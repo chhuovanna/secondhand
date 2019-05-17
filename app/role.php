@@ -12,3 +12,4 @@ class role extends Model
         return $this->belongsToMany('App\user','role_user','role_id','id');
     }
 }
+//no need
