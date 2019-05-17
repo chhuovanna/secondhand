@@ -75,25 +75,29 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category/showrate')) }}" href="{{ url('admin/category/showrate') }}">
-                    View Product
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category/rate')) }}" href="{{ url('admin/category/rate') }}">
-                    Rate Category
+                    View Category
                 </a>
             </li>
 
-
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product')) }}" href="{{ url('admin/product') }}">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller')) }}" href="{{ url('admin/seller') }}">
                     List Seller
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('seller')) }}" href="{{ url('admin/product/create') }}">
-                    Add Seller
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller/create')) }}" href="{{ url('admin/seller/create') }}">
+                    Add seller
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller')) }}" href="{{ url('admin/seller/sign_up') }}">
+                    Seller sign_up
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller/')) }}" href="{{ url('admin/seller/view') }}">
+                    Seller view profile
                 </a>
             </li>
 

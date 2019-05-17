@@ -13,7 +13,7 @@ class category extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\product');
+        return $this->belongsToMany('App\seller');
     }
 
     public function thumbnail()
