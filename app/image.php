@@ -11,6 +11,6 @@ class image extends Model
 
     public function product()
     {
-        return $this->belongsTo('App\seller');
+        return $this->belongsTo('App\product'); //not seller
     }
 }
