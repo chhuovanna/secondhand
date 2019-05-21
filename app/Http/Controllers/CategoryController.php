@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\category;
-use App\seller;
-use App\product;
+//use App\seller;
+//use App\product;
 use Datatables;
 
 use DB;
@@ -17,7 +17,7 @@ class CategoryController extends Controller
         return view('category.categoryindex');
     }
     public function create() {
-        return view('categorycreate');
+        return view('category.categorycreate');
     }
     public function store(Request $request) {
         $category = new Category();
@@ -44,7 +44,7 @@ class CategoryController extends Controller
     }
     public function edit($id) {
         $category = Category::find($id);
-        return view('categoryupdate',['category'=>$category]);
+        return view('categoryedit',['category'=>$category]);
     }
     public function update(Request $request, $id) {
         $category= Category::find($id);

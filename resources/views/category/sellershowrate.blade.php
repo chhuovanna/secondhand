@@ -4,14 +4,14 @@
 
 @section('content')
 
-
+    <  method="post">
         @csrf
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
-                            Category Management
+                            Seller Management
                             <small class="text-muted">Show Rate</small>
                         </h4>
                     </div><!--col-->
@@ -22,14 +22,14 @@
                 <div class="row mt-4">
                     <div class="col">
                         <div class="form-group row">
-                            {{ html()->label('category_ID')
+                            {{ html()->label('seller_ID')
                                 ->class('col-md-1 form-control-label')
-                                ->for('category_id') }}
+                                ->for('seller_id') }}
 
                             <div class="col-md-3">
                                 <select name="id" id="id" class="form-control" >
-                                    @foreach ($categorys as $category) {
-                                    <option value='{{ $category->ID }}'>{{ $category->name}}</option>"
+                                    @foreach ($sellers as $seller) {
+                                    <option value='{{ $seller->ID }}'>{{ $seller->name}}</option>"
                                     @endforeach
 
                                 </select>
@@ -46,6 +46,7 @@
             </div>
         </div>
 
+
         {{ html()->form()->close() }}
         @endsection
 
@@ -53,13 +54,13 @@
 
             <script>
 
-                $('#category_id').off('change');
-                $('#category_id').on('change', function(){
+                $('#seller_id').off('change');
+                $('#seller_id').on('change', function(){
                     //alert('change');
                     $.ajax({
                         type:"GET",
-                        url:"getseller",
-                        data:{id: parseInt($('#category_id').val())},
+                        url:"getcategory",
+                        data:{id: parseInt($('#seller_id').val())},
                         success: function (data) {
                             console.log(data);
                             $('#result').html(data);
@@ -71,4 +72,4 @@
                 });
             </script>
 
-        @endpush
+    @endpush

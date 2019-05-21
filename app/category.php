@@ -9,16 +9,13 @@ class category extends Model
     //
     protected $table ='category';
     protected $primaryKey = 'category_id';
-    //public $timestamps = false;
 
     public function product()
     {
-        return $this->belongsToMany('App\seller');
+        return $this->belongsToMany('App\product','product_category','category_id','product_id');//not seller ; add intermediate table and key name
     }
-
     public function thumbnail()
     {
         return $this->belongsTo('App\image');
     }
-
 }

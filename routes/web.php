@@ -42,7 +42,10 @@ Route::get('admin/category/rate','CategoryController@getform')->name('category.r
 Route::post('admin/category/saveseller','CategoryController@saveseller');
 Route::get('admin/category/showrate','CategoryController@showrate')->name('category.showrate');
 Route::get('admin/category/getseller','CategoryController@getseller');
+Route::get('admin/category/getseller','SellerController@getseller')->name('seller.getseller');
 Route::get('admin/category/getcategory', 'CategoryController@getcategory')->name('category.getcategory');
+
+
 
 Route::resource('admin/category','CategoryController');
 Route::resource('admin/seller','SellerController');

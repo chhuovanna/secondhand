@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\seller;
 use Illuminate\Http\Request;
-use App\category;
+use App\seller;
+use Datatables;
+use DB;
+//use App\category;
 
 
 class SellerController extends Controller
 {
     public function index() {
-        return view('sellerindex');
+        return view('category.sellerindex');
     }
     public function create() {
-        return view('sellercreate');
+        return view('category.sellercreate');
     }
     public function store(Request $request) {
         $seller = new Seller();
@@ -47,7 +49,7 @@ class SellerController extends Controller
     }
     public function edit($id) {
         $seller = Seller::find($id);
-        return view('sellerupdate',['seller'=>$seller]);
+        return view('selleredit',['seller'=>$seller]);
     }
     public function update(Request $request, $id) {
         $seller = Seller::find($id);
@@ -167,7 +169,7 @@ EOF;
 
         return Datatables::of($sellers)
             ->addColumn('action', function ($seller) {
-                $html = '<a href="'.route('seller.edit', ['id' => $seller->seller_ID]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
+                $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_ID]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
                 $html .= '<a data-id="'.$seller->seller_ID.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
                 return $html;
             })
