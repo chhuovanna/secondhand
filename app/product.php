@@ -32,12 +32,14 @@ class product extends Model
     public function thumbnail()
     {
         return $this->belongsTo('App\image','image_id','image_id');
-    }
 
+    }
 
     public function featured_product()//add function featured_product
     {
         return $this->hasMany('App\featured_product','product_id','product_id');
+
     }
+
 
 }

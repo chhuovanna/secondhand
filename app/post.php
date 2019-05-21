@@ -12,7 +12,9 @@ class post extends Model
     {
         return $this->hasMany('App\product','post_id','post_id');
     }
+
     public function seller(){ //create seller function
         return $this->belongTo('App\seller','seller_id','seller_id');
+
     }
 }

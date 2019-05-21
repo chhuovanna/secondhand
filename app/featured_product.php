@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class featured_category extends Model
+class featured_product extends Model
 {
     //
     public function product()

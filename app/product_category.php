@@ -8,3 +8,4 @@ class product_category extends Model
 {
     //
 }
+//no need for product_category model

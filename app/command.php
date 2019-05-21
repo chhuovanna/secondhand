@@ -14,3 +14,4 @@ class command extends Model
     return $this->belongTo(App\post,'seller_id',('id_post'));
 }
 }
+//no command model
