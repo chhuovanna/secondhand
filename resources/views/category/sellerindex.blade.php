@@ -30,7 +30,7 @@
 
                             <th>Phone</th>
 
-                            <th>Instant_massage_account</th>
+                            <th>massage_account</th>
 
                             <th>Type</th>
 

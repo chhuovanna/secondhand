@@ -18,8 +18,8 @@ class CreateProductTable extends Migration
             $table->text('status')->nullable();
             $table->text('pickup_address')->nullable();
             $table->text('pickup_time')->nullable();
-            $table->dateTime('created_at');//->nullable();
-            $table->dateTime('updated_at');//->nullable();
+            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->integer('post_id')->unsigned()->nullable();
             $table->foreign('post_id')->references('post_id')->on('post');
             $table->integer('image_id')->unsigned()->nullable();

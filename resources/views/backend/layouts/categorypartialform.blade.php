@@ -41,14 +41,14 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Released Description')
+            {{ html()->label('Description')
                 ->class('col-md-1 form-control-label')
                 ->for('description') }}
 
             <div class="col-md-3">
                 {{ html()->input('number','description',$description)
                     ->class('form-control')
-                    ->placeholder('released description')
+                    ->placeholder('description')
                     ->attributes(['min'=> 1, 'max' => 9999])
                      }}
             </div><!--col-->

@@ -17,8 +17,8 @@ class CreateSellerTable extends Migration
             $table->string('phone')->nullable();
             $table->string('instant_massage_account')->nullable();
             $table->string('type')->nullable();
-            $table->dateTime('created_at');//->nullable();
-            $table->dateTime('updated_at');//->nullable();
+            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->integer('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('image_id')->on('image');
         });

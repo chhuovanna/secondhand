@@ -74,7 +74,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category/showrate')) }}" href="{{ url('admin/category/showrate') }}">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('category')) }}" href="{{ url('admin/category/showrate') }}">
                     View Category
                 </a>
             </li>

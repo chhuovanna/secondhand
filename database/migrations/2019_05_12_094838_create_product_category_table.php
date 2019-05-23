@@ -16,8 +16,8 @@ class CreateProductCategoryTable extends Migration
         Schema::create('product_category', function (Blueprint $table) {
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('category_id');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->foreign('category_id')->references('category_id')->on('category');
             //add primary key

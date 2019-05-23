@@ -3,7 +3,7 @@
 @section('title', 'Add category')
 
 @section('content')
-    {{ html()->form('POST', route('category.store'))->class('form-horizontal')->open() }}
+    {{ html()->form('POST', route('category'))->class('form-horizontal')->open() }}
     <div class="card">
         <div class="card-body">
             <div class="row">

@@ -18,8 +18,8 @@
         $phone = null;
         $instant_massage_account = null;
         $type = null;
-        $created_at = null;
-        $updated_at = null;
+        $created_at = now();
+        $updated_at = now();
         $image_id = null;
     }
 @endphp
@@ -36,7 +36,7 @@
                     ->placeholder('seller_id')
                     ->attribute('min', 1)
                     ->required()
-                    ->autofocus() }}
+                    ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
 
@@ -53,15 +53,16 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Address') //change to something understandable
+            {{ html()->label('Address')
                 ->class('col-md-2 form-control-label')
                 ->for('address') }}
 
             <div class="col-md-3">
-                {{ html()->input('number','address',$address)
+                {{ html()->input('text','address',$address)
                     ->class('form-control')
                     ->placeholder('address')
                     ->attributes(['min'=> 1, 'max' => 9999])
+                    ->required()
                      }}
             </div><!--col-->
         </div><!--form-group-->
@@ -126,7 +127,8 @@
             <div class="col-md-3">
                 {{ html()->text('created_at',$created_at)
                     ->class('form-control')
-                    ->placeholder('created_at') }}
+                    ->placeholder('created_at')
+                    ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
@@ -137,7 +139,8 @@
             <div class="col-md-3">
                 {{ html()->text('updated_at',$updated_at)
                     ->class('form-control')
-                    ->placeholder('updated_at') }}
+                    ->placeholder('updated_at')
+                     ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">

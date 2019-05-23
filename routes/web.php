@@ -41,7 +41,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
 Route::get('admin/category/rate','CategoryController@getform')->name('category.rate');
 Route::post('admin/category/saveseller','CategoryController@saveseller');
 Route::get('admin/category/showrate','CategoryController@showrate')->name('category.showrate');
-Route::get('admin/category/getseller','CategoryController@getseller');
+Route::get('admin/category/getseller','CategoryController@getseller')->name('category.getcategory');
 Route::get('admin/category/getseller','SellerController@getseller')->name('seller.getseller');
 Route::get('admin/category/getcategory', 'CategoryController@getcategory')->name('category.getcategory');
 

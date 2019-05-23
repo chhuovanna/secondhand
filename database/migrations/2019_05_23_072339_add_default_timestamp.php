@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-class CreatePostTable extends Migration
+class AddDefaultTimestamp extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,17 @@ class CreatePostTable extends Migration
      */
     public function up()
     {
-        Schema::create('post', function (Blueprint $table) {
-            $table->increments('post_id');//->nullable();
+        Schema::table('image', function (Blueprint $table) {
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->integer('postedby')->unsigned();//->nullable();
-            $table->foreign('postedby')->references('seller_id')->on('seller');
+
         });
+        /*Schema::table('seller', function (Blueprint $table) {
+            $table->dateTime('created_at')->useCurrent()->change();
+            $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))->change();
+
+        });*/
+
     }
 
     /**
@@ -29,6 +34,6 @@ class CreatePostTable extends Migration
      */
     public function down()
     {
-        Schema::drop('post');
+        //
     }
 }
