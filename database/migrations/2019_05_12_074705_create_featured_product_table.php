@@ -19,6 +19,8 @@ class CreateFeaturedProductTable extends Migration
             $table->date('end_date_time')->nullable();
             $table->text('status')->nullable();
             $table->foreign('product_id')->references('product_id')->on('product'); //on product not seller
+            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             //add primary key
             $table->primary(['product_id', 'start_date_time']);
 

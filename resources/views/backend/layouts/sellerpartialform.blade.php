@@ -18,15 +18,15 @@
         $phone = null;
         $instant_massage_account = null;
         $type = null;
-        $created_at = now();
-        $updated_at = now();
+        $created_at = null;
+        $updated_at = null;
         $image_id = null;
     }
 @endphp
 <div class="row mt-4">
     <div class="col">
         <div class="form-group row">
-            {{ html()->label('seller_ID') //no need
+            {{ html()->label('seller ID') //no need
                 ->class('col-md-2 form-control-label')
                 ->for('seller_id') }}
 
@@ -34,8 +34,6 @@
                 {{ html()->input('number','seller_id', $seller_id)
                     ->class('form-control')
                     ->placeholder('seller_id')
-                    ->attribute('min', 1)
-                    ->required()
                     ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
@@ -61,7 +59,6 @@
                 {{ html()->input('text','address',$address)
                     ->class('form-control')
                     ->placeholder('address')
-                    ->attributes(['min'=> 1, 'max' => 9999])
                     ->required()
                      }}
             </div><!--col-->
@@ -72,9 +69,9 @@
                 ->for('email') }}
 
             <div class="col-md-3">
-                {{ html()->text('email',$email)
+                {{ html()->email('email',$email)
                     ->class('form-control')
-                    ->placeholder('email') }}
+                    ->placeholder('Email') }}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
@@ -83,21 +80,21 @@
                 ->for('phone') }}
 
             <div class="col-md-3">
-                {{ html()->text('phone',$phone)
+                {{ html()->input('tel','phone',$phone)
                     ->class('form-control')
                     ->placeholder('phone')
                      ->required() }}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Massage account') //change to something understandable
+            {{ html()->label('Instant Massage') //change to something understandable
                 ->class('col-md-2 form-control-label')
                 ->for('massage account') }}
 
             <div class="col-md-3">
-                {{ html()->text('massage account',$instant_massage_account)
+                {{ html()->text('instant_massage_account',$instant_massage_account)
                     ->class('form-control')
-                    ->placeholder('massage account')
+                    ->placeholder('Instant Message Account')
                      ->required() }}
             </div><!--col-->
         </div><!--form-group-->
@@ -108,57 +105,58 @@
                  }}
 
             <div class="col-md-3">
-                {{--{{ html()->text('type',$type) //select options: [individual , shop]--}}
-                    {{--->class('form-control')--}}
-                    {{--->placeholder('type')--}}
-                    {{--->required() }}--}}
-                <select class="browser-default custom-select">
-                    <option value="individual">individual</option>
-                    <option value="shop">shop</option>
+                @php $options = ['Individual'=>'Individual','Shop'=>'Shop']; @endphp
+                {{html()->select('type',$options)->class('form-control browser-default custom-select')}}
+                
+               
+                
+            </div><!--col-->
+        </div><!--form-group-->
+        
+        <div class="form-group row">
+            {{ html()->label('Image')
+                ->class('col-md-2 form-control-label')
+                ->for('image_id') }}
 
-                </select>
+            <div class="col-md-3">
+                
+
+                {{ html()->input('file','image_id',$image_id)
+                        ->class('form-control')
+                        ->placeholder('image')
+                        ->required()
+                    }}
+                <!-- <div class="file-field">
+                    <div class="btn btn-primary btn-sm float-left">
+                        <input type="file">
+                    </div>
+                </div> -->
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Created_at')
+            {{ html()->label('Created at')
                 ->class('col-md-2 form-control-label')
                 ->for('created_at') }}
 
             <div class="col-md-3">
                 {{ html()->text('created_at',$created_at)
                     ->class('form-control')
-                    ->placeholder('created_at')
+                    ->placeholder('created at')
                     ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Updated_at')
+            {{ html()->label('Updated at')
                 ->class('col-md-2 form-control-label')
                 ->for('updated_at') }}
 
             <div class="col-md-3">
                 {{ html()->text('updated_at',$updated_at)
                     ->class('form-control')
-                    ->placeholder('updated_at')
+                    ->placeholder('updated at')
                      ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
-        <div class="form-group row">
-            {{ html()->label('Image_id')
-                ->class('col-md-2 form-control-label')
-                ->for('image_id') }}
-
-            <div class="col-md-3">
-                {{--{{ html()->text('image_id',$image_id)--}}
-                    {{--->class('form-control')--}}
-                    {{--->placeholder('image_id')
-                      ->required }}--}}
-                <div class="file-field">
-                    <div class="btn btn-primary btn-sm float-left">
-                        <input type="file">
-                    </div>
-                </div>
-            </div><!--col-->
-        </div><!--form-group-->
+        
     </div><!--col-->
 </div><!--row-->
