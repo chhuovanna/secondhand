@@ -24,7 +24,7 @@
                     ->placeholder('category_id')
                     ->attribute('min', 1)
                     ->required()
-                    ->autofocus() }}
+                    ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
 
@@ -46,7 +46,7 @@
                 ->for('description') }}
 
             <div class="col-md-3">
-                {{ html()->input('number','description',$description)
+                {{ html()->input('text','description',$description)
                     ->class('form-control')
                     ->placeholder('description')
                     ->attributes(['min'=> 1, 'max' => 9999])
@@ -59,9 +59,14 @@
                 ->for('image_id') }}
 
             <div class="col-md-3">
-                {{ html()->text('image_id',$image_id)
-                    ->class('form-control')
-                    ->placeholder('image_id') }}
+                {{--{{ html()->text('image_id',$image_id)--}}
+                    {{--->class('form-control')--}}
+                    {{--->placeholder('image_id') }}--}}
+                <div class="file-field">
+                    <div class="btn btn-primary btn-sm float-left">
+                        <input type="file">
+                    </div>
+                </div>
             </div><!--col-->
         </div><!--form-group-->
     </div><!--col-->

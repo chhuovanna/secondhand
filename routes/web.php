@@ -44,8 +44,10 @@ Route::get('admin/category/showrate','CategoryController@showrate')->name('categ
 Route::get('admin/category/getseller','CategoryController@getseller')->name('category.getcategory');
 Route::get('admin/category/getseller','SellerController@getseller')->name('seller.getseller');
 Route::get('admin/category/getcategory', 'CategoryController@getcategory')->name('category.getcategory');
+Route::get('admin/category/getproduct', 'ProductController@getproduct')->name('product.getproduct');
 
 
 
 Route::resource('admin/category','CategoryController');
 Route::resource('admin/seller','SellerController');
+Route::resource('admin/product','ProductController');

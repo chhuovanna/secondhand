@@ -41,8 +41,8 @@
 
                             <div class="col-md-3">
                                 <select name="id" class="form-control">
-                                    @foreach ($sellers as $seller)
-                                        <option value='{{$seller->id}}'>{{$seller->name }}</option>
+                                    @foreach ($products as $product)
+                                        <option value='{{$product->id}}'>{{$product->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -65,7 +65,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        {{ form_cancel(route('seller'), 'Cancel') }}
+                        {{ form_cancel(route('product'), 'Cancel') }}
                     </div><!--col-->
 
                     <div class="col text-right">
