@@ -54,9 +54,9 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Image')
+            {{ html()->label('Image_id')
                 ->class('col-md-1 form-control-label')
-                ->for('image') }}
+                ->for('image_id') }}
 
             <div class="col-md-3">
                 {{--{{ html()->text('image_id',$image_id)--}}

@@ -29,7 +29,7 @@ class SellerController extends Controller
         $seller->type = $request->get('type');
         //$seller->created_at = $request->get('created_at');
         //$seller->updated_at = $request->get('updated_at');
-        //$seller->image_id = $request->get('image_id');
+        $seller->image_id = $request->get('image_id');
 
         //validate if the upload file is image
         $validatedData = $request->validate([

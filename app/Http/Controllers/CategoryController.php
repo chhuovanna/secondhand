@@ -21,13 +21,32 @@ class CategoryController extends Controller
     }
     public function store(Request $request) {
         $category = new Category();
-        $category->category_id = $request->get('category_id'); //id not ID
+        //$category->category_id = $request->get('category_id'); //id not ID
         $category->name = $request->get('name');
         $category->description = $request->get('description');
-        $category->image = $request->get('image');
+        //$category->image_id = $request->get('image_id');
+
+        $validateData = $request->validate([
+            'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
         try {
+            //move file to resource/images
+            $file = $request->file('image_id');
+            $imageName = time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $imageName);
+
+            //save image to database
+            $image = new Image();
+            $image->location = public_path('images');
+            $image->file_name = $imageName;
+            $image->save();
+
+            //assign new image to seller and save seller to database
+            $category->image_id = $image->image_id;
             $category->save();
+
+
             return redirect()->route('category.index')->withFlashSuccess('Category is added');
         }
         catch (\Exception $e) {
