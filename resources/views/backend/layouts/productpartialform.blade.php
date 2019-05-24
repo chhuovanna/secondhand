@@ -31,7 +31,7 @@ $image_id = null;
 <div class="row mt-4">
     <div class="col">
         <div class="form-group row">
-            {{ html()->label('product_id')
+            {{ html()->label('Product id')
             ->class('col-md-2 form-control-label')
             ->for('product_id') }}
 
@@ -85,7 +85,7 @@ $image_id = null;
         </div><!--form-group-->
 
         <div class="form-group row">
-            {{ html()->label('Number of Viewf')
+            {{ html()->label('Number of View')
             ->class('col-md-2 form-control-label')
             ->for('view_number') }}
 
@@ -98,7 +98,7 @@ $image_id = null;
         </div><!--form-group-->
 
         <div class="form-group row">
-            {{ html()->label('status')
+            {{ html()->label('Status')
             ->class('col-md-2 form-control-label')
             ->for('status') }}
 
@@ -145,19 +145,19 @@ $image_id = null;
                 </div><!--form-group-->
 
         <div class="form-group row">
-            {{ html()->label('Created_at')
+            {{ html()->label('Created at')
             ->class('col-md-2 form-control-label')
             ->for('created_at') }}
 
             <div class="col-md-3">
-                {{ html()->text('created_at',$created_at)//readonly
+                {{ html()->text('Created_at',$created_at)//readonly
                 ->class('form-control')
                 ->placeholder('created_at')
                  ->readonly()}}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Updated_at')
+            {{ html()->label('Updated at')
             ->class('col-md-2 form-control-label')
             ->for('updated_at') }}
 
