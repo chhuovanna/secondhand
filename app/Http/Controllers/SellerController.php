@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\seller;
+use App\image; 
 use Datatables;
 use DB;
 //use App\category;
@@ -19,18 +20,38 @@ class SellerController extends Controller
     }
     public function store(Request $request) {
         $seller = new Seller();
-        $seller->seller_ID = $request->get('seller_id');
+        //$seller->seller_ID = $request->get('seller_id');
         $seller->name = $request->get('name');
         $seller->address = $request->get('address');
         $seller->email = $request->get('email');
         $seller->phone = $request->get('phone');
         $seller->instant_massage_account = $request->get('instant_massage_account');
         $seller->type = $request->get('type');
-        $seller->created_at = $request->get('created_at');
-        $seller->updated_at = $request->get('updated_at');
-        $seller->image_id = $request->get('image_id');
+        //$seller->created_at = $request->get('created_at');
+        //$seller->updated_at = $request->get('updated_at');
+        //$seller->image_id = $request->get('image_id');
+
+        //validate if the upload file is image
+        $validatedData = $request->validate([
+                            'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            ]);
         try {
+            
+            //move file to resource/images
+            $file = $request->file('image_id');
+            $imageName = time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $imageName);
+
+            //save image to database
+            $image = new Image();
+            $image->location = public_path('images');
+            $image->file_name = $imageName;
+            $image->save();
+
+            //assign new image to seller and save seller to database
+            $seller->image_id = $image->image_id;
             $seller->save();
+
             return redirect()->route('seller.index')->withFlashSuccess('seller is added');
         }
         catch (\Exception $e) {
