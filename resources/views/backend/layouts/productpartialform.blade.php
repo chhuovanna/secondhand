@@ -40,8 +40,7 @@ $image_id = null;
                 ->class('form-control')
                 ->placeholder('product_id')
                 ->attribute('min', 1)
-                ->required()
-                ->autofocus() }}
+                ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
 
@@ -61,13 +60,14 @@ $image_id = null;
         <div class="form-group row">
             {{ html()->label('Price')
             ->class('col-md-2 form-control-label')
-            ->for('address') }}
+            ->for('price') }}
 
             <div class="col-md-3">
                 {{ html()->input('number','price',$price)
                 ->class('form-control')
                 ->placeholder('price')
-                ->prices(['min'=> 1, 'max' => 9999])
+                ->attributes(['min'=> 0, 'max' => 9999])
+                ->required()
                 }}
             </div><!--col-->
         </div><!--form-group-->
@@ -78,22 +78,22 @@ $image_id = null;
             ->for('description') }}
 
             <div class="col-md-3">
-                {{ html()->text('description',$description)
+                {{ html()->textarea('description',$description)
                 ->class('form-control')
                 ->placeholder('description') }}
             </div><!--col-->
         </div><!--form-group-->
 
         <div class="form-group row">
-            {{ html()->label('View_number')
+            {{ html()->label('Number of Viewf')
             ->class('col-md-2 form-control-label')
             ->for('view_number') }}
 
             <div class="col-md-3">
-                {{ html()->text('view_number',$view_number)
+                {{ html()->input('number','view_number',$view_number)
                 ->class('form-control')
                 ->placeholder('view_number')
-                ->required() }}
+                ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
 
@@ -103,21 +103,25 @@ $image_id = null;
             ->for('status') }}
 
             <div class="col-md-3">
-                {{ html()->text('status',$status)
+                {{--{{ html()->text('status',$status)
                 ->class('form-control')
                 ->placeholder('status')
-                ->required() }}
+                ->required() }}--}}
+
+
+                @php $options = ['Available'=>'Available','Sold'=>'Sold','Out of stock'=>'Out of stock']; @endphp
+                {{html()->select('status',$options)->class('form-control browser-default custom-select')}}
             </div><!--col-->
         </div><!--form-group-->
 
         <div class="form-group row">
-            {{ html()->label('Pickup_address')
+            {{ html()->label('Pickup address')//change to normal text
             ->class('col-md-2 form-control-label')
             ->for('pickup_address')
             }}
 
             <div class="col-md-3">
-                {{ html()->text('pickup_address',$pickup_address)
+                {{ html()->textarea('pickup_address',$pickup_address)//text area
                 ->class('form-control')
                 ->placeholder('pickup_address')
                 ->required() }}
@@ -126,13 +130,13 @@ $image_id = null;
         </div><!--form-group-->
 
             <div class="form-group row">
-                {{ html()->label('Pickup_time')
+                {{ html()->label('Available Pickup Time')
                 ->class('col-md-2 form-control-label')
                 ->for('pickup_time')
                 }}
 
                 <div class="col-md-3">
-                    {{ html()->text('pickup_time',$pickup_time)
+                    {{ html()->textarea('pickup_time',$pickup_time)
                     ->class('form-control')
                     ->placeholder('pickup_time')
                     ->required() }}
@@ -146,9 +150,10 @@ $image_id = null;
             ->for('created_at') }}
 
             <div class="col-md-3">
-                {{ html()->text('created_at',$created_at)
+                {{ html()->text('created_at',$created_at)//readonly
                 ->class('form-control')
-                ->placeholder('created_at') }}
+                ->placeholder('created_at')
+                 ->readonly()}}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
@@ -157,22 +162,23 @@ $image_id = null;
             ->for('updated_at') }}
 
             <div class="col-md-3">
-                {{ html()->text('updated_at',$updated_at)
+                {{ html()->text('updated_at',$updated_at)//readonly
                 ->class('form-control')
-                ->placeholder('updated_at') }}
+                ->placeholder('updated_at')
+                 ->readonly()}}
             </div><!--col-->
         </div><!--form-group-->
 
-                <div class="form-group row">
+                {{--<div class="form-group row">
                     {{ html()->label('Post_id')
                     ->class('col-md-2 form-control-label')
                     ->for('post_id') }}
 
                     <div class="col-md-3">
-                        {{--{{ html()->text('post_id',$post_id)--}}
-                        {{--->class('form-control')--}}
-                        {{--->placeholder('post_id')
-                        ->required }}--}}
+                        --}}{{--{{ html()->text('post_id',$post_id)--}}{{--
+                        --}}{{--->class('form-control')--}}{{--
+                        --}}{{--->placeholder('post_id')
+                        ->required }}--}}{{--
                         <div class="file-field">
                             <div class="btn btn-primary btn-sm float-left">
                                 <input type="file">
@@ -180,6 +186,45 @@ $image_id = null;
                         </div>
                     </div><!--col-->
                 </div><!--form-group-->
+
+
+--}}
+
+        <div class="form-group row">
+            {{ html()->label('Thumbnail')
+                ->class('col-md-2 form-control-label')
+                ->for('image_id') }}
+
+            <div class="col-md-3">
+
+
+            {{ html()->input('file','image_id')
+                    ->class('form-control')
+                    ->placeholder('image')
+                    ->required()
+                }}
+
+            </div><!--col-->
+        </div><!--form-group-->
+
+        <div class="form-group row">
+            {{ html()->label('Photos')
+                ->class('col-md-2 form-control-label')
+                ->for('photos') }}
+
+            <div class="col-md-3">
+
+
+                {{ html()->input('file','photos')
+                        ->class('form-control')
+                        ->placeholder('image')
+                        ->attributes(['multiple'=>'true'])
+
+                    }}
+
+            </div><!--col-->
+        </div><!--form-group-->
+
 
         <div class="form-group row">
             {{ html()->label('Image_id')

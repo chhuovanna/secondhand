@@ -103,7 +103,7 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product/create')) }}" href="{{ url('admin/product/create') }}">
-                    List Product
+                    Create Product
                 </a>
             </li>
 
