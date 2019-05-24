@@ -41,12 +41,12 @@ class SellerController extends Controller
 
         }
     }
-    public function view($id) {
-        echo 'view';
-    }
-    public function sign_up($id) {
-        echo 'sign_up';
-    }
+//    public function view($id) {
+//        echo 'view';
+//    }
+//    public function sign_up($id) {
+//        echo 'sign_up';
+//    }
     public function edit($id) {
         $seller = Seller::find($id);
         return view('selleredit',['seller'=>$seller]);
@@ -95,74 +95,74 @@ class SellerController extends Controller
         return view('sellersign_up', [ 'sellers' => $sellers, 'views' => $views  ]);
     }
 
-    public function savesign_up(Request $request){
+//    public function savesign_up(Request $request){
+//
+//        $sign_up = new Sign_up();
+//        $sign_up->seller_ID = $request->get('seller_id');
+//        $sign_up->username_or_email = $request->get('username_or_email');
+//        $sign_up-> phone= $request->get('phone');
+//        $sign_up-> password= $request->get('password');
+//        $sign_up->sign_upDate = date('Y-m-d');
+//        try {
+//            $sign_up->save();
+//            return redirect()->route('seller.sign_up')->withFlashSuccess('sign_up is added');
+//        }
+//        catch (\Exception $e) {
+//            return redirect()
+//                ->back()
+//                ->withInput($request->all())
+//                ->withFlashDanger("Sign_up can't be added. ". $e->getMessage());
+//        }
+//    }
 
-        $sign_up = new Sign_up();
-        $sign_up->seller_ID = $request->get('seller_id');
-        $sign_up->username_or_email = $request->get('username_or_email');
-        $sign_up-> phone= $request->get('phone');
-        $sign_up-> password= $request->get('password');
-        $sign_up->sign_upDate = date('Y-m-d');
-        try {
-            $sign_up->save();
-            return redirect()->route('seller.sign_up')->withFlashSuccess('sign_up is added');
-        }
-        catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->withInput($request->all())
-                ->withFlashDanger("Sign_up can't be added. ". $e->getMessage());
-        }
-    }
 
 
-
-    public function showsign_up(){
-        $sellers = seller::all();
-        return view('sellersign_up', [ 'sellers' => $sellers]);
-    }
-
-    public function getsign_up(Request $request){
-        $seller_id = $request->input('seller_id');
-        $sign_ups = Sign_up::getRating($seller_id);
-        if (sizeof($sign_ups) > 0){
-            $stars = 0;
-            $body = "";
-
-            foreach ($sign_ups as $sign_up) {
-                $stars += $sign_up->stars;
-                $body .= <<<EOF
-	<tr>
-		
-		<td>$sign_up->username</td>
-		<td>$sign_up->stars</td>
-		<td>$sign_up->sign_upDate</td>
-	</tr>
-EOF;
-            }
-
-            $stars = $stars/sizeof($sign_ups);
-            $html = <<<EOF
-<br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
-<table clas="table">
-	<thead>
-		<tr>
-			<th scope="col">view</th>
-			<th scope="col">stars</th>
-			<th scope="col">sign_upDate</th>
-		</tr>
-	</thead>
-	<tbody>
-	$body
-	</tdbody>
-</table>
-
-EOF;
-            return $html;
-        }else{
-            return "No Sign_up";
-        }
-    }
+//    public function showsign_up(){
+//        $sellers = seller::all();
+//        return view('sellersign_up', [ 'sellers' => $sellers]);
+//    }
+//
+//    public function getsign_up(Request $request){
+//        $seller_id = $request->input('seller_id');
+//        $sign_ups = Sign_up::getRating($seller_id);
+//        if (sizeof($sign_ups) > 0){
+//            $stars = 0;
+//            $body = "";
+//
+//            foreach ($sign_ups as $sign_up) {
+//                $stars += $sign_up->stars;
+//                $body .= <<<EOF
+//	<tr>
+//
+//		<td>$sign_up->username</td>
+//		<td>$sign_up->stars</td>
+//		<td>$sign_up->sign_upDate</td>
+//	</tr>
+//EOF;
+//            }
+//
+//            $stars = $stars/sizeof($sign_ups);
+//            $html = <<<EOF
+//<br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
+//<table clas="table">
+//	<thead>
+//		<tr>
+//			<th scope="col">view</th>
+//			<th scope="col">stars</th>
+//			<th scope="col">sign_upDate</th>
+//		</tr>
+//	</thead>
+//	<tbody>
+//	$body
+//	</tdbody>
+//</table>
+//
+//EOF;
+//            return $html;
+//        }else{
+//            return "No Sign_up";
+//        }
+//    }
 
     public function getseller(){
         $sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','created_at','updated_at','image_id'])->get();
