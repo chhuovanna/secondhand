@@ -21,14 +21,32 @@ class CategoryController extends Controller
     }
     public function store(Request $request) {
         $category = new Category();
-        $category->category_id = $request->get('category_id'); //id not ID
+        //$category->category_id = $request->get('category_id'); //id not ID
         $category->name = $request->get('name');
         $category->description = $request->get('description');
-        $category->image = $request->get('image');
+        //$category->image_id = $request->get('image_id');
 
+        $validateData = $request->validate([
+            'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
         try {
+            //move file to resource/images
+            $file = $request->file('image_id');
+            $imageName = time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $imageName);
+
+            //save image to database
+            $image = new Image();
+            $image->location = public_path('images');
+            $image->file_name = $imageName;
+            $image->save();
+
+            //assign new image to seller and save seller to database
+            $category->image_id = $image->image_id;
             $category->save();
+
+
             return redirect()->route('category.index')->withFlashSuccess('Category is added');
         }
         catch (\Exception $e) {
@@ -83,32 +101,32 @@ class CategoryController extends Controller
         return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
     }
 
-    public function saveseller_signup(Request $request){
-
-        $seller_signup = new product();
-        $seller_signup->seller_signup_ID = $request->get('seller_signup_ID');
-        $seller_signup->name = $request->get('name');
-        $seller_signup->address = $request->get('address');
-        $seller_signup->email = $request->get('email');
-        $seller_signup->phone = $request->get('phone');
-        $seller_signup->instant_massage_account = $request->get('instant_message_account');
-        $seller_signup->type = $request->get('type');
-        $seller_signup->image = $request->get('image');
-        $seller_signup->created_at = $request->get('created_at');
-        $seller_signup->updated_at = $request->get('updated_at');
-        $seller_signup->image = $request->get('image');
-        $seller_signup->sellerDate = date('Y-m-d');
-        try {
-            $seller_signup->save();
-            return redirect()->route('category.rate')->withFlashSuccess('Seller is added');
-        }
-        catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->withInput($request->all())
-                ->withFlashDanger("Seller can't be added. ". $e->getMessage());
-        }
-    }
+//    public function saveseller_signup(Request $request){
+//
+//        $seller_signup = new product();
+//        $seller_signup->seller_signup_ID = $request->get('seller_signup_ID');
+//        $seller_signup->name = $request->get('name');
+//        $seller_signup->address = $request->get('address');
+//        $seller_signup->email = $request->get('email');
+//        $seller_signup->phone = $request->get('phone');
+//        $seller_signup->instant_massage_account = $request->get('instant_message_account');
+//        $seller_signup->type = $request->get('type');
+//        $seller_signup->image = $request->get('image');
+//        $seller_signup->created_at = $request->get('created_at');
+//        $seller_signup->updated_at = $request->get('updated_at');
+//        $seller_signup->image = $request->get('image');
+//        $seller_signup->sellerDate = date('Y-m-d');
+//        try {
+//            $seller_signup->save();
+//            return redirect()->route('category.rate')->withFlashSuccess('Seller is added');
+//        }
+//        catch (\Exception $e) {
+//            return redirect()
+//                ->back()
+//                ->withInput($request->all())
+//                ->withFlashDanger("Seller can't be added. ". $e->getMessage());
+//        }
+//    }
 
 
     public function showrate(){
@@ -116,47 +134,47 @@ class CategoryController extends Controller
         return view('categoryshowrate', [ 'category' => $category]);
     }
 
-    public function getseller_signup(Request $request){
-        $add = $request->input('add');
-        $sellers_signup = seller::getSeller_signup($add);
-        if (sizeof($sellers_signup) > 0){
-            $stars = 0;
-            $body = "";
+//    public function getseller_signup(Request $request){
+//        $add = $request->input('add');
+//        $sellers_signup = seller::getSeller_signup($add);
+//        if (sizeof($sellers_signup) > 0){
+//            $stars = 0;
+//            $body = "";
+//
+//            foreach ($sellers_signup as $seller_signup) {
+//                $stars += $seller_signup->stars;
+//                $body .= <<<EOF
+//	<tr>
+//
+//		<td>$seller_signup->name</td>
+//		<td>$seller_signup->stars</td>
+//		<td>$seller_signup->sellerDate</td>
+//	</tr>
+//EOF;
+//            }
 
-            foreach ($sellers_signup as $seller_signup) {
-                $stars += $seller_signup->stars;
-                $body .= <<<EOF
-	<tr>
-		
-		<td>$seller_signup->name</td>
-		<td>$seller_signup->stars</td>
-		<td>$seller_signup->sellerDate</td>
-	</tr>
-EOF;
-            }
-
-            $stars = $stars/sizeof($sellers_signup);
-            $html = <<<EOF
-<br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
-<table clas="table">
-	<thead>
-		<tr>
-			<th scope="col">seller</th>
-			<th scope="col">stars</th>
-			<th scope="col">sellerDate</th>
-		</tr>
-	</thead>
-	<tbody>
-	$body
-	</tdbody>
-</table>
-
-EOF;
-            return $html;
-        }else{
-            return "No Seller_signup";
-        }
-    }
+//            $stars = $stars/sizeof($sellers_signup);
+//            $html = <<<EOF
+//<br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
+//<table clas="table">
+//	<thead>
+//		<tr>
+//			<th scope="col">seller</th>
+//			<th scope="col">stars</th>
+//			<th scope="col">sellerDate</th>
+//		</tr>
+//	</thead>
+//	<tbody>
+//	$body
+//	</tdbody>
+//</table>
+//
+//EOF;
+//            return $html;
+//        }else{
+//            return "No Seller_signup";
+//        }
+//    }
 
     public function getcategory(){
         $categorys = Category::select(['category_id', 'name', 'description' , 'image_id'])->get();
