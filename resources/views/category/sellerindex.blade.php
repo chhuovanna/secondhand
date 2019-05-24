@@ -38,7 +38,7 @@
 
                             <th>Updated_at</th>
 
-                            <th>Image_id</th>
+                            <th>Image</th>
 
                             <th>Action</th>
 
@@ -83,7 +83,12 @@
                     {data: 'type', name: 'type'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'updated_at', name: 'updated_at'},
-                    {data: 'image_id', name: 'image'},
+                    {data: 'file_name', name: 'image',orderable: false, searchable: false,
+                        render:function ( data, type, row, meta ) {
+                            var source = "{{ asset('images/') }}"+"/"+data;
+                            return '<img src="'+source+'" height="42" width="42">';
+                        }
+                    },
                     {data:'action', name: 'action', orderable: false, searchable: false}
 
                 ]
