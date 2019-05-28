@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\category;
-//use App\seller;
+use App\image;
 //use App\product;
 use Datatables;
 
@@ -21,7 +21,7 @@ class CategoryController extends Controller
     }
     public function store(Request $request) {
         $category = new Category();
-        //$category->category_id = $request->get('category_id'); //id not ID
+       // $category->category_id = $request->get('category_id'); //id not ID
         $category->name = $request->get('name');
         $category->description = $request->get('description');
         //$category->image_id = $request->get('image_id');
