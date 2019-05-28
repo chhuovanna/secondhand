@@ -54,19 +54,20 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Image_id')
+            {{ html()->label('Image')
                 ->class('col-md-1 form-control-label')
                 ->for('image_id') }}
 
             <div class="col-md-3">
-                {{--{{ html()->text('image_id',$image_id)--}}
-                    {{--->class('form-control')--}}
-                    {{--->placeholder('image_id') }}--}}
-                <div class="file-field">
+                {{ html()->input('file','image_id',$image_id)
+                        ->class('form-control btn btn-primary btn-sm float-left')
+                        ->required()
+                    }}
+               <!--  <div class="file-field"> // 
                     <div class="btn btn-primary btn-sm float-left">
-                        <input type="file">
+                        <input type="file"> // you give it a name (name='image_id') or id
                     </div>
-                </div>
+                </div> -->
             </div><!--col-->
         </div><!--form-group-->
     </div><!--col-->

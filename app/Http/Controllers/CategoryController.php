@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\category;
 //use App\seller;
 //use App\product;
+use App\image; //need to use it to call new Image();
 use Datatables;
 
 use DB;
