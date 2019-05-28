@@ -3,7 +3,7 @@
 @section('title', 'Edit Seller')
 
 @section('content')
-    {{ html()->form('PUT', route('seller.update'))->class('form-horizontal')->acceptsFiles()->open() }}
+    {{ html()->form('PUT', route('seller.update',['id'=>$seller->seller_id]))->class('form-horizontal')->acceptsFiles()->open() }}
     <div class="card">
         <div class="card-body">
             <div class="row">

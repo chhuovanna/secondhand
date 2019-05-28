@@ -100,7 +100,7 @@
             $(document).off('click','.seller-delete');
             $(document).on('click','.seller-delete' , function(){
 
-                var confirm_delete = confirm("Do you really want to delete this category?");
+                var confirm_delete = confirm("Do you really want to delete this seller?");
                 if (confirm_delete == true) {
                     $.ajax({
                         type:"DELETE",

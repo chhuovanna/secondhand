@@ -1,11 +1,11 @@
 @php
     if (isset($seller)){
-        $seller_id = $seller->seller_ID;
+        $seller_id = $seller->seller_id;
         $name = $seller->name;
         $address = $seller->address;
         $email = $seller->email;
         $phone = $seller->phone;
-        $massageaccount = $seller->massageaccount;
+        $massage_account = $seller->massage_account;
         $type = $seller->type;
         $created_at = $seller->created_at;
         $updated_at = $seller->updated_at;
@@ -16,7 +16,7 @@
         $address = null;
         $email = null;
         $phone = null;
-        $instant_massage_account = null;
+        $massage_account = null;
         $type = null;
         $created_at = null;
         $updated_at = null;
@@ -26,7 +26,7 @@
 <div class="row mt-4">
     <div class="col">
         <div class="form-group row">
-            {{ html()->label('seller ID') //no need
+            {{ html()->label('seller_id') //no need
                 ->class('col-md-2 form-control-label')
                 ->for('seller_id') }}
 
@@ -87,14 +87,14 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Instant Massage') //change to something understandable
+            {{ html()->label('Massage_account') //change to something understandable
                 ->class('col-md-2 form-control-label')
-                ->for('massage account') }}
+                ->for('massage_account') }}
 
             <div class="col-md-3">
-                {{ html()->text('instant_massage_account',$instant_massage_account)
+                {{ html()->text('massage_account',$massage_account)
                     ->class('form-control')
-                    ->placeholder('Instant Message Account')
+                    ->placeholder('message_account')
                      ->required() }}
             </div><!--col-->
         </div><!--form-group-->

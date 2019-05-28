@@ -66,8 +66,13 @@
                         }
                     },
 
-                    {data: 'image_id', name: 'image'},
-
+                    {data: 'image_id', name: 'image_id'},
+                    {{--{data: 'file_name', name: 'image',orderable: false, searchable: false,--}}
+                        {{--render:function ( data, type, row, meta ) {--}}
+                            {{--var source = "{{ asset('images/') }}"+"/"+data;--}}
+                            {{--return '<img src="'+source+'" height="42" width="42">';--}}
+                        {{--}--}}
+                    {{--},--}}
                     {data:'action', name: 'action', orderable: false, searchable: false}
 
                 ]

@@ -70,11 +70,11 @@ class SellerController extends Controller
 //    }
     public function edit($id) {
         $seller = Seller::find($id);
-        return view('selleredit',['seller'=>$seller]);
+        return view('category.selleredit',['seller'=>$seller]);
     }
     public function update(Request $request, $id) {
         $seller = Seller::find($id);
-        $seller->seller_ID = $request->get('seller_id');
+        $seller->seller_id = $request->get('seller_id');
         $seller->name = $request->get('name');
         $seller->address = $request->get('address');
         $seller->email = $request->get('email');

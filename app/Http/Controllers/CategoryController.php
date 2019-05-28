@@ -62,14 +62,14 @@ class CategoryController extends Controller
     }
     public function edit($id) {
         $category = Category::find($id);
-        return view('categoryedit',['category'=>$category]);
+        return view('category.categoryedit',['category'=>$category]);
     }
     public function update(Request $request, $id) {
         $category= Category::find($id);
-        $category->category_ID = $request->get('category_ID');
+        $category->category_id = $request->get('category_id');
         $category->name = $request->get('name');
         $category->description = $request->get('description');
-        $category->image = $request->get('image');
+        $category->image = $request->get('image_id');
         try{
             $category->save();
             return redirect()->route('category.index')->withFlashSuccess('Category is updated');
@@ -177,7 +177,8 @@ class CategoryController extends Controller
 //    }
 
     public function getcategory(){
-        $categorys = Category::select(['category_id', 'name', 'description' , 'image_id'])->get();
+        $categorys = Category::select(['category_id', 'name', 'description' ,'category.created_at','category.updated_at','category.image_id','location','file_name'])
+            ->join('image','category.image_id','=','image.image_id')->get();
 
         return Datatables::of($categorys)
             ->addColumn('action', function ($category) {

@@ -14,7 +14,7 @@
 <div class="row mt-4">
     <div class="col">
         <div class="form-group row">
-            {{ html()->label('category_ID')
+            {{ html()->label('category_id')
                 ->class('col-md-1 form-control-label')
                 ->for('category_id') }}
 
@@ -54,7 +54,7 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Image')
+            {{ html()->label('Image_id')
                 ->class('col-md-1 form-control-label')
                 ->for('image_id') }}
 
