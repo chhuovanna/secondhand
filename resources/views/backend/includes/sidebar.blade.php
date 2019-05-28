@@ -107,6 +107,12 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product')) }}" href="{{ url('admin/product') }}">
+                    List Product
+                </a>
+            </li>
+
 
         </ul>
     </nav>

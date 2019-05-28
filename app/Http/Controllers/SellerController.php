@@ -186,7 +186,7 @@ class SellerController extends Controller
 //    }
 
     public function getseller(){
-        $sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','created_at','updated_at','image_id'])->get();
+        $sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name'])->join('image','seller.image_id','=','image.image_id')->get();
 
         return Datatables::of($sellers)
             ->addColumn('action', function ($seller) {
