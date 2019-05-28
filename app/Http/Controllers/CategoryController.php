@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\category;
-use App\image;
 //use App\product;
 use App\image; //need to use it to call new Image();
 use Datatables;

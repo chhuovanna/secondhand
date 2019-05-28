@@ -104,7 +104,7 @@
                 if (confirm_delete == true) {
                     $.ajax({
                         type:"DELETE",
-                        url:"category/"+$(this).data('id'),
+                        url:"seller/"+$(this).data('id'),
                         data:{ _token: $('meta[name="csrf-token"]').attr('content'), ID: $(this).data('id')},
                         success: function (data) {
                             if(data == 1){
