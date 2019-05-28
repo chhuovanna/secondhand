@@ -186,12 +186,13 @@ class SellerController extends Controller
 //    }
 
     public function getseller(){
-        $sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name'])->join('image','seller.image_id','=','image.image_id')->get();
+        $sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name'])
+            ->join('image','seller.image_id','=','image.image_id')->get();
 
         return Datatables::of($sellers)
             ->addColumn('action', function ($seller) {
-                $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_ID]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
-                $html .= '<a data-id="'.$seller->seller_ID.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
+                $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
+                $html .= '<a data-id="'.$seller->seller_id.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
                 return $html;
             })
             ->make(true);
