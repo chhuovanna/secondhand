@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\image;
 use Datatables;
 use DB;
 //use App\category;
@@ -12,16 +13,19 @@ use DB;
 
 class ProductController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('category.productindex');
     }
-    public function create() {
+
+    public function create()
+    {
         return view('category.productcreate');
     }
 
 
-
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $product = new Product();
         $product->product_id = $request->get('product_id');
         $product->name = $request->get('name');
@@ -31,34 +35,58 @@ class ProductController extends Controller
         $product->status = $request->get('status');
         $product->pickup_address = $request->get('pickup_address');
         $product->pickup_time = $request->get('pickup_time');
-        $product->created_at = $request->get('created_at');
-        $product->updated_at = $request->get('updated_at');
+        //$product->created_at = $request->get('created_at');
+        //$product->updated_at = $request->get('updated_at');
         $product->post_id = $request->get('post_id');
         $product->image_id = $request->get('image_id');
-        $product->ratingDate = now();
+
+
+        $validateData = $request->validate(['image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',]);
+        //$product->ratingDate = now();
+
         try {
+            $file = $request->file('image_id');
+            $imageName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('image'), $imageName);
+
+            $image = new Image();
+            $image->location = public_path('images');
+            $image->file_name = $imageName;
+            $image->save();
+
+
+            $product->image_id = $image->image_id;
             $product->save();
-            return redirect()->route('product.index')->withFlashSuccess('product is added');
-        }
-        catch (\Exception $e) {
+
+
+            return redirect()->route('product.index')->withFlashSuccess('Product is added');
+        } catch (\Exception $e) {
             return redirect()
                 ->back()
                 ->withInput($request->all())
-                ->withFlashDanger("product can't be added. ". $e->getMessage());
+                ->withFlashDanger("Product can't be added. " . $e->getMessage());
 
         }
     }
-    public function view($id) {
+
+    public function view($id)
+    {
         echo 'view';
     }
-    public function sign_up($id) {
+
+    public function sign_up($id)
+    {
         echo 'sign_up';
     }
-    public function edit($id) {
+
+    public function edit($id)
+    {
         $product = Product::find($id);
-        return view('productedit',['product'=>$product]);
+        return view('productedit', ['product' => $product]);
     }
-    public function update(Request $request, $id) {
+
+    public function update(Request $request, $id)
+    {
         $product = Product::find($id);
         $product = new Product();
         $product->product_id = $request->get('product_id');
@@ -74,35 +102,39 @@ class ProductController extends Controller
         $product->post_id = $request->get('post_id');
         $product->image_id = $request->get('image_id');
 
-        try{
+
+        try {
             $product->save();
             return redirect()->route('product.index')->withFlashSuccess('productis updated');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()
                 ->back()
                 ->withInput($request->all())
-                ->withFlashDanger("product can't be updated. ". $e->getMessage());
+                ->withFlashDanger("product can't be updated. " . $e->getMessage());
         }
 
     }
-    public function destroy($id) {
 
-        try{
+    public function destroy($id)
+    {
+
+        try {
             $res = product::destroy($id);
             if ($res)
                 return 1;
             else
                 return 0;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return 0;
         }
 
     }
 
-    public function getform(){
+    public function getform()
+    {
         $products = product::all();
         $views = view::all();
-        return view('productsign_up', [ 'products' => $products, 'views' => $views  ]);
+        return view('productsign_up', ['products' => $products, 'views' => $views]);
     }
 
 //    public function savesign_up(Request $request){
@@ -124,7 +156,6 @@ class ProductController extends Controller
 //                ->withFlashDanger("Sign_up can't be added. ". $e->getMessage());
 //        }
 //    }
-
 
 
 //    public function showsign_up(){
@@ -174,13 +205,14 @@ class ProductController extends Controller
 //        }
 //    }
 
-    public function getproduct(){
-        $products = product::select(['product_id', 'name', 'price', 'description','view_number','status','pickup_address','pickup_time','created_at','updated_at','post_id','image_id'])->get();
+    public function getproduct()
+    {
+        $products = product::select(['product_id', 'name', 'price', 'description', 'view_number', 'status', 'pickup_address', 'pickup_time', 'created_at', 'updated_at', 'post_id', 'image_id'])->get();
 
         return Datatables::of($products)
             ->addColumn('action', function ($product) {
-                $html = '<a href="'.route('product.edit', ['product_id' => $product->product_ID]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
-                $html .= '<a data-id="'.$product->product_ID.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
+                $html = '<a href="' . route('product.edit', ['product_id' => $product->product_ID]) . '" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
+                $html .= '<a data-id="' . $product->product_ID . '" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></i> Delete</a>';
                 return $html;
             })
             ->make(true);
