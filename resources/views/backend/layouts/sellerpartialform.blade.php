@@ -107,9 +107,7 @@
             <div class="col-md-3">
                 @php $options = ['Individual'=>'Individual','Shop'=>'Shop']; @endphp
                 {{html()->select('type',$options)->class('form-control browser-default custom-select')}}
-                
-               
-                
+
             </div><!--col-->
         </div><!--form-group-->
         

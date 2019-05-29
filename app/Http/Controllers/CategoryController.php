@@ -24,7 +24,7 @@ class CategoryController extends Controller
        // $category->category_id = $request->get('category_id'); //id not ID
         $category->name = $request->get('name');
         $category->description = $request->get('description');
-        //$category->image_id = $request->get('image_id');
+        $category->image_id = $request->get('image_id');
 
         $validateData = $request->validate([
             'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -69,7 +69,9 @@ class CategoryController extends Controller
         $category->category_id = $request->get('category_id');
         $category->name = $request->get('name');
         $category->description = $request->get('description');
-        $category->image = $request->get('image_id');
+        $category->image_id = $request->get('image_id');
+        $category->created_at = $request->get('created_at');
+        $category->updated_at = $request->get('updated_at');
         try{
             $category->save();
             return redirect()->route('category.index')->withFlashSuccess('Category is updated');
@@ -97,7 +99,7 @@ class CategoryController extends Controller
 
     public function getform(){
         $category = category::all();
-        $sellers = product::all();
+        $sellers = seller::all();
         return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
     }
 

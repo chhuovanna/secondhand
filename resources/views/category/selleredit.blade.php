@@ -31,7 +31,7 @@
             </div><!--row-->
         </div><!--card-footer-->
     </div><!--card-->
-    </div>>
+    </div>
     {{ html()->form()->close() }}
 @endsection
 
