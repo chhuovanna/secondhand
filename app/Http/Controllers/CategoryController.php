@@ -179,13 +179,13 @@ class CategoryController extends Controller
 //    }
 
     public function getcategory(){
-        $categorys = Category::select(['category_id', 'name', 'description' ,'category.created_at','category.updated_at','category.image_id','location','file_name'])
+        $categorys = category::select(['category_id', 'name', 'description' ,'category.image_id','category.created_at','category.updated_at','location','file_name'])
             ->join('image','category.image_id','=','image.image_id')->get();
 
         return Datatables::of($categorys)
             ->addColumn('action', function ($category) {
                 $html = '<a href="'.route('category.edit', ['category_id' => $category->category_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
-                $html .= '<a data-id="'.$category->category_id.'" class="btn btn-danger btn-sm movie-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
+                $html .= '<a data-id="'.$category->category_id.'" class="btn btn-danger btn-sm category-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
                 return $html;
             })
             ->make(true);

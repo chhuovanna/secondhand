@@ -28,6 +28,10 @@
 
                             <th>Image</th>
 
+                            <th>Created_at</th>
+
+                            <th>Updated_at</th>
+
                             <th>Action</th>
 
                         </tr>
@@ -66,9 +70,9 @@
                         }
                     },
 
-                   {data: 'image_id', name: 'image_id'},
-                   //  {data: 'created_at', name: 'created_at'},
-                   //  {data: 'updated_at', name: 'updated_at'},
+                    {data: 'image_id', name: 'image_id'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'updated_at', name: 'updated_at'},
                     {{--{data: 'file_name', name: 'image',orderable: false, searchable: false,--}}
                         {{--render:function ( data, type, row, meta ) {--}}
                             {{--var source = "{{ asset('images/') }}"+"/"+data;--}}
@@ -112,6 +116,7 @@
             });
         });
     </script>
+
 
 @endpush
 
