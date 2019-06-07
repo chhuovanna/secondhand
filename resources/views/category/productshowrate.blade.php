@@ -22,14 +22,14 @@
             <div class="row mt-4">
                 <div class="col">
                     <div class="form-group row">
-                        {{ html()->label('product_ID')
+                        {{ html()->label('product_id')
                             ->class('col-md-1 form-control-label')
                             ->for('product_id') }}
 
                         <div class="col-md-3">
                             <select name="id" id="id" class="form-control" >
                                 @foreach ($products as $product) {
-                                <option value='{{ $product->ID }}'>{{ $product->name}}</option>"
+                                <option value='{{ $product->id }}'>{{ $product->name}}</option>"
                                 @endforeach
 
                             </select>
