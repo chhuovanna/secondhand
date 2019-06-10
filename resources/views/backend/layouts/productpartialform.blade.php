@@ -22,7 +22,7 @@ $view_number = null;
 $status = null;
 $pickup_address  = null;
 $pickup_time  = null;
-$created_at = null;
+$created_at = null; 
 $updated_at = null;
 $post_id = null;
 $image_id = null;
@@ -169,27 +169,7 @@ $image_id = null;
             </div><!--col-->
         </div><!--form-group-->
 
-                {{--<div class="form-group row">
-                    {{ html()->label('Post_id')
-                    ->class('col-md-2 form-control-label')
-                    ->for('post_id') }}
-
-                    <div class="col-md-3">
-                        --}}{{--{{ html()->text('post_id',$post_id)--}}{{--
-                        --}}{{--->class('form-control')--}}{{--
-                        --}}{{--->placeholder('post_id')
-                        ->required }}--}}{{--
-                        <div class="file-field">
-                            <div class="btn btn-primary btn-sm float-left">
-                                <input type="file">
-                            </div>
-                        </div>
-                    </div><!--col-->
-                </div><!--form-group-->
-
-
---}}
-
+               
         <div class="form-group row">
             {{ html()->label('Thumbnail')
                 ->class('col-md-2 form-control-label')
@@ -215,7 +195,7 @@ $image_id = null;
             <div class="col-md-3">
 
 
-                {{ html()->input('file','photos')
+                {{ html()->input('file','photos[]')
                         ->class('form-control')
                         ->placeholder('image')
                         ->attributes(['multiple'=>'true'])
@@ -226,22 +206,6 @@ $image_id = null;
         </div><!--form-group-->
 
 
-        <div class="form-group row">
-            {{ html()->label('Image_id')
-            ->class('col-md-2 form-control-label')
-            ->for('image_id') }}
-
-            <div class="col-md-3">
-                {{--{{ html()->text('image_id',$image_id)--}}
-                {{--->class('form-control')--}}
-                {{--->placeholder('image_id')
-                ->required }}--}}
-                <div class="file-field">
-                    <div class="btn btn-primary btn-sm float-left">
-                        <input type="file">
-                    </div>
-                </div>
-            </div><!--col-->
-        </div><!--form-group-->
+        
     </div><!--col-->
 </div><!--row-->
