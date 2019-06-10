@@ -50,7 +50,7 @@
                 ->for('description') }}
 
             <div class="col-md-3">
-                {{ html()->input('text','description',$description)
+                {{ html()->textarea('description',$description)
                     ->class('form-control')
                     ->placeholder('description')
                     ->attributes(['min'=> 1, 'max' => 9999])

@@ -16,6 +16,6 @@ class category extends Model
     }
     public function thumbnail()
     {
-        return $this->belongsTo('App\image');
+        return $this->belongsTo('App\image','image_id','image_id');
     }
 }

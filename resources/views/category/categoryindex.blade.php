@@ -22,11 +22,11 @@
 
                             <th>Id</th>
 
+                            <th>Image</th>
+
                             <th>Name</th>
 
                             <th>Description</th>
-
-                            <th>Image</th>
 
                             <th>Created_at</th>
 
@@ -62,6 +62,17 @@
 
                     {data: 'category_id', name: 'category_id'},
 
+                    {data: 'file_name', name: 'image',orderable: false, searchable: false,
+                        render:function ( data, type, row, meta ) {
+                            if (data){
+                                var source = "{{ asset('images/category') }}"+"/"+data;
+                                return '<img src="'+source+'" height="42" width="42" class="image" data-id="'+row.category_id+'">';
+                            }else{
+                                return '<i class="fa fa-film fa-3x" aria-hidden="true"></i>';
+                            }
+                        }
+                    },
+
                     {data: 'name', name: 'name'},
 
                     {data: 'description', name: 'description',
@@ -70,19 +81,15 @@
                         }
                     },
 
-                    {data: 'image_id', name: 'image_id'},
+                    //{data: 'image_id', name: 'image_id'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'updated_at', name: 'updated_at'},
-                    {{--{data: 'file_name', name: 'image',orderable: false, searchable: false,--}}
-                        {{--render:function ( data, type, row, meta ) {--}}
-                            {{--var source = "{{ asset('images/') }}"+"/"+data;--}}
-                            {{--return '<img src="'+source+'" height="42" width="42">';--}}
-                        {{--}--}}
-                    {{--},--}}
+
                     {data:'action', name: 'action', orderable: false, searchable: false}
 
                 ]
-
+                ,
+                "order":[[0,'desc']]
             });
 
 
@@ -95,14 +102,15 @@
                     $.ajax({
                         type:"DELETE",
                         url:"category/"+$(this).data('id'),
-                        data:{ _token: $('meta[name="csrf-token"]').attr('content'), ID: $(this).data('id')},
+                        data:{ _token: $('meta[name="csrf-token"]').attr('content'), category_id: $(this).data('id')},
                         success: function (data) {
                             if(data == 1){
                                 $('.col').prepend('</div><div class="alert alert-success alert-dismissible fade show success-msg" role="alert" >Deleted<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                                 oTable.ajax.reload(null, false);
                             }else{
-                                $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to delete<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                                console.log(data);
+                                $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to delete'+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                                console.log(data[1]);
+                                //alert(data[1]+ 'sadffdasd');
                             }
 
                         },
@@ -117,6 +125,14 @@
         });
     </script>
 
-
 @endpush
+
+@push('after-styles')
+    <style type="text/css">
+        .lg-backdrop.in {
+            opacity: 0.5 !important;
+        }
+    </style>
+@endpush
+
 

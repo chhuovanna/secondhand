@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File; // for deleting file
 use App\seller;
 use App\image; 
 use Datatables;
@@ -35,24 +36,24 @@ class SellerController extends Controller
         $validatedData = $request->validate([
                             'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             ]);
+
+        //get file from input
+        $file = $request->file('image_id');
+        $image = new Image();
+        $image->file_name = rand(1111,9999).time().'.'.$file->getClientOriginalExtension();
+        $image->location = 'images\seller'; //seller is stored in public/images/seller
         try {
             
-            //move file to resource/images
-            $file = $request->file('image_id');
-            $imageName = time().'.'.$file->getClientOriginalExtension();
-            $file->move(public_path('images'), $imageName);
-
-            //save image to database
-            $image = new Image();
-            $image->location = public_path('images');
-            $image->file_name = $imageName;
+//
             $image->save();
+            //seller the file to it's location on server
+            $file->move(public_path($image->location),$image->file_name);
 
-            //assign new image to seller and save seller to database
+            //image of seller
             $seller->image_id = $image->image_id;
             $seller->save();
-
-            return redirect()->route('seller.index')->withFlashSuccess('seller is added');
+            echo $seller->image_id;
+            //return redirect()->route('seller.index')->withFlashSuccess('seller is added');
         }
         catch (\Exception $e) {
             return redirect()
@@ -99,13 +100,32 @@ class SellerController extends Controller
     public function destroy($id) {
 
         try{
-            $res = seller::destroy($id);
-            if ($res)
-                return 1;
+
+            //to get image of the seller to be deleted. in Seller model, there is function called image
+            $image = Seller::find($id)->thumbnail;
+
+            //delete seller from database
+            $res['seller'] = Seller::destroy($id);
+            if ($image) {
+
+                $file = public_path($image->location) . '\\' . $image->file_name;
+
+                //test if the image file exists or not
+                if (File::exists($file)) {
+                    //delete the file from the folder
+                    if (File::delete($file)) {
+                        //delete the image of the seller from database;
+                        $res['image'] = $image->delete();
+                    }
+                }
+            }
+
+            if ($res['seller'] )
+                return [1];
             else
-                return 0;
+                return [0];
         }catch(\Exception $e){
-            return 0;
+            return [0,$e->getMessage()];
         }
 
     }
@@ -186,13 +206,18 @@ class SellerController extends Controller
 //    }
 
     public function getseller(){
-        $sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name'])
-            ->join('image','seller.image_id','=','image.image_id')->get();
+
+        //$sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name']);
+        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name'])
+            ->leftJoin('image','seller.image_id', '=', 'image.image_id')
+        ;
 
         return Datatables::of($sellers)
             ->addColumn('action', function ($seller) {
-                $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
-                $html .= '<a data-id="'.$seller->seller_id.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
+                $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;';
+                $html .= '<a data-id="'.$seller->seller_id.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i>Delete</a>&nbsp;&nbsp;&nbsp;' ;
+                $html .= '<a data-id="'.$seller->seller_id.'"  class="btn btn-info btn-sm seller-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;
+
                 return $html;
             })
             ->make(true);

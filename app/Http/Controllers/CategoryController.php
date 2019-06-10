@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File; //for deleting file
 use App\category;
-//use App\product;
 use App\image; //need to use it to call new Image();
 use Datatables;
 
@@ -21,33 +21,32 @@ class CategoryController extends Controller
     }
     public function store(Request $request) {
         $category = new Category();
-       // $category->category_id = $request->get('category_id'); //id not ID
+        //$category->category_id = $request->get('category_id');
         $category->name = $request->get('name');
         $category->description = $request->get('description');
-        $category->image_id = $request->get('image_id');
+        //$category->image_id = $request->get('image_id');
 
         $validateData = $request->validate([
-            'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+            'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
+
+        //get file from input
+        $file = $request->file('image_id');
+        $image = new Image();
+        $image->file_name = rand(1111,9999).time().'.'.$file->getClientOriginalExtension();
+        $image->location = 'images\category'; //category is stored in public/images/category
 
         try {
-            //move file to resource/images
-            $file = $request->file('image_id');
-            $imageName = time().'.'.$file->getClientOriginalExtension();
-            $file->move(public_path('images'), $imageName);
-
-            //save image to database
-            $image = new Image();
-            $image->location = public_path('images');
-            $image->file_name = $imageName;
             $image->save();
+            //category the file to it's location on server
+            $file->move(public_path($image->location),$image->file_name);
 
-            //assign new image to seller and save seller to database
+            //image of category
             $category->image_id = $image->image_id;
             $category->save();
+            echo $category->image_id;
 
+            //return redirect()->route('category.index')->withFlashSuccess('Category is added');
 
-            return redirect()->route('category.index')->withFlashSuccess('Category is added');
         }
         catch (\Exception $e) {
             return redirect()
@@ -86,16 +85,38 @@ class CategoryController extends Controller
     public function destroy($id) {
 
         try{
-            $res = Category::destroy($id);
-            if ($res)
-                return 1;
+            //to get image of the category to be deleted. in Category model, there is function called image
+            $image = Category::find($id)->thumbnail;
+
+            //delete category from database
+            $res['category'] = Category::destroy($id);
+            if ($image) {
+
+                $file = public_path($image->location) . '\\' . $image->file_name;
+
+
+                //test if the image file exists or not
+                if (File::exists($file)) {
+                    //delete the file from the folder
+                    if (File::delete($file)) {
+                        //delete the image of the category from database;
+                        $res['image'] = $image->delete();
+                    }
+                }
+            }
+
+            if ($res['category'] )
+                return [1];
             else
-                return 0;
+                return [0];
         }catch(\Exception $e){
-            return 0;
+            return [0,$e->getMessage()];
         }
 
+
     }
+
+
 
     public function getform(){
         $category = category::all();
@@ -179,13 +200,17 @@ class CategoryController extends Controller
 //    }
 
     public function getcategory(){
-        $categorys = category::select(['category_id', 'name', 'description' ,'category.image_id','category.created_at','category.updated_at','location','file_name'])
-            ->join('image','category.image_id','=','image.image_id')->get();
+        $categorys = Category::select(['category_id', 'name', 'description'
+            ,'category.image_id','category.created_at','category.updated_at'
+            ,'location','file_name'])
+            ->leftJoin('image','category.image_id', '=', 'image.image_id')
+        ;
 
         return Datatables::of($categorys)
             ->addColumn('action', function ($category) {
                 $html = '<a href="'.route('category.edit', ['category_id' => $category->category_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
                 $html .= '<a data-id="'.$category->category_id.'" class="btn btn-danger btn-sm category-delete"><i class="far fa-trash-alt"></i></i> Delete</a>' ;
+                $html .= '<a data-id="'.$category->category_id.'"  class="btn btn-info btn-sm category-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;
                 return $html;
             })
             ->make(true);

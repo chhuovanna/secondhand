@@ -8,7 +8,7 @@ class seller extends Model
 {
     protected $table ='seller';
     protected $primaryKey = 'seller_id'; //id not ID
-
+    public $timestamps = false;
 
 
     public function post()

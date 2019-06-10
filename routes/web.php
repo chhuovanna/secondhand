@@ -45,7 +45,8 @@ Route::get('admin/category/getseller','CategoryController@getseller')->name('cat
 Route::get('admin/category/getseller','SellerController@getseller')->name('seller.getseller');
 Route::get('admin/category/getcategory', 'CategoryController@getcategory')->name('category.getcategory');
 Route::get('admin/category/getproduct', 'ProductController@getproduct')->name('product.getproduct');
-
+//Route::get('admin/sign up','Sign_upController@getsign_upseller');
+//Route::post('admin/sign up','Sign_upController@postsign_upseller');
 
 
 Route::resource('admin/category','CategoryController');
