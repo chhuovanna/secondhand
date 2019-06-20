@@ -173,14 +173,14 @@ $image_id = null;
         <div class="form-group row">
             {{ html()->label('Thumbnail')
                 ->class('col-md-2 form-control-label')
-                ->for('image_id') }}
+                ->for('thumbnail_id') }}
 
             <div class="col-md-3">
 
 
-            {{ html()->input('file','image_id')
+            {{ html()->input('file','thumbnail_id')
                     ->class('form-control')
-                    ->placeholder('image')
+                    ->placeholder('Thumbnail')
                     ->required()
                 }}
 
@@ -204,8 +204,5 @@ $image_id = null;
 
             </div><!--col-->
         </div><!--form-group-->
-
-
-        
     </div><!--col-->
 </div><!--row-->

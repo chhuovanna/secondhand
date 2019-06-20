@@ -3,7 +3,7 @@
 @section('title', 'Update product')
 
 @section('content')
-    {{ html()->form('PUT', route('product.update',['id'=>$product->ID]))->class('form-horizontal')->open() }}
+    {{ html()->form('PUT', route('product.update',['id'=>$product->product_id]))->class('form-horizontal')->open() }}
     <div class="card">
         <div class="card-body">
             <div class="row">
