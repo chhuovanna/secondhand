@@ -43,9 +43,9 @@ class CategoryController extends Controller
             //image of category
             $category->image_id = $image->image_id;
             $category->save();
-            echo $category->image_id;
+            //echo $category->image_id;
 
-            //return redirect()->route('category.index')->withFlashSuccess('Category is added');
+            return redirect()->route('category.index')->withFlashSuccess('Category is added');
 
         }
         catch (\Exception $e) {

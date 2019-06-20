@@ -22,6 +22,8 @@
 
                             <th>Id</th>
 
+                            <th>Image</th>
+
                             <th>Name</th>
 
                             <th>Address</th>
@@ -37,8 +39,6 @@
                             <th>Created_at</th>
 
                             <th>Updated_at</th>
-
-                            <th>Image</th>
 
                             <th>Action</th>
 

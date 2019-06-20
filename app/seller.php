@@ -18,7 +18,7 @@ class seller extends Model
 
 
     public function image(){
-        return $this->belongTo('App\image','image_id','image_id');
+        return $this->belongsTo('App\image','image_id','image_id');
     }
 
 }

@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; // for deleting file
 use App\seller;
-use App\image; 
+use App\image; //need to use it to call new Image();
 use Datatables;
+
 use DB;
-//use App\category;
+
 
 
 class SellerController extends Controller
@@ -30,11 +31,11 @@ class SellerController extends Controller
         $seller->type = $request->get('type');
         //$seller->created_at = $request->get('created_at');
         //$seller->updated_at = $request->get('updated_at');
-        $seller->image_id = $request->get('image_id');
+        //$seller->image_id = $request->get('image_id');
 
         //validate if the upload file is image
         $validatedData = $request->validate([
-                            'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             ]);
 
         //get file from input
@@ -52,8 +53,8 @@ class SellerController extends Controller
             //image of seller
             $seller->image_id = $image->image_id;
             $seller->save();
-            echo $seller->image_id;
-            //return redirect()->route('seller.index')->withFlashSuccess('seller is added');
+            //echo $seller->image_id;
+            return redirect()->route('seller.index')->withFlashSuccess('seller is added');
         }
         catch (\Exception $e) {
             return redirect()
@@ -102,7 +103,7 @@ class SellerController extends Controller
         try{
 
             //to get image of the seller to be deleted. in Seller model, there is function called image
-            $image = Seller::find($id)->thumbnail;
+            $image = Seller::find($id)->image;
 
             //delete seller from database
             $res['seller'] = Seller::destroy($id);
@@ -208,7 +209,7 @@ class SellerController extends Controller
     public function getseller(){
 
         //$sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name']);
-        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name'])
+        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
             ->leftJoin('image','seller.image_id', '=', 'image.image_id')
         ;
 
