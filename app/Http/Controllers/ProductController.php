@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\File;
 
 use App\product;
 use App\image;
-use App\reviewer;
-use App\rating;
+//use App\reviewer;
+//use App\rating;
 use Datatables;
 use DB;
 //use App\category;
@@ -46,8 +46,8 @@ class ProductController extends Controller
 
 
         $validateData = $request->validate([
-            'thumbnail_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ,'photos[]' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
+            'thumbnail_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photos[]' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
 
         //get file from input
         $file = $request->file('thumbnail_id');
@@ -186,7 +186,7 @@ class ProductController extends Controller
     public function getform(){
         $products = product::all();
         //$reviewers = reviewer::all();//???
-        return view('productrate', [ 'products' => $products, 'reviewers' => $reviewers  ]);
+        return view('productrate', [ 'products' => $products  ]);
     }
 
     // public function saverating(Request $request){

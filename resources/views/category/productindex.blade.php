@@ -74,7 +74,7 @@ $(document).ready(function() {
                 render:function ( data, type, row, meta ) {
                     if (data){
                         var source = "{{ asset('images/thumbnail') }}"+"/"+data;
-                        return '<img src="'+source+'" height="42" width="42" class="thumbnail" data-id="'+row.product+'">';
+                        return '<img src="'+source+'" height="42" width="42" class="thumbnail" data-id="'+row.product_id+'">';
                     }else{
                         return '<i class="fa fa-film fa-3x" aria-hidden="true"></i>';
                     }
