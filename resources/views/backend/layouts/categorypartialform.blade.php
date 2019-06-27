@@ -7,8 +7,8 @@
         $created_at = $category->created_at;
         $updated_at = $category->updated_at;
 
-        if(isset($category->image)){
-            $source = asset(str_replace('\\','/',$category->image->location)) . "/" . $category->image->file_name;
+        if(isset($category->thumbnail)){//no image, only thumbnail, it is the same as with('thumbnail') in controller
+            $source = asset(str_replace('\\','/',$category->thumbnail->location)) . "/" . $category->thumbnail->file_name;
         }
 
     }else{
@@ -34,7 +34,7 @@
                     ->attribute('min', 1)
                     ->required()
                     ->readonly()
-                    ->autofocus() }}
+                     }}
             </div><!--col-->
         </div><!--form-group-->
 

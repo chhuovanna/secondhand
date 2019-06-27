@@ -62,7 +62,9 @@ class CategoryController extends Controller
         echo 'show';
     }
     public function edit($id) {
-        $category = Category::with('image')->find($id);
+
+        //we dont have image function in model category, we only have thumbnail()
+        $category = Category::with('thumbnail')->find($id);
         return view('category.categoryedit',['category'=>$category]);
     }
     public function update(Request $request, $id) {
@@ -70,7 +72,7 @@ class CategoryController extends Controller
         $category->category_id = $request->get('category_id');
         $category->name = $request->get('name');
         $category->description = $request->get('description');
-        $category->image_id = $request->get('image_id');
+        //$category->image_id = $request->get('image_id');
         $category->created_at = $request->get('created_at');
         $category->updated_at = $request->get('updated_at');
 
@@ -90,24 +92,24 @@ class CategoryController extends Controller
                 $image->save();//save new image
 
 
-                $old_image = $category->image; // Keep the old image for removing if it exists
+                $old_image = $category->image_id; // Keep the old image for removing if it exists
                 $category->image_id = $image->image_id;	//change the image to the new one
 
 
             }
             $category->save(); //save the update of seller
             if(isset($old_image)){
+                $old_image = Image::find($old_image);
                 //remove old image from harddisk
-                $file = public_path($category->image->location).'\\'.$category->image->file_name;
+                $file = public_path($old_image->location).'\\'.$old_image->file_name;
                 if ( File::exists($file)) {
                     File::delete($file);
                 }
 
-                $category->image->delete(); //delete the old image if user add a new one
+                $old_image->delete(); //delete the old image if user add a new one
             }
 
-
-            return redirect()->route('category.index')->withFlashSuccess('Category is updated');
+               return redirect()->route('category.index')->withFlashSuccess('Category is updated');
         }catch(\Exception $e){
             return redirect()
                 ->back()
@@ -257,8 +259,8 @@ class CategoryController extends Controller
         $categorys = Category::select(['category_id', 'name', 'description'
             ,'category.image_id','category.created_at','category.updated_at'
             ,'location','file_name'])
-            ->leftJoin('image','category.image_id', '=', 'image.image_id')
-        ;
+            ->leftJoin(DB::raw('(select image_id, file_name, location from image) AS temp'),'category.image_id', '=', 'temp.image_id')
+        ;///need to use subquery with DB::raw to avoid ambigous of created_at and updated_at when search
 
         return Datatables::of($categorys)
             ->addColumn('action', function ($category) {
