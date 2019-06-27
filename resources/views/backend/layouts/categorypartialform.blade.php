@@ -6,6 +6,11 @@
         $image_id = $category->image_id;
         $created_at = $category->created_at;
         $updated_at = $category->updated_at;
+
+        if(isset($category->image)){
+            $source = asset(str_replace('\\','/',$category->image->location)) . "/" . $category->image->file_name;
+        }
+
     }else{
         $category_id = null;
         $name = null;
@@ -28,7 +33,8 @@
                     ->placeholder('category_id')
                     ->attribute('min', 1)
                     ->required()
-                    ->readonly() }}
+                    ->readonly()
+                    ->autofocus() }}
             </div><!--col-->
         </div><!--form-group-->
 
@@ -58,22 +64,31 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Image_id')
+            {{ html()->label('Image')
                 ->class('col-md-2 form-control-label')
                 ->for('image_id') }}
 
             <div class="col-md-3">
-                {{ html()->input('file','image_id',$image_id)
-                        ->class('form-control btn btn-primary btn-sm float-left')
+                {{ html()->input('file','image_id')
+                        ->class('form-control')
                         ->placeholder('image')
-                        ->required()
+
                     }}
-               <!--  <div class="file-field"> // 
-                    <div class="btn btn-primary btn-sm float-left">
-                        <input type="file"> // you give it a name (name='image_id') or id
-                    </div>
-                </div> -->
+
             </div><!--col-->
+            @if(isset($source))
+
+                <div class="old-image">
+
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert" >
+                        <input type="hidden" name="old_image" value="1">
+                        <img src="{{$source}}"  class="img-image" width="100px" height="100px">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            @endif
         </div><!--form-group-->
         <div class="form-group row">
             {{ html()->label('Created at')

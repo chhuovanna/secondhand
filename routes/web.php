@@ -41,13 +41,14 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
 Route::get('admin/category/rate','CategoryController@getform')->name('category.rate');
 Route::post('admin/category/saveseller','CategoryController@saveseller');
 Route::get('admin/category/showrate','CategoryController@showrate')->name('category.showrate');
-Route::get('admin/category/getseller','CategoryController@getseller')->name('category.getcategory');
+//Route::get('admin/category/getseller','CategoryController@getseller')->name('category.getcategory');
 Route::get('admin/category/getseller','SellerController@getseller')->name('seller.getseller');
 Route::get('admin/category/getcategory', 'CategoryController@getcategory')->name('category.getcategory');
 Route::get('admin/category/getproduct', 'ProductController@getproduct')->name('product.getproduct');
-//Route::get('admin/sign up','Sign_upController@getsign_upseller');
-//Route::post('admin/sign up','Sign_upController@postsign_upseller');
-
+//Route::get('signup','Sign_upController@signup');
+//Route::post('signup','Sign_upController@postSignup');
+Route::get('admin/category/getcategorymore', 'CategoryController@getcategorymore');
+Route::get('admin/category/getsellermore', 'SellerController@getsellermore');
 
 Route::resource('admin/category','CategoryController');
 Route::resource('admin/seller','SellerController');

@@ -5,18 +5,23 @@
         $address = $seller->address;
         $email = $seller->email;
         $phone = $seller->phone;
-        $massage_account = $seller->massage_account;
+        $message_account = $seller->message_account;
         $type = $seller->type;
         $created_at = $seller->created_at;
         $updated_at = $seller->updated_at;
         $image_id = $seller->image_id;
+
+        if(isset($seller->image)){
+            $source = asset(str_replace('\\','/',$seller->image->location)) . "/" . $seller->image->file_name;
+        }
+
     }else{
         $seller_id = null;
         $name = null;
         $address = null;
         $email = null;
         $phone = null;
-        $massage_account = null;
+        $message_account = null;
         $type = null;
         $created_at = null;
         $updated_at = null;
@@ -87,12 +92,12 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Massage_account') //change to something understandable
+            {{ html()->label('Message_account') //change to something understandable
                 ->class('col-md-2 form-control-label')
-                ->for('massage_account') }}
+                ->for('message_account') }}
 
             <div class="col-md-3">
-                {{ html()->text('massage_account',$massage_account)
+                {{ html()->text('message_account',$message_account)
                     ->class('form-control')
                     ->placeholder('message_account')
                      ->required() }}
@@ -119,17 +124,26 @@
             <div class="col-md-3">
                 
 
-                {{ html()->input('file','image_id',$image_id)
+                {{ html()->input('file','image_id')
                         ->class('form-control')
                         ->placeholder('image')
                         ->required()
                     }}
-                <!-- <div class="file-field">
-                    <div class="btn btn-primary btn-sm float-left">
-                        <input type="file">
-                    </div>
-                </div> -->
+
             </div><!--col-->
+            @if(isset($source))
+
+                <div class="old-image">
+
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert" >
+                        <input type="hidden" name="old_image" value="1">
+                        <img src="{{$source}}"  class="img-image" width="100px" height="100px">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            @endif
         </div><!--form-group-->
         <div class="form-group row">
             {{ html()->label('Created at')

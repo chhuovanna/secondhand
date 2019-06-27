@@ -38,7 +38,13 @@
 @push('after-scripts')
 
     <script>
+        $(document).ready(function(){
+            $(document).off('change','#image_id');
+            $(document).on('change','#image_id', function(){
+                $('.old-image').remove();
+            });
 
+        });
     </script>
 
 @endpush
