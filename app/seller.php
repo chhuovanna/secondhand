@@ -21,7 +21,7 @@ class seller extends Model
         return $this->belongsTo('App\image','image_id','image_id');
     }
     public static function getSellersWithImage($offset=0){
-        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','instant_message_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
+        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','message_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
             ->leftJoin('image','seller.image_id', '=', 'image.image_id')->orderBy('seller.seller_id','desc')->offset($offset)
             ->limit(20)->get();
 

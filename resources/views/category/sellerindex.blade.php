@@ -32,7 +32,7 @@
 
                             <th>Phone</th>
 
-                            <th>Instant_massage_account</th>
+                            <th>Message_account</th>
 
                             <th>Type</th>
 
@@ -89,7 +89,7 @@
                     },
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
-                    {data: 'instant_massage_account', name: 'instant_massage_account'},
+                    {data: 'message_account', name: 'message_account'},
                     {data: 'type', name: 'type'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'updated_at', name: 'updated_at'},

@@ -5,7 +5,7 @@
         $address = $seller->address;
         $email = $seller->email;
         $phone = $seller->phone;
-        $instant_massage_account = $seller->instant_massage_account;
+        $message_account = $seller->message_account;
         $type = $seller->type;
         $created_at = $seller->created_at;
         $updated_at = $seller->updated_at;
@@ -21,7 +21,7 @@
         $address = null;
         $email = null;
         $phone = null;
-        $instant_massage_account = null;
+        $message_account = null;
         $type = null;
         $created_at = null;
         $updated_at = null;
@@ -92,14 +92,14 @@
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Instant_massage_account') //change to something understandable
+            {{ html()->label('Message_account') //change to something understandable
                 ->class('col-md-2 form-control-label')
                 ->for('message_account') }}
 
             <div class="col-md-3">
-                {{ html()->text('instant_massage_account',$instant_massage_account)
+                {{ html()->text('message_account',$message_account)
                     ->class('form-control')
-                    ->placeholder('instant_massage_account')
+                    ->placeholder('message_account')
                      ->required() }}
             </div><!--col-->
         </div><!--form-group-->

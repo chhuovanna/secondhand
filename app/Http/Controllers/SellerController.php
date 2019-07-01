@@ -29,7 +29,7 @@ class SellerController extends Controller
         $seller->address = $request->get('address');
         $seller->email = $request->get('email');
         $seller->phone = $request->get('phone');
-        $seller->instant_massage_account = $request->get('instant_massage_account');
+        $seller->message_account = $request->get('message_account');
         $seller->type = $request->get('type');
         //$seller->created_at = $request->get('created_at');
         //$seller->updated_at = $request->get('updated_at');
@@ -77,7 +77,7 @@ class SellerController extends Controller
         $seller->address = $request->get('address');
         $seller->email = $request->get('email');
         $seller->phone = $request->get('phone');
-        $seller->instant_massage_account = $request->get('instant_massage_account');
+        $seller->message_account = $request->get('message_account');
         $seller->type = $request->get('type');
         $seller->created_at = $request->get('created_at');
         $seller->updated_at = $request->get('updated_at');
@@ -238,7 +238,7 @@ class SellerController extends Controller
     public function getseller(){
 
         //$sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name']);
-        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
+        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','message_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) AS temp'),'seller.image_id', '=', 'temp.image_id');
 
         return Datatables::of($sellers)
@@ -246,7 +246,7 @@ class SellerController extends Controller
             ->addColumn('action', function ($seller) {
                 $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
                 $html .= '<a data-id="'.$seller->seller_id.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i></i> Delete</a>&nbsp;&nbsp;&nbsp;' ;
-                $html .= '<a data-id="'.$seller->seller_id.'"  class="btn btn-info btn-sm seller-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;
+                $html .= '<a data-id="'.$seller->seller_id.'"  class="btn btn-info btn-sm seller-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>&nbsp;&nbsp;&nbsp;' ;
 
                 return $html;
             })
