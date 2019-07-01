@@ -32,7 +32,7 @@
 
                             <th>Phone</th>
 
-                            <th>Message_account</th>
+                            <th>Instant_massage_account</th>
 
                             <th>Type</th>
 
@@ -68,11 +68,12 @@
 
                 "columns": [
                     {data: 'seller_id', name: 'seller_id'},
+
                     {data: 'file_name', name: 'image',orderable: false, searchable: false,
                         render:function ( data, type, row, meta ) {
                             if (data){
                                 var source = "{{ asset('images/seller') }}"+"/"+data;
-                                return '<img src="'+source+'" height="42" width="42" class="image" data-id="'+row.seller_id+'" style="cursor:pointer">';
+                                return '<img src="'+source+'" height="42" width="42" class="thumbnail img-thumbnail" data-id="'+row.seller_id+'" style="cursor:pointer">';
                             }else{
                                 return '<i class="fa fa-film fa-3x" aria-hidden="true"></i>';
                             }
@@ -95,7 +96,8 @@
                     {data:'action', name: 'action', orderable: false, searchable: false}
 
                 ]
-
+                ,
+                "order":[[0,'desc']]
             });
 
 
@@ -109,12 +111,12 @@
                         url:"seller/"+$(this).data('id'),
                         data:{ _token: $('meta[name="csrf-token"]').attr('content'), seller_id: $(this).data('id')},
                         success: function (data) {
-                            if(data[0] === 1){
+                            if(data[0] == 1){
                                 $('.col').prepend('</div><div class="alert alert-success alert-dismissible fade show success-msg" role="alert" >Deleted<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                                 oTable.ajax.reload(null, false);
                             }else{
                                 $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to delete'+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                                console.log(data[1]);
+                                console.log(data);
                             }
 
                         },

@@ -142,23 +142,6 @@ class CategoryController extends Controller
                     }
                 }
             }
-//            //delete category from database
-//            $res['category'] = Category::destroy($id);
-//            if ($image){
-//                $file = public_path($image->location).'\\'.$image->file_name;
-//
-//
-//
-//                //test if the image file exists or not
-//                if ( File::exists($file)) {
-//                    //delete the file from the folder
-//                    if(File::delete($file)){
-//                        //delete the image of the movie from database;
-//                        $res['image'] = $image->delete();
-//                    }
-//                }
-//
-//            }
 
 
             if ($res['category'] )

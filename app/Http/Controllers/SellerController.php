@@ -81,7 +81,7 @@ class SellerController extends Controller
         $seller->type = $request->get('type');
         $seller->created_at = $request->get('created_at');
         $seller->updated_at = $request->get('updated_at');
-        $seller->image_id = $request->get('image_id');
+       // $seller->image_id = $request->get('image_id');
 
         $validateData = $request->validate([
             'image_id' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
@@ -99,21 +99,23 @@ class SellerController extends Controller
                 $image->save();//save new image
 
 
-                $old_image = $seller->image; // Keep the old image for removing if it exists
+                $old_image = $seller->image_id; // Keep the old image for removing if it exists
                 $seller->image_id = $image->image_id;	//change the image to the new one
 
             }
 
             $seller->save();//save the update of category
             if(isset($old_image)){
+                $old_image = Image::find($old_image);
                 //remove old image from harddisk
-                $file = public_path($seller->image->location).'\\'.$seller->image->file_name;
+                $file = public_path($old_image->location).'\\'.$old_image->file_name;
                 if ( File::exists($file)) {
                     File::delete($file);
                 }
 
-                $seller->image->delete(); //delete the old image if user add a new one
+                $old_image->delete(); //delete the old image if user add a new one
             }
+
 
             return redirect()->route('seller.index')->withFlashSuccess('Seller is updated');
         }catch(\Exception $e){
@@ -146,21 +148,7 @@ class SellerController extends Controller
                     }
                 }
             }
-//            //delete seller from database
-//            $res['seller'] = Seller::destroy($id);
-//            if ($image){
-//                $file = public_path($image->location).'\\'.$image->file_name;
-//
-//                //test if the image file exists or not
-//                if ( File::exists($file)) {
-//                    //delete the file from the folder
-//                    if(File::delete($file)){
-//                        //delete the image of the movie from database;
-//                        $res['image'] = $image->delete();
-//                    }
-//                }
-//
-//            }
+
 
             if ($res['seller'] )
                 return [1];
@@ -250,8 +238,9 @@ class SellerController extends Controller
     public function getseller(){
 
         //$sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name']);
-        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','message_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
-            ->leftJoin('image','seller.image_id', '=', 'image.image_id');
+        $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
+            ->leftJoin(DB::raw('(select image_id, file_name, location from image) AS temp'),'seller.image_id', '=', 'temp.image_id');
+
         return Datatables::of($sellers)
 
             ->addColumn('action', function ($seller) {
