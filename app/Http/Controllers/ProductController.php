@@ -61,7 +61,7 @@ class ProductController extends Controller
             $file->move(public_path($thumbnail->location),$thumbnail->file_name);
 
             //thumbnail of movie
-            $product->thumbnail_id = $thumbnail->image_id;
+            $product->image_id = $thumbnail->image_id;
             $product->save();
 
             //test if user has upload other photos or not
@@ -79,7 +79,7 @@ class ProductController extends Controller
                     $photo->location = 'images\photos';
                     
                     //photo belongs to movie
-                    $photo->product_id = $request->get('id'); //note(id)
+                    $photo->product_id = $request->get('product_id'); //not (id) product_id
                     $photo->save();
                     $file->move(public_path($photo->location),$photo->file_name);
                 }
@@ -259,9 +259,9 @@ class ProductController extends Controller
 
     public function getproduct(){
         //$movies = Movie::select(['mID', 'title', 'director', 'year']);
-        $products = Product::select(['product.product_id', 'name', 'price', 'description','view_number','status','pickup_address','pickup_time','created_at','updated_at',  'image.file_name', 'image.location'])
-        ->leftJoin(DB::raw('(select product_id, avg(stars) as avgstars from rating group by product_id) AS temp'), 'temp.product_id','product.product_id')
-        ->leftJoin('image','thumbnail_id', '=', 'image.image_id')
+        $products = Product::select(['product.product_id', 'name', 'price', 'description','view_number','status','pickup_address','pickup_time','created_at','updated_at',  'file_name', 'location'])
+        
+        ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp'),'product.image_id', '=', 'temp.image_id')
         ;
 
         return Datatables::of($products)

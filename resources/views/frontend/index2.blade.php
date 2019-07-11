@@ -506,10 +506,10 @@
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
 						All Products
 					</button>
-					@foreach($directors as $director)
-						@php $classname = str_replace(' ','-', $director->director); @endphp
+					@foreach($categories as $category)
+						@php /*$classname = str_replace(' ','-', $director->director); */ $classname='test';@endphp
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
-						{{$director->director}}
+						{{$category->name}}
 					</button>
 					@endforeach
 
@@ -760,39 +760,37 @@
 
 			
 			<div class="row isotope-grid">
-				@foreach ($movies as $movie)
-					@php $director = str_replace(' ','-',$movie->director); @endphp
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$director}}" data-mid="{{$movie->mID}}">
+				@foreach ($products as $product)
+					@php /*$director = str_replace(' ','-',$product->director); */ $director='test';@endphp
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$director}}" data-mid="{{$product->product_id}}">
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
-							@if($movie->file_name)
-							<img src="{{asset($movie->location)}}/{{$movie->file_name}}" alt="IMG-PRODUCT">
+							@if($product->thumbnail->file_name)
+							<img src="{{asset($product->thumbnail->location)}}/{{$product->thumbnail->file_name}}" alt="IMG-PRODUCT">
 							@else
 							<img src="{{asset('images/thumbnail')}}/default.png" alt="IMG-PRODUCT">
 							@endif
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-mid="{{$movie->mID}}">
+							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-mid="{{$product->product_id}}">
 								Quick View
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<!-- <a href="javascript:void(0)" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 title">
-									{{$movie->title}}
-								</a> -->
+								
 
 								<span class="stext-105 cl3 ">
-									<b class="title">{{$movie->title}}</b>
+									<b class="title">{{$product->name}}</b>
 								</span>
 
 
 								<span class="stext-105 cl3 year">
-									{{$movie->year}}
+									{{$product->price}}
 								</span>
 
 								<span class="stext-105 cl3 director">
-									{{$movie->director}}
+									{{$product->description}}
 								</span>
 							</div>
 

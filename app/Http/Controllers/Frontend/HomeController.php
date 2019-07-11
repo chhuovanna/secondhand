@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 
+use App\product;
+use App\category;
 /**
  * Class HomeController.
  */
@@ -19,7 +21,9 @@ class HomeController extends Controller
 
     public function test()
     {
-        return view('frontend.index2');
+    	$categories = Category::get();
+    	$products = Product::with('thumbnail')->with('category')->skip(0)->take(10)->get();
+        return view('frontend.index2',['products' => $products, 'categories' => $categories]);
     }
 
 
