@@ -16,4 +16,11 @@ class HomeController extends Controller
     {
         return view('frontend.index');
     }
+
+    public function test()
+    {
+        return view('frontend.index2');
+    }
+
+
 }
