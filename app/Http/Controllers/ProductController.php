@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 
 use App\product;
 use App\image;
+use App\category;
 //use App\reviewer;
 //use App\rating;
 use Datatables;
@@ -24,7 +25,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('category.productcreate');
+        $categories = Category::getSelectOptions();
+        return view('category.productcreate', ['categories' => $categories]);
     }
 
 
@@ -39,10 +41,11 @@ class ProductController extends Controller
         $product->status = $request->get('status');
         $product->pickup_address = $request->get('pickup_address');
         $product->pickup_time = $request->get('pickup_time');
+
         //$product->created_at = $request->get('created_at');
         //$product->updated_at = $request->get('updated_at');
-        $product->post_id = $request->get('post_id');
-        $product->image_id = $request->get('image_id');
+        //$product->post_id = $request->get('post_id');
+        //$product->image_id = $request->get('image_id');
 
 
         $validateData = $request->validate([
@@ -84,6 +87,13 @@ class ProductController extends Controller
                     $file->move(public_path($photo->location),$photo->file_name);
                 }
             }
+
+            $category = $request->get('category_id');
+            if(sizeof($category)>0){
+                $product->category()->attach($category);
+            }
+            //dd($category);
+
             return redirect()->route('product.index')->withFlashSuccess('Product is added');
         }
         catch (\Exception $e) {

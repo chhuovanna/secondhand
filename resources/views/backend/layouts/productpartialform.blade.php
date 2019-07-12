@@ -12,6 +12,7 @@ $created_at = $product->created_at;
 $updated_at = $product->updated_at;
 $post_id = $product->post_id;
 $image_id = $product->image_id;
+$category = $product->category;
 
 }else{
 $product_id = null;
@@ -26,6 +27,7 @@ $created_at = null;
 $updated_at = null;
 $post_id = null;
 $image_id = null;
+$category = null;
 }
 @endphp
 <div class="row mt-4">
@@ -72,6 +74,18 @@ $image_id = null;
             </div><!--col-->
         </div><!--form-group-->
 
+        <!-- added by vanna -->
+        <div class="form-group row">
+            {{ html()->label('Category')
+            ->class('col-md-2 form-control-label')
+            ->for('Category') }}
+
+            <div class="col-md-3">
+                
+                {{html()->multiselect('category_id[]',$categories,$category)->class('form-control browser-default custom-select')}}
+            </div><!--col-->
+        </div><!--form-group-->
+
         <div class="form-group row">
             {{ html()->label('Description')
             ->class('col-md-2 form-control-label')
@@ -110,7 +124,7 @@ $image_id = null;
 
 
                 @php $options = ['Available'=>'Available','Sold'=>'Sold','Out of stock'=>'Out of stock']; @endphp
-                {{html()->select('status',$options)->class('form-control browser-default custom-select')}}
+                {{html()->select('status',$options, $status)->class('form-control browser-default custom-select')}}
             </div><!--col-->
         </div><!--form-group-->
 
