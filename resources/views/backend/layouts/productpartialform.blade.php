@@ -14,6 +14,7 @@ $post_id = $product->post_id;
 $image_id = $product->image_id;
 $category = $product->category;
 
+echo '<h4>lalalal</h4>';
 }else{
 $product_id = null;
 $name = null;
@@ -28,6 +29,7 @@ $updated_at = null;
 $post_id = null;
 $image_id = null;
 $category = null;
+echo '<h4>lalalaltoto</h4>';
 }
 @endphp
 <div class="row mt-4">
@@ -82,7 +84,7 @@ $category = null;
 
             <div class="col-md-3">
                 
-                {{html()->multiselect('category_id[]',$categories,$category)->class('form-control browser-default custom-select')}}
+                {{html()->multiselect('category_id[]',$categories,$category)->class('form-control browser-default custom-select')->required()}}
             </div><!--col-->
         </div><!--form-group-->
 
@@ -218,5 +220,29 @@ $category = null;
 
             </div><!--col-->
         </div><!--form-group-->
+
+        <div class="form-group row">
+            {{ html()->label('<b>Add more products in this post</b>')
+                ->class('col-md-3 form-control-label')
+                ->for('add_more') }}
+
+            <div class="col-md-3">
+
+
+                <label class="switch switch-lg switch-label switch-primary">
+                    {{ html()->checkbox('add_more',true)
+                        ->class('form-control switch-input')
+                        ->placeholder('Add more')
+                    }}
+                  
+                  <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                </label>
+
+             
+
+            </div><!--col-->
+        </div><!--form-group-->
+        <input type='hidden' id='post_id' name='post_id' value='{{$post_id}}'>
+
     </div><!--col-->
 </div><!--row-->

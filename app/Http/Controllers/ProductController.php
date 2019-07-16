@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use App\product;
 use App\image;
 use App\category;
+use App\post;
 //use App\reviewer;
 //use App\rating;
 use Datatables;
@@ -18,6 +19,7 @@ use DB;
 
 class ProductController extends Controller
 {
+    protected $productwithpost;
     public function index()
     {
         return view('category.productindex');
@@ -27,6 +29,12 @@ class ProductController extends Controller
     {
         $categories = Category::getSelectOptions();
         return view('category.productcreate', ['categories' => $categories]);
+    }
+
+    public function createwitholdpost()
+    {
+        $categories = Category::getSelectOptions();
+        return view('category.productcreate', ['categories' => $categories, 'product' =>$this->productwithpost]);
     }
 
 
@@ -58,14 +66,32 @@ class ProductController extends Controller
         $thumbnail->file_name = rand(1111,9999).time().'.'.$file->getClientOriginalExtension();
         $thumbnail->location = 'images\thumbnail'; //thumbnail is stored in public/images/thumbnail
         
-        try {
+      /*  try {*/
             $thumbnail->save();
             //movie the file to it's location on server
             $file->move(public_path($thumbnail->location),$thumbnail->file_name);
 
             //thumbnail of movie
             $product->image_id = $thumbnail->image_id;
+
+            if ($request->get('post_id') !== null){
+                $product->post_id = $request->get('post_id');
+            }else{
+                $post = new Post();
+                $product->post_id = $post->post_id;
+            }
+
+            //add seller is missing
+
             $product->save();
+            if($request->get('add_more') == 1){
+
+                $this->productwithpost = new Product();
+                $productwithpost->post_id = $product->post_id;
+                $productwithpost->pickup_address = $product->pickup_address;
+                $productwithpost->pickup_time = $product->pickup_time;
+                return redirect()->route('product.create.with.oldpost')->withFlashSuccess('Product is added');
+            }
 
             //test if user has upload other photos or not
             if($request->hasFile('photos')){
@@ -92,17 +118,20 @@ class ProductController extends Controller
             if(sizeof($category)>0){
                 $product->category()->attach($category);
             }
+
+            
+
             //dd($category);
 
             return redirect()->route('product.index')->withFlashSuccess('Product is added');
-        }
+       /* }
         catch (\Exception $e) {
             return redirect()
             ->back()
             ->withInput($request->all())
             ->withFlashDanger("Product can't be added. ". $e->getMessage());
 
-        }
+        }*/
     }
     public function show($id) {
         echo 'showlalal';
@@ -269,16 +298,17 @@ class ProductController extends Controller
 
     public function getproduct(){
         //$movies = Movie::select(['mID', 'title', 'director', 'year']);
-        $products = Product::select(['product.product_id', 'name', 'price', 'description','view_number','status','pickup_address','pickup_time','created_at','updated_at',  'file_name', 'location'])
+        $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price', 'description','view_number','status','pickup_address','pickup_time','created_at','updated_at',  'file_name', 'location'])
         
         ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp'),'product.image_id', '=', 'temp.image_id')
+        ->with('category');
         ;
 
         return Datatables::of($products)
                         ->addColumn('action', function ($product) {
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
-                                                $html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;
+                                                /*$html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;*/
                                                 
                                                 return $html;
                                             })
