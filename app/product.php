@@ -29,14 +29,18 @@ class product extends Model
     }
 
 
-    public function photos(){
-        return $this->hasMany('App\image','product_id','product_id');
+    public function photo(){
+        return $this->belongsTo('App\image','image_id','image_id');
     }
 
     public function thumbnail(){
-        return $this->belongsTo('App\image','thumbnail_id','image_id');
+        return $this->belongsTo('App\image','image_id','image_id');
     }
 
+    public function featured_product()//add function featured_product
+    {
+        return $this->hasMany('App\featured_product','product_id','product_id');
+    }
 
 
 
