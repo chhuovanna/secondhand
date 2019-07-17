@@ -28,4 +28,15 @@ class category extends Model
         return $categorys;
 
     }
+
+    public static function getSelectOptions(){
+        $rows = Category::all();
+        $result = [];
+        foreach ($rows as $row) {
+            $id       = $row->category_id;
+            $name     = $row->name;
+            $result[$id] = "$id:$name";
+        }
+        return $result;
+    }
 }

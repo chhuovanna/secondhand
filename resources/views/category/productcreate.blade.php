@@ -32,13 +32,24 @@
             </div><!--card-footer-->
         </div><!--card-->
     </div>
+
     {{ html()->form()->close() }}
+
+{{ html()->form()->close() }}
+
 @endsection
 
 @push('after-scripts')
+
 
     <script>
 
     </script>
 
+=======
+<script>
+    $('[name="category_id[]"]').select2();
+</script>
+
+>>>>>>> c5b4f9df4d3dafa7eeb688201553b1ab112464aa
 @endpush

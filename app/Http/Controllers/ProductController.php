@@ -271,8 +271,8 @@ EOF;
         }
     }
     public function getmovie(){
-        //$products = Product::select(['mID', 'title', 'director', 'year']);
-        $products = Product::select(['product.product_id', 'name','price', 'description', 'view_number','status','pickup_address','pickup_time','created_at','update_at','post_id','image_id', 'avgstars', 'image.file_name', 'image.location'])
+        //$movies = Movie::select(['mID', 'title', 'director', 'year']);
+        $movies = Movie::select(['product.product_id', 'name','price', 'description', 'view_number','status','pickup_address','pickup_time','created_at','update_at','post_id','image_id', 'avgstars', 'image.file_name', 'image.location'])
             ->leftJoin(DB::raw('(select product_id, avg(stars) as avgstars from rating group by product_id) as temp'), 'temp.product_id','product.product_id')
             ->leftJoin('image','thumbnail_id', '=', 'image.image_id')
         ;
@@ -280,7 +280,7 @@ EOF;
             ->addColumn('action', function ($product) {
                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
-
+                $html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;
 
                 return $html;
             })

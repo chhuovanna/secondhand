@@ -25,7 +25,13 @@
 
                             <th>Id</th>
 
+
                             <th>Name</th>
+
+                                <th>Image</th>
+
+                                <th>Name</th>
+
 
                             <th>Price</th>
 
@@ -35,12 +41,21 @@
 
                             <th>Status</th>
 
+
                             <th>Pickup Time</th>
                             <th>Pickup Adress</th>
                             <th>Created At</th>
                             <th>Updated At</th>
 
                             <th>Action</th>
+
+                                <th>Pickup Time</th> 
+                                <th>Pickup Adress</th>
+                                <th>Category</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
+                                <th>Action</th>
+
 
                         </tr>
 
@@ -70,6 +85,7 @@
 
                     {data: 'product_id', name: 'product_id'},
 
+
                     {data: 'file_name', name: 'image',orderable: false, searchable: false,
                         render:function ( data, type, row, meta ) {
                             if (data){
@@ -80,6 +96,17 @@
                             }
                         }
                     },
+
+            {data: 'file_name', name: 'image',orderable: false, searchable: false,
+                render:function ( data, type, row, meta ) {
+                    if (data){
+                        var source = "{{ asset('images/thumbnail') }}"+"/"+data;
+                        return '<img src="'+source+'" height="42" width="42" class="thumbnail img-thumbnail" data-id="'+row.product_id+'" style="cursor:pointer">';
+                    }else{
+                        return '<i class="fa fa-film fa-3x" aria-hidden="true"></i>';
+                    }
+                }
+            },
 
                     {data:'name',name:'name'},
                     {data:'price',name:'price'},
@@ -92,6 +119,7 @@
 
                     {data: 'view_number', name: 'view_number'},
 
+
                     {data: 'status', name: 'status',
                         render:function ( data, type, row ) {
                             return type === 'display' && data && data.length > 50 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data;
@@ -101,6 +129,40 @@
                     {data:'created_at',name:'created_at'},
                     {data:'updated_at',name:'updated_at'},
                     {data:'action', name: 'action', orderable: false, searchable: false},
+
+            {data: 'status', name: 'status',
+            render:function ( data, type, row ) {
+                    return type === 'display' && data && data.length > 50 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data; 
+                },
+            },
+            {data:'pickup_time', name:'pickup_address',
+            render:function ( data, type, row ) {
+                    return type === 'display' && data && data.length > 50 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data; 
+                },
+            
+            },
+            {data:'pickup_address', name:'pickup_address',
+
+            render:function ( data, type, row ) {
+                    return type === 'display' && data && data.length > 50 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data; 
+                },
+            },
+            {data:'category', name:'category',
+             render:function ( data, type, row) {
+                    var text="";
+                    data.forEach(function(item){
+                        text = text + ""+item.name+",&nbsp;";
+                    });
+                    return  type === 'display' && text && text.length > 50 ? '<span title="'+text+'">'+text.substr( 0, 20 )+'...</span>' : text;
+                },
+                orderable: false,
+                searchable: false
+            },
+           /* {data:'created_at',name:'created_at'},
+            {data:'updated_at',name:'updated_at'},*/
+            {data:'action', name: 'action', orderable: false, searchable: false},
+        
+
 
 
                 ],

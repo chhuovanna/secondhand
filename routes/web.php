@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LanguageController;
 
+
 /*
  * Global Routes
  * Routes that are used between both frontend and backend.
@@ -49,6 +50,8 @@ Route::get('admin/category/getproduct', 'ProductController@getproduct')->name('p
 //Route::post('signup','Sign_upController@postSignup');
 Route::get('admin/category/getcategorymore', 'CategoryController@getcategorymore');
 Route::get('admin/category/getsellermore', 'SellerController@getsellermore');
+Route::get('admin/product/createwithpost', 'ProductController@createwitholdpost')->name('product.create.with.oldpost');;
+
 
 Route::resource('admin/category','CategoryController');
 Route::resource('admin/seller','SellerController');
