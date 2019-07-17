@@ -249,7 +249,7 @@ class CategoryController extends Controller
             ->addColumn('action', function ($category) {
                 $html = '<a href="'.route('category.edit', ['category_id' => $category->category_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
                 $html .= '<a data-id="'.$category->category_id.'" class="btn btn-danger btn-sm category-delete"><i class="far fa-trash-alt"></i></i> Delete</a>&nbsp;&nbsp;&nbsp;' ;
-                $html .= '<a data-id="'.$category->category_id.'"  class="btn btn-info btn-sm category-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;
+
                 return $html;
             })
             ->make(true);

@@ -32,13 +32,13 @@
             </div><!--card-footer-->
         </div><!--card-->
     </div>
-        {{ html()->form()->close() }}
-        @endsection
+    {{ html()->form()->close() }}
+@endsection
 
-        @push('after-scripts')
+@push('after-scripts')
 
-            <script>
+    <script>
 
-            </script>
+    </script>
 
-    @endpush
+@endpush

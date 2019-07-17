@@ -186,6 +186,21 @@ $image_id = null;
 
             </div><!--col-->
         </div><!--form-group-->
+    </div><!--col-->
+    @if(isset($source))
+
+        <div class="old-thumbnail">
+
+            <div class="alert alert-primary alert-dismissible fade show" role="alert" >
+                <input type="hidden" name="old_thumbnail" value="1">
+                <img src="{{$source}}"  class="img-thumbnail" width="100px" height="100px">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    @endif
+</div><!--form-group-->
 
         <div class="form-group row">
             {{ html()->label('Photos')
