@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class category extends Model
+class Category extends Model
 {
     //
     protected $table ='category';
@@ -12,11 +12,11 @@ class category extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\product','product_category','category_id','product_id');//not seller ; add intermediate table and key name
+        return $this->belongsToMany('App\Product','product_category','category_id','product_id');//not seller ; add intermediate table and key name
     }
     public function thumbnail()
     {
-        return $this->belongsTo('App\image','image_id','image_id');
+        return $this->belongsTo('App\Image','image_id','image_id');
     }
     public static function getCategorysWithImage($offset=0){
         $categorys = Category::select(['category_id', 'name', 'description'

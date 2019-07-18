@@ -38,6 +38,15 @@
 @push('after-scripts')
 
 <script>
+    $('[name="category_id[]"]').select2({width:'100%'});
+
+    $(document).ready(function(){
+        $(document).off('change','#thumbnail_id');
+        $(document).on('change','#thumbnail_id', function(){
+            $('.old-thumbnail').remove();
+        });
+
+    });
 
 </script>
 

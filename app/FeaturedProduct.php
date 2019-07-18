@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class featured_product extends Model
+class FeaturedProduct extends Model
 {
     //
     public function product()
     {
-        return $this->belongsTo('App\product','product_id','product_id');
+        return $this->belongsTo('App\Product','product_id','product_id');
     }
 }

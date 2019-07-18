@@ -1,36 +1,56 @@
 @php
+// form called by edit operation
 if (isset($product)){
-$product_id = $product->product_id;
-$name = $product->name;
-$price = $product->price;
-$description = $product->description;
-$view_number = $product->view_number;
-$status = $product->status;
-$pickup_address = $product->pickup_address;
-$pickup_time = $product->pickup_time;
-$created_at = $product->created_at;
-$updated_at = $product->updated_at;
-$post_id = $product->post_id;
-$image_id = $product->image_id;
-$category = $product->category;
+    // dd($product->toArray());
+    $product_id = $product->product_id;
+    $name = $product->name;
+    $price = $product->price;
+    $description = $product->description;
+    $view_number = $product->view_number;
+    $status = $product->status;
+    $pickup_address = $product->pickup_address;
+    $pickup_time = $product->pickup_time;
+    $created_at = $product->created_at;
+    $updated_at = $product->updated_at;
+    $image_id = $product->image_id;
+    $category = array();
+    foreach ($product->category as $ele) {
+        array_push($category,$ele->category_id);
+    }
 
-echo '<h4>lalalal</h4>';
-}else{
-$product_id = null;
-$name = null;
-$price = null;
-$description = null;
-$view_number = null;
-$status = null;
-$pickup_address  = null;
-$pickup_time  = null;
-$created_at = null; 
-$updated_at = null;
-$post_id = null;
-$image_id = null;
-$category = null;
-echo '<h4>lalalaltoto</h4>';
+    if(isset($product->thumbnail)){
+        $source = asset(str_replace('\\','/',$product->thumbnail->location)) . "/" . $product->thumbnail->file_name;
+    }
+
+
+    if(isset($product->photo)){
+        foreach($product->photo as $photo){
+            $photos_source[$photo->image_id] = asset(str_replace('\\','/',$photo->location)) . "/" . $photo->file_name;
+        }
 }
+
+// form is called by create operation
+}else{
+    $product_id = null;
+    $name = null;
+    $price = null;
+    $description = null;
+    $view_number = null;
+    $status = null;
+    $created_at = null;
+    $updated_at = null;
+    $image_id = null;
+    $category = null;
+
+        // form is called by create operation to add more product in the same post
+        if(!isset($post_id)){
+            $pickup_address = null;
+            $pickup_time = null;
+            $post_id = null;
+        }
+
+    }
+    // print_r($category);
 @endphp
 <div class="row mt-4">
     <div class="col">
@@ -83,8 +103,8 @@ echo '<h4>lalalaltoto</h4>';
             ->for('Category') }}
 
             <div class="col-md-3">
-                
-                {{html()->multiselect('category_id[]',$categories,$category)->class('form-control browser-default custom-select')->required()}}
+
+                {{html()->multiselect('category_id[]',$categories,old('category_id') ?: $category?:[])->class('form-control browser-default custom-select')->required()}}
             </div><!--col-->
         </div><!--form-group-->
 
@@ -185,7 +205,7 @@ echo '<h4>lalalaltoto</h4>';
             </div><!--col-->
         </div><!--form-group-->
 
-               
+
         <div class="form-group row">
             {{ html()->label('Thumbnail')
                 ->class('col-md-2 form-control-label')
@@ -197,10 +217,27 @@ echo '<h4>lalalaltoto</h4>';
             {{ html()->input('file','thumbnail_id')
                     ->class('form-control')
                     ->placeholder('Thumbnail')
-                    ->required()
+
                 }}
 
             </div><!--col-->
+            {{-- the form is called by edit operation and product has thumbnail --}}
+            @if(isset($source))
+
+            <div class="old-thumbnail">
+
+                 <div class="alert alert-primary alert-dismissible fade show" role="alert" >
+                     <input type="hidden" name="old_thumbnail" value="1">
+                   <img src="{{$source}}"  class="img-thumbnail" width="100px" height="100px">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                   </button>
+                 </div>
+             </div>
+             @endif
+
+
+
         </div><!--form-group-->
 
         <div class="form-group row">
@@ -219,30 +256,53 @@ echo '<h4>lalalaltoto</h4>';
                     }}
 
             </div><!--col-->
+
+            {{-- the form is called by edit operation, and product has photo --}}
+            @if(isset($photos_source))
+
+           <div class="old-photo">
+                @foreach ($photos_source as $image_id => $photo_source)
+                <div class="alert alert-primary alert-dismissible fade show" role="alert" >
+                    <input type="hidden" name="old_photos[]" value={{$image_id}}>
+                  <img src="{{$photo_source}}"  class="img-thumbnail" width="100px" height="100px">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                @endforeach
+            </div>
+            @endif
+
+
+
+
         </div><!--form-group-->
 
+        {{-- when create not update --}}
+        @if(!isset($product))
         <div class="form-group row">
-            {{ html()->label('<b>Add more products in this post</b>')
-                ->class('col-md-3 form-control-label')
+            {{ html()->label('<b>Add more products in this post, the pickup address and time will be the same as this product</b>')
+                ->class('col-md-4 form-control-label')
                 ->for('add_more') }}
 
             <div class="col-md-3">
 
 
                 <label class="switch switch-lg switch-label switch-primary">
-                    {{ html()->checkbox('add_more',true)
+                    {{ html()->checkbox('add_more',false)
                         ->class('form-control switch-input')
                         ->placeholder('Add more')
                     }}
-                  
+
                   <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
                 </label>
 
-             
+
 
             </div><!--col-->
         </div><!--form-group-->
-        <input type='hidden' id='post_id' name='post_id' value='{{$post_id}}'>
 
+        <input type='hidden' id='post_id' name='post_id' value='{{$post_id}}'>
+        @endif
     </div><!--col-->
 </div><!--row-->

@@ -8,6 +8,11 @@ Breadcrumbs::for('product.create', function ($trail) {
     $trail->push( 'Create product', route('product.create'));
 });
 
+Breadcrumbs::for('product.create.with.oldpost', function ($trail) {
+    $trail->parent('product.index');
+    $trail->push( 'Create product', route('product.create'));
+});
+
 Breadcrumbs::for('product.edit', function ($trail,$id) {
     $trail->parent('product.index');
     $trail->push( 'Create product', route('product.edit',$id));

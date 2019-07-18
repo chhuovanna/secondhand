@@ -38,7 +38,7 @@
 @push('after-scripts')
 
 <script>
-    $('[name="category_id[]"]').select2();
+    $('[name="category_id[]"]').select2({width:'100%'});
 </script>
 
 @endpush

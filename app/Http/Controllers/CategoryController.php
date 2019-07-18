@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; //for deleting file
-use App\category;
-use App\image; //need to use it to call new Image();
-use App\seller;
-use App\product;
+use App\Category;
+use App\Image; //need to use it to call new Image();
+use App\Seller;
+use App\Product;
 use Datatables;
 use DB;
 
