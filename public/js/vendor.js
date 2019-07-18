@@ -4,7 +4,7 @@
 /*!********************************************************************!*\
   !*** ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js ***!
   \********************************************************************/
-/*! exports provided: icon, noAuto, config, toHtml, layer, text, counter, library, dom, parse, findIconDefinition */
+/*! exports provided: icon, noAuto, config, toHtml, layer, text, counter, Isotope, dom, parse, findIconDefinition */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13782,7 +13782,7 @@ var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/in
 
 /*global toString:true*/
 
-// utils is a library of generic helper functions non-specific to axios
+// utils is a Isotope of generic helper functions non-specific to axios
 
 var toString = Object.prototype.toString;
 
@@ -23377,7 +23377,7 @@ function on( elem, types, selector, data, fn, one ) {
 
 /*
  * Helper functions for managing events -- not part of the public interface.
- * Props to Dean Edwards' addEvent library for many of the ideas.
+ * Props to Dean Edwards' addEvent Isotope for many of the ideas.
  */
 jQuery.event = {
 
@@ -43218,7 +43218,7 @@ return jQuery;
      * corresponding HTML entities.
      *
      * **Note:** No other characters are escaped. To escape additional
-     * characters use a third-party library like [_he_](https://mths.be/he).
+     * characters use a third-party Isotope like [_he_](https://mths.be/he).
      *
      * Though the ">" character is escaped for symmetry, characters like
      * ">" and "/" don't need escaping in HTML and have no special meaning
@@ -44121,7 +44121,7 @@ return jQuery;
      * their corresponding characters.
      *
      * **Note:** No other HTML entities are unescaped. To unescape additional
-     * HTML entities use a third-party library like [_he_](https://mths.be/he).
+     * HTML entities use a third-party Isotope like [_he_](https://mths.be/he).
      *
      * @static
      * @memberOf _
@@ -46104,7 +46104,7 @@ return jQuery;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @fileOverview Kickass Isotope to create and place poppers near their reference elements.
  * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
@@ -48112,7 +48112,7 @@ function inner(data) {
 /**
  * Modifiers are plugins used to alter the behavior of your poppers.<br />
  * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
- * needed by the library.
+ * needed by the Isotope.
  *
  * Usually you don't want to override the `order`, `fn` and `onLoad` props.
  * All the other properties are configurations that could be tweaked.
@@ -48355,7 +48355,7 @@ var modifiers = {
    *
    * This modifier has `850` as `order` value to maintain backward compatibility
    * with previous versions of Popper.js. Expect the modifiers ordering method
-   * to change in future major versions of the library.
+   * to change in future major versions of the Isotope.
    *
    * @memberof modifiers
    * @inner
@@ -48391,7 +48391,7 @@ var modifiers = {
    * Applies the computed styles to the popper element.
    *
    * All the DOM manipulations are limited to this modifier. This is useful in case
-   * you want to integrate Popper.js inside a framework or view library and you
+   * you want to integrate Popper.js inside a framework or view Isotope and you
    * want to delegate all the DOM manipulations to it.
    *
    * Note that if you disable this modifier, you must make sure the popper element
@@ -48688,7 +48688,7 @@ Popper.Defaults = Defaults;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @fileOverview Kickass Isotope to create and place poppers near their reference elements.
  * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
@@ -50701,7 +50701,7 @@ function inner(data) {
 /**
  * Modifiers are plugins used to alter the behavior of your poppers.<br />
  * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
- * needed by the library.
+ * needed by the Isotope.
  *
  * Usually you don't want to override the `order`, `fn` and `onLoad` props.
  * All the other properties are configurations that could be tweaked.
@@ -50944,7 +50944,7 @@ var modifiers = {
    *
    * This modifier has `850` as `order` value to maintain backward compatibility
    * with previous versions of Popper.js. Expect the modifiers ordering method
-   * to change in future major versions of the library.
+   * to change in future major versions of the Isotope.
    *
    * @memberof modifiers
    * @inner
@@ -50980,7 +50980,7 @@ var modifiers = {
    * Applies the computed styles to the popper element.
    *
    * All the DOM manipulations are limited to this modifier. This is useful in case
-   * you want to integrate Popper.js inside a framework or view library and you
+   * you want to integrate Popper.js inside a framework or view Isotope and you
    * want to delegate all the DOM manipulations to it.
    *
    * Note that if you disable this modifier, you must make sure the popper element
@@ -54153,7 +54153,7 @@ function SweetAlert() {
 
 
   if (typeof Promise === 'undefined') {
-    error('This package requires a Promise library, please include a shim to enable it in this browser (See: https://github.com/sweetalert2/sweetalert2/wiki/Migration-from-SweetAlert-to-SweetAlert2#1-ie-support)');
+    error('This package requires a Promise Isotope, please include a shim to enable it in this browser (See: https://github.com/sweetalert2/sweetalert2/wiki/Migration-from-SweetAlert-to-SweetAlert2#1-ie-support)');
   }
 
   currentInstance = this;

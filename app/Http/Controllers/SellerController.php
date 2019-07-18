@@ -246,7 +246,6 @@ class SellerController extends Controller
             ->addColumn('action', function ($seller) {
                 $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
                 $html .= '<a data-id="'.$seller->seller_id.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i></i> Delete</a>&nbsp;&nbsp;&nbsp;' ;
-                $html .= '<a data-id="'.$seller->seller_id.'"  class="btn btn-info btn-sm seller-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>&nbsp;&nbsp;&nbsp;' ;
 
                 return $html;
             })

@@ -74,30 +74,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('category')) }}" href="{{ url('admin/category/showrate') }}">
-                    View Category
-                </a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller')) }}" href="{{ url('admin/seller') }}">
                     List Seller
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller/create')) }}" href="{{ url('admin/seller/create') }}">
-                    Add seller
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller')) }}" href="{{ url('admin/seller/sign_up') }}">
-                    Seller sign_up
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller/')) }}" href="{{ url('admin/seller/view') }}">
-                    Seller view profile
                 </a>
             </li>
 

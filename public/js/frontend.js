@@ -4,7 +4,7 @@
 /*!********************************************************************!*\
   !*** ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js ***!
   \********************************************************************/
-/*! exports provided: icon, noAuto, config, toHtml, layer, text, counter, library, dom, parse, findIconDefinition */
+/*! exports provided: icon, noAuto, config, toHtml, layer, text, counter, Isotope, dom, parse, findIconDefinition */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17478,7 +17478,7 @@ function on( elem, types, selector, data, fn, one ) {
 
 /*
  * Helper functions for managing events -- not part of the public interface.
- * Props to Dean Edwards' addEvent library for many of the ideas.
+ * Props to Dean Edwards' addEvent Isotope for many of the ideas.
  */
 jQuery.event = {
 
@@ -23094,7 +23094,7 @@ return jQuery;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @fileOverview Kickass Isotope to create and place poppers near their reference elements.
  * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
@@ -25102,7 +25102,7 @@ function inner(data) {
 /**
  * Modifiers are plugins used to alter the behavior of your poppers.<br />
  * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
- * needed by the library.
+ * needed by the Isotope.
  *
  * Usually you don't want to override the `order`, `fn` and `onLoad` props.
  * All the other properties are configurations that could be tweaked.
@@ -25345,7 +25345,7 @@ var modifiers = {
    *
    * This modifier has `850` as `order` value to maintain backward compatibility
    * with previous versions of Popper.js. Expect the modifiers ordering method
-   * to change in future major versions of the library.
+   * to change in future major versions of the Isotope.
    *
    * @memberof modifiers
    * @inner
@@ -25381,7 +25381,7 @@ var modifiers = {
    * Applies the computed styles to the popper element.
    *
    * All the DOM manipulations are limited to this modifier. This is useful in case
-   * you want to integrate Popper.js inside a framework or view library and you
+   * you want to integrate Popper.js inside a framework or view Isotope and you
    * want to delegate all the DOM manipulations to it.
    *
    * Note that if you disable this modifier, you must make sure the popper element
@@ -25678,7 +25678,7 @@ Popper.Defaults = Defaults;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @fileOverview Kickass Isotope to create and place poppers near their reference elements.
  * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
@@ -27691,7 +27691,7 @@ function inner(data) {
 /**
  * Modifiers are plugins used to alter the behavior of your poppers.<br />
  * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
- * needed by the library.
+ * needed by the Isotope.
  *
  * Usually you don't want to override the `order`, `fn` and `onLoad` props.
  * All the other properties are configurations that could be tweaked.
@@ -27934,7 +27934,7 @@ var modifiers = {
    *
    * This modifier has `850` as `order` value to maintain backward compatibility
    * with previous versions of Popper.js. Expect the modifiers ordering method
-   * to change in future major versions of the library.
+   * to change in future major versions of the Isotope.
    *
    * @memberof modifiers
    * @inner
@@ -27970,7 +27970,7 @@ var modifiers = {
    * Applies the computed styles to the popper element.
    *
    * All the DOM manipulations are limited to this modifier. This is useful in case
-   * you want to integrate Popper.js inside a framework or view library and you
+   * you want to integrate Popper.js inside a framework or view Isotope and you
    * want to delegate all the DOM manipulations to it.
    *
    * Note that if you disable this modifier, you must make sure the popper element
@@ -28717,7 +28717,7 @@ exports._unrefActive = exports.active = function(item) {
 __webpack_require__(/*! setimmediate */ "./node_modules/setimmediate/setImmediate.js");
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
+// `setimmediate` Isotope.
 exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
                        (typeof global !== "undefined" && global.setImmediate) ||
                        (this && this.setImmediate);
@@ -35886,7 +35886,7 @@ function model (
       "<" + (el.tag) + " v-model=\"" + value + "\">: " +
       "v-model is not supported on this element type. " +
       'If you are working with contenteditable, it\'s recommended to ' +
-      'wrap a library dedicated for that purpose inside a custom component.'
+      'wrap a Isotope dedicated for that purpose inside a custom component.'
     );
   }
 
@@ -40085,8 +40085,8 @@ window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a;
 window._ = lodash__WEBPACK_IMPORTED_MODULE_0___default.a; // Lodash
 
 /**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
+ * We'll load the axios HTTP Isotope which allows us to easily issue requests
+ * to our Laravel back-end. This Isotope automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 

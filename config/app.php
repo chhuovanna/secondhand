@@ -100,7 +100,7 @@ return [
     | Faker Locale
     |--------------------------------------------------------------------------
     |
-    | This locale will be used by the Faker PHP library when generating fake
+    | This locale will be used by the Faker PHP Isotope when generating fake
     | data for your database seeds. For example, this will be used to get
     | localized telephone numbers, street address information and more.
     |
@@ -113,7 +113,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | The PHP locale determines the default locale that will be used
-    | by the Carbon library when setting Carbon's localization.
+    | by the Carbon Isotope when setting Carbon's localization.
     |
     */
     'locale_php' => env('APP_LOCALE_PHP', 'en_US'),

@@ -432,7 +432,7 @@
   $export.B = 16;  // bind
   $export.W = 32;  // wrap
   $export.U = 64;  // safe
-  $export.R = 128; // real proto method for `library`
+  $export.R = 128; // real proto method for `Isotope`
   var _export = $export;
 
   _export({
@@ -887,7 +887,7 @@
     if ((!_library || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
       _hide(proto, ITERATOR, $default);
     }
-    // Plug for library
+    // Plug for Isotope
     _iterators[NAME] = $default;
     _iterators[TAG] = returnThis;
     if (DEFAULT) {
@@ -2318,7 +2318,7 @@
 /*!********************************************************************!*\
   !*** ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js ***!
   \********************************************************************/
-/*! exports provided: icon, noAuto, config, toHtml, layer, text, counter, library, dom, parse, findIconDefinition */
+/*! exports provided: icon, noAuto, config, toHtml, layer, text, counter, Isotope, dom, parse, findIconDefinition */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14806,7 +14806,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	"use strict";
 
 	/**
-	 * DataTables is a plug-in for the jQuery Javascript library. It is a highly
+	 * DataTables is a plug-in for the jQuery Javascript Isotope. It is a highly
 	 * flexible tool, based upon the foundations of progressive enhancement,
 	 * which will add advanced interaction controls to any HTML table. For a
 	 * full list of features please refer to
@@ -39936,7 +39936,7 @@ function on( elem, types, selector, data, fn, one ) {
 
 /*
  * Helper functions for managing events -- not part of the public interface.
- * Props to Dean Edwards' addEvent library for many of the ideas.
+ * Props to Dean Edwards' addEvent Isotope for many of the ideas.
  */
 jQuery.event = {
 
@@ -47822,7 +47822,7 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @fileOverview Kickass Isotope to create and place poppers near their reference elements.
  * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
@@ -49830,7 +49830,7 @@ function inner(data) {
 /**
  * Modifiers are plugins used to alter the behavior of your poppers.<br />
  * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
- * needed by the library.
+ * needed by the Isotope.
  *
  * Usually you don't want to override the `order`, `fn` and `onLoad` props.
  * All the other properties are configurations that could be tweaked.
@@ -50073,7 +50073,7 @@ var modifiers = {
    *
    * This modifier has `850` as `order` value to maintain backward compatibility
    * with previous versions of Popper.js. Expect the modifiers ordering method
-   * to change in future major versions of the library.
+   * to change in future major versions of the Isotope.
    *
    * @memberof modifiers
    * @inner
@@ -50109,7 +50109,7 @@ var modifiers = {
    * Applies the computed styles to the popper element.
    *
    * All the DOM manipulations are limited to this modifier. This is useful in case
-   * you want to integrate Popper.js inside a framework or view library and you
+   * you want to integrate Popper.js inside a framework or view Isotope and you
    * want to delegate all the DOM manipulations to it.
    *
    * Note that if you disable this modifier, you must make sure the popper element
@@ -50406,7 +50406,7 @@ Popper.Defaults = Defaults;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @fileOverview Kickass Isotope to create and place poppers near their reference elements.
  * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
@@ -52419,7 +52419,7 @@ function inner(data) {
 /**
  * Modifiers are plugins used to alter the behavior of your poppers.<br />
  * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
- * needed by the library.
+ * needed by the Isotope.
  *
  * Usually you don't want to override the `order`, `fn` and `onLoad` props.
  * All the other properties are configurations that could be tweaked.
@@ -52662,7 +52662,7 @@ var modifiers = {
    *
    * This modifier has `850` as `order` value to maintain backward compatibility
    * with previous versions of Popper.js. Expect the modifiers ordering method
-   * to change in future major versions of the library.
+   * to change in future major versions of the Isotope.
    *
    * @memberof modifiers
    * @inner
@@ -52698,7 +52698,7 @@ var modifiers = {
    * Applies the computed styles to the popper element.
    *
    * All the DOM manipulations are limited to this modifier. This is useful in case
-   * you want to integrate Popper.js inside a framework or view library and you
+   * you want to integrate Popper.js inside a framework or view Isotope and you
    * want to delegate all the DOM manipulations to it.
    *
    * Note that if you disable this modifier, you must make sure the popper element
@@ -53664,7 +53664,7 @@ S2.define('jquery',[],function () {
 
   if (_$ == null && console && console.error) {
     console.error(
-      'Select2: An instance of jQuery or a jQuery-compatible library was not ' +
+      'Select2: An instance of jQuery or a jQuery-compatible Isotope was not ' +
       'found. Make sure that you are including jQuery before Select2 on your ' +
       'web page.'
     );
@@ -59251,8 +59251,8 @@ window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a;
 window._ = lodash__WEBPACK_IMPORTED_MODULE_0___default.a; // Lodash
 
 /**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
+ * We'll load the axios HTTP Isotope which allows us to easily issue requests
+ * to our Laravel back-end. This Isotope automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
