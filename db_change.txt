@@ -2,6 +2,9 @@
 #change altribute name in seller
 alter table seller change instant_massage_account to message_account varchar(191);
 alter table seller add user_id  int(10) unsigned, add foreign key (user_id) references users (id);
+
 alter table post drop postedby, add seller_id int(10) unsigned , add foreign key (seller_id) references seller (seller_id);
-INSERT INTO `seller` (`seller_id`, `name`, `address`, `email`, `phone`, `message_account`, `type`, `created_at`, `updated_at`, `image_id`, `user_id`) 
+INSERT INTO `seller` (`seller_id`, `name`, `address`, `email`, `phone`, `message_account`, `type`, `created_at`, `updated_at`, `image_id`, `user_id`)
 	VALUES (null, 'Admin seller', 'PP', NULL, '01233432', 'test', 'Individual', '2019-06-07 08:13:10', '2019-07-16 20:30:17', null, 1);
+#18-07-19
+#on delelete cascade product_category

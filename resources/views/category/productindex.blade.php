@@ -135,28 +135,37 @@
         });
         $(document).off('click','.thumbnail');
         $(document).on('click','.thumbnail' , function(){
-            // alert( $(this).data('id'));
+           //  alert( $(this).data('id'));
             $.ajax({
                 type:"GET",
-                url:"product/getphotos",
+                url:"product/getphotos/",
                 data:{ product_id: $(this).data('id')},
                 success: function (data) {
+
+                    console.log(data);
                     if(data[0] == 1){
 
                         $('.col').append(data[1]); //insert list of photos for viewing
+
                         var $lg = $("#lightgallery");
+
+                        console.log($lg);
+
                         //apply the lightgallery to the list of photos
                         $lg.lightGallery({
                             mode: 'lg-slide-circular',
+                            mousewheel:true,
                         });
+
                         //after closing the photo viewer, delete the list of photos
                         $lg.on('onCloseAfter.lg', function (event){
                             $(this).data('lightGallery').destroy(true);
                             $('#lightgallery').remove();
                         });
+
                         //automatically click on the first photo for viewing
                         $('.start').click();
-                        console.log(data[1]);
+
                     }
                 },
                 error: function(data){

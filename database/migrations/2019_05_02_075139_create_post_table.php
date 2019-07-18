@@ -17,8 +17,8 @@ class CreatePostTable extends Migration
             $table->increments('post_id');//->nullable();
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->integer('postedby')->unsigned();//->nullable();
-            $table->foreign('postedby')->references('seller_id')->on('seller');
+            $table->integer('seller_id')->unsigned();//->nullable();
+            $table->foreign('seller_id')->references('seller_id')->on('seller');
         });
     }
 

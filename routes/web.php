@@ -51,6 +51,7 @@ Route::get('admin/category/getproduct', 'ProductController@getproduct')->name('p
 Route::get('admin/category/getcategorymore', 'CategoryController@getcategorymore');
 Route::get('admin/category/getsellermore', 'SellerController@getsellermore');
 Route::get('admin/product/createwithpost/{post}', 'ProductController@createwitholdpost')->name('product.create.with.oldpost');;
+Route::get('admin/product/getphotos', 'ProductController@getphotos');
 
 Route::resource('admin/category','CategoryController');
 Route::resource('admin/seller','SellerController');

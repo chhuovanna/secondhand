@@ -18,7 +18,7 @@ class CreateProductCategoryTable extends Migration
             $table->unsignedInteger('category_id');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->foreign('product_id')->references('product_id')->on('product');
+            $table->foreign('product_id')->references('product_id')->on('product')->onDelete('cascade');
             $table->foreign('category_id')->references('category_id')->on('category');
             //add primary key
             $table->primary(['product_id','category_id']);
