@@ -149,8 +149,6 @@
 
                         var $lg = $("#lightgallery");
 
-                        console.log($lg);
-
                         //apply the lightgallery to the list of photos
                         $lg.lightGallery({
                             mode: 'lg-slide-circular',
