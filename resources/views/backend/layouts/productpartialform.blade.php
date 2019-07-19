@@ -85,7 +85,7 @@ if (isset($product)){
                 {{ html()->input('number','price',$price)
                 ->class('form-control')
                 ->placeholder('price')
-                ->attributes(['min'=> 0, 'max' => 9999])
+                ->attributes(['min'=> 0, 'step'=>'any' ])
                 ->required()
                 }}
             </div><!--col-->

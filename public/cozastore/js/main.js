@@ -536,7 +536,7 @@
     $(document).off('click','.sort-by');
     $(document).on('click','.sort-by', function(){
         var sort_by = $(this).data('sort');
-        var old_sort_by = $('.filter-link-active');
+        var old_sort_by = $('.filter-link-active.sort-by');
         old_sort_by.removeClass('filter-link-active');
         $(this).addClass('filter-link-active');
 
@@ -569,7 +569,7 @@
 /*===================================================================[ filter by ]*/
     $(document).off('click','.filter-by');
     $(document).on('click','.filter-by', function(){
-        var old_active = $('.filter-link-active');
+        var old_active = $('.filter-link-active.filter-by');
         
 
         $(this).addClass('filter-link-active');

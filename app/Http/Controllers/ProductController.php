@@ -374,10 +374,11 @@ class ProductController extends Controller
 // EOF;
     public function getproduct(){
         //$movies = Movie::select(['mID', 'title', 'director', 'year']);
-        $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price', 'description','view_number','status','pickup_address','pickup_time','created_at','updated_at',  'file_name', 'location'])
+        $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
+                                    , 'description','view_number','status','pickup_address','pickup_time','created_at'
+                                    ,'updated_at',  'file_name', 'location'])
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp'),'product.image_id', '=', 'temp.image_id')
             ->with('category');
-        ;
         return Datatables::of($products)
                         ->addColumn('action', function ($product) {
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
