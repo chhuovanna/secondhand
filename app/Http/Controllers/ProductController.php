@@ -393,7 +393,11 @@ class ProductController extends Controller
 
         //get the list of photos of product using relationship defined in model
         $photos = Product::find($product_id)->photo;
-        if (sizeof($photos) > 0){
+        $thumbnail = Product::find($product_id)->thumbnail;
+        if($thumbnail){
+            $photos->push($thumbnail);
+        }
+        if (sizeof($photos) > 0 || $thumbnail){
             $html = "";
             $source = "";
             $eleclass = "";
