@@ -87,4 +87,8 @@ class User extends Authenticatable
 //    {
 //        return $this->belongsToMany('App\Role')->withPivot('created_at', 'updated_at');
 //    }
+    //added by vanna
+    public function seller(){
+        return $this->hasOne('App\Seller','user_id','id');
+    }
 }
