@@ -17,6 +17,7 @@ class CreateCacheTable extends Migration
             $table->string('key')->unique();
             $table->text('value');
             $table->integer('expiration');
+            $table->engine='innodb';
         });
     }
 

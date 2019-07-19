@@ -23,6 +23,7 @@ class CreateAuditsTable extends Migration
             $table->string('tags')->nullable();
             $table->timestamps();
             $table->index(['user_id', 'user_type']);
+            $table->engine='innodb';
         });
     }
 

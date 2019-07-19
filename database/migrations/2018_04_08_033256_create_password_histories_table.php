@@ -19,6 +19,7 @@ class CreatePasswordHistoriesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('password');
             $table->timestamps();
+            $table->engine='innodb';
         });
     }
 

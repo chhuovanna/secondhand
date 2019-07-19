@@ -25,6 +25,7 @@ class CreateSocialAccountsTable extends Migration
             $table->text('token')->nullable(); // Text because Facebook tokens can be greater than 255 characters
             $table->string('avatar')->nullable();
             $table->timestamps();
+            $table->engine='innodb';
         });
     }
 

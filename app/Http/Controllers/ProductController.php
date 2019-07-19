@@ -93,7 +93,7 @@ class ProductController extends Controller
                     $photo->location = 'images\photos';
 
                     //photo belongs to product
-                    $photo->product_id = $request->get('product_id'); //not (id) product_id
+                    $photo->product_id = $product->product_id; //not (id) product_id
                     $photo->save();
                     $file->move(public_path($photo->location),$photo->file_name);
                 }
@@ -163,7 +163,7 @@ class ProductController extends Controller
 
 
 				$old_thumbnail = $product->thumbnail; // Keep the old thumbnail for removing if it exists
-				$product->thumbnail_id = $thumbnail->image_id;	//change the thumbnail to the new one
+				$product->image_id = $thumbnail->image_id;	//change the thumbnail to the new one
 
 
 			}
@@ -253,15 +253,18 @@ class ProductController extends Controller
             $product = Product::with('photo')->with('thumbnail')->find($id);
             $photos = $product->photo;
             $res['photos'] = true;
-            foreach ($photos as $photo) {
-                $file = public_path($photo->location).'\\'.$photo->file_name;
-                if ( File::exists($file)) {
+            if($photos){
+                foreach ($photos as $photo) {
+                    $file = public_path($photo->location).'\\'.$photo->file_name;
+                    if ( File::exists($file)) {
 
-                    if(File::delete($file)){//delete the file from the folder
-                        $res['photos'] = $res['photos'] && $photo->delete(); //delete the file from database
+                        if(File::delete($file)){//delete the file from the folder
+                            $res['photos'] = $res['photos'] && $photo->delete(); //delete the file from database
+                        }
+
                     }
-
                 }
+
             }
 
 
@@ -270,20 +273,29 @@ class ProductController extends Controller
             //to get thumbnail of the product to be deleted. in product model, there is function called thumbnail
             $thumbnail = $product->thumbnail;
 
+            $post = $product->post;
+
             //delete product from database
             $res['product'] = Product::destroy($id);
 
-            if ($thumbnail){
+            $otherproduct = $post->product;
+            if(sizeof($otherproduct) == 0){
+                $post->delete();
+            }
 
+            if ($thumbnail){
+                $file = $file = public_path($thumbnail->location).'\\'.$thumbnail->file_name;
                 //test if the thumbnail file exists or not
                 if ( File::exists($file)) {
                     //delete the file from the folder
-                   if(File::delete($file)){
+                    if(File::delete($file)){
                         //delete the thumbnail of the product from database;
                         $res['thumbnail'] = $thumbnail->delete();
                     }
                 }
             }
+
+
             if ($res['product'] )
                 return [1];
             else

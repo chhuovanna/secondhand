@@ -19,10 +19,11 @@ class CreateSellerTable extends Migration
             $table->string('type')->nullable();
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->integer('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('image_id')->on('image');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->engine = 'InnoDB';
         });
     }
     public function down()

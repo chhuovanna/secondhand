@@ -14,6 +14,7 @@ class CreateImageTable extends Migration
             $table->text('location');//->nullable();
             $table->text('file_name');//->nullable();
             $table->integer('product_id')->unsigned()->nullable() ; //product_id can be null in case the image is for category etc.
+            $table->engine = 'InnoDB';
 
         });
     }

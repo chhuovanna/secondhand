@@ -22,6 +22,7 @@ class CreateProductCategoryTable extends Migration
             $table->foreign('category_id')->references('category_id')->on('category');
             //add primary key
             $table->primary(['product_id','category_id']);
+            $table->engine = 'InnoDB';
 
         });
     }

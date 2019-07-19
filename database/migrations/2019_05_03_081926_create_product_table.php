@@ -24,6 +24,7 @@ class CreateProductTable extends Migration
             $table->foreign('post_id')->references('post_id')->on('post');
             $table->integer('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('image_id')->on('image');
+            $table->engine = 'InnoDB';
 
         });
     }

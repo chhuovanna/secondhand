@@ -19,6 +19,7 @@ class CreatePostTable extends Migration
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->integer('seller_id')->unsigned();//->nullable();
             $table->foreign('seller_id')->references('seller_id')->on('seller');
+            $table->engine = 'InnoDB';
         });
     }
 
