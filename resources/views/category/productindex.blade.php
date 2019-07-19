@@ -92,8 +92,9 @@
                 render:function ( data, type, row) {
                     var text="";
                     data.forEach(function(item){
-                        text = text + ""+item.name+",&nbsp;";
+                        text = text + ""+item.name+", ";
                     });
+                    text = text.substring(0, text.length - 2);
                     return  type === 'display' && text && text.length > 50 ? '<span title="'+text+'">'+text.substr( 0, 20 )+'...</span>' : text;
                 },
                 orderable: false,
