@@ -36,9 +36,9 @@
 
                             <th>Type</th>
 
-                            <th>Created_at</th>
+                            {{--<th>Created_at</th>--}}
 
-                            <th>Updated_at</th>
+                            {{--<th>Updated_at</th>--}}
 
                             <th>Action</th>
 
@@ -91,8 +91,8 @@
                     {data: 'phone', name: 'phone'},
                     {data: 'message_account', name: 'message_account'},
                     {data: 'type', name: 'type'},
-                    {data: 'created_at', name: 'created_at'},
-                    {data: 'updated_at', name: 'updated_at'},
+                    // {data: 'created_at', name: 'created_at'},
+                    // {data: 'updated_at', name: 'updated_at'},
                     {data:'action', name: 'action', orderable: false, searchable: false}
 
                 ]

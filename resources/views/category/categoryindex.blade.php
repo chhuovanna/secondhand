@@ -28,9 +28,9 @@
 
                             <th>Description</th>
 
-                            <th>Created_at</th>
+                            {{--<th>Created_at</th>--}}
 
-                            <th>Updated_at</th>
+                            {{--<th>Updated_at</th>--}}
 
                             <th>Action</th>
 
@@ -82,8 +82,8 @@
                     },
 
                     //{data: 'image_id', name: 'image_id'},
-                    {data: 'created_at', name: 'created_at'},
-                    {data: 'updated_at', name: 'updated_at'},
+                    // {data: 'created_at', name: 'created_at'},
+                    // {data: 'updated_at', name: 'updated_at'},
 
                     {data:'action', name: 'action', orderable: false, searchable: false}
 
