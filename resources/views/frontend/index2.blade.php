@@ -50,13 +50,35 @@
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Sign Up
-						</a>
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Login
-						</a>
+						@auth
+							<li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>
+						@endauth
+
+						@guest
+							<a href="#" class="flex-c-m trans-04 p-lr-25">
+								Sign Up
+							</a>
+							<li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
+
+							@if(config('access.registration'))
+								<li class="nav-item"><a href="{{route('frontend.auth.register')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.register')) }}">@lang('navs.frontend.register')</a></li>
+							@endif
+						@else
+							<li class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+								   aria-haspopup="true" aria-expanded="false">{{ $logged_in_user->name }}</a>
+
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser" style="position: absolute">
+									@can('view backend')
+										<a href="{{ route('admin.dashboard') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
+									@endcan
+
+									<a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Active::checkRoute('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
+									<a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">@lang('navs.general.logout')</a>
+								</div>
+							</li>
+						@endguest
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							Language
@@ -69,7 +91,7 @@
 				</div>
 			</div>
 
-			<div class="wrap-menu-desktop">
+			<div class="wrap-menu-desktop" style="z-index:100;">
 				<nav class="limiter-menu-desktop container">
 					
 					<!-- Logo desktop -->		
@@ -595,14 +617,14 @@
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 sort-by" data-sort="hightolow">
 										<!-- Price: Low to High -->
-										Year: Low to High
+										Price: Low to High
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 sort-by" data-sort="lowtohigh">
 										<!-- Price: High to Low -->
-										Year: Low to High
+										Price: Low to High
 									</a>
 								</li>
 							</ul>
@@ -610,7 +632,7 @@
 
 						<div class="filter-col2 p-r-15 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Release Year
+								Release Price
 								<!-- Price -->
 							</div>
 
@@ -623,35 +645,35 @@
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="500">
-										0 - 500
+										0 - 50$
 										<!-- $0.00 - $50.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="1000">
-										500 - 1000
+										50$ - 100$
 										<!-- $50.00 - $100.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="1500">
-										1000 - 1500
+										100$ - 150$
 										<!-- $100.00 - $150.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6"> 
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="2000">
-										1500 - 2000
+										150$ - 200$
 										<!-- $150.00 - $200.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="after2000">
-										2000+
+										200$+
 									</a>
 								</li>
 							</ul>

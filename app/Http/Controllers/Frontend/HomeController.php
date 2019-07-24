@@ -16,7 +16,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $categories = Category::all();
+        $products = Product::all();
+        return view('frontend.index2', ['categories' => $categories, 'products' => $products]);
     }
 
     public function test()
