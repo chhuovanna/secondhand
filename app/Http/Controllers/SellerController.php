@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\view;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; // for deleting file
+use Illuminate\Support\Facades\Auth;
 use App\Seller;
 use App\Image; //need to use it to call new Image();
 use App\Category;
@@ -20,7 +21,11 @@ class SellerController extends Controller
         return view('category.sellerindex');
     }
     public function create() {
-        return view('category.sellercreate');
+        if (Auth::user()->hasRole('administrator')) {
+            return view('category.sellercreate');
+        }else{
+            return "You don't have the permission";
+        }
     }
     public function store(Request $request) {
         $seller = new Seller();
@@ -67,8 +72,12 @@ class SellerController extends Controller
         }
     }
     public function edit($id) {
-        $seller = Seller::with('image')->find($id);
-        return view('category.selleredit',['seller'=>$seller]);
+        if (Auth::user()->hasRole('administrator')) {
+            $seller = Seller::with('image')->find($id);
+            return view('category.selleredit', ['seller' => $seller]);
+        }else{
+            return "You don't have the permission";
+        }
     }
     public function update(Request $request, $id) {
         $seller = Seller::find($id);
@@ -127,37 +136,39 @@ class SellerController extends Controller
 
     }
     public function destroy($id) {
+        if (Auth::user()->hasRole('administrator')) {
+            try {
 
-        try{
+                //to get image of the seller to be deleted. in Seller model, there is function called image
+                $image = Seller::find($id)->image;
 
-            //to get image of the seller to be deleted. in Seller model, there is function called image
-            $image = Seller::find($id)->image;
+                //delete seller from database
+                $res['seller'] = Seller::destroy($id);
+                if ($image) {
 
-            //delete seller from database
-            $res['seller'] = Seller::destroy($id);
-            if ($image) {
+                    $file = public_path($image->location) . '\\' . $image->file_name;
 
-                $file = public_path($image->location) . '\\' . $image->file_name;
-
-                //test if the image file exists or not
-                if (File::exists($file)) {
-                    //delete the file from the folder
-                    if (File::delete($file)) {
-                        //delete the image of the seller from database;
-                        $res['image'] = $image->delete();
+                    //test if the image file exists or not
+                    if (File::exists($file)) {
+                        //delete the file from the folder
+                        if (File::delete($file)) {
+                            //delete the image of the seller from database;
+                            $res['image'] = $image->delete();
+                        }
                     }
                 }
+
+
+                if ($res['seller'])
+                    return [1];
+                else
+                    return [0];
+            } catch (\Exception $e) {
+                return [0, $e->getMessage()];
             }
-
-
-            if ($res['seller'] )
-                return [1];
-            else
-                return [0];
-        }catch(\Exception $e){
-            return [0,$e->getMessage()];
+        }else{
+            return [0, "You don't have the permission"];
         }
-
     }
 
     public function getform(){

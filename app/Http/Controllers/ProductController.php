@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use App\Product;
 use App\Image;
 use App\Category;
@@ -9,7 +10,7 @@ use App\Post;
 use App\Seller;
 use Datatables;
 use DB;
-use Illuminate\Support\Facades\Auth;
+
 
 
 
@@ -398,7 +399,7 @@ class ProductController extends Controller
             ;
         }
 
-        //$movies = Movie::select(['mID', 'title', 'director', 'year']);
+
         
         return Datatables::of($products)
                         ->addColumn('action', function ($product) {

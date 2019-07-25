@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File; //for deleting file
+use Illuminate\Support\Facades\File;//for deleting file
+use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Image; //need to use it to call new Image();
 use App\Seller;
@@ -17,8 +18,15 @@ class CategoryController extends Controller
     public function index() {
         return view('category.categoryindex');
     }
-    public function create() {
-        return view('category.categorycreate');
+    public function create()
+    {
+        if (Auth::user()->hasRole('administrator')) {
+
+            return view('category.categorycreate');
+
+        }else{
+            return "You don't have the permission";
+        }
     }
     public function store(Request $request) {
         $category = new Category();
@@ -62,12 +70,17 @@ class CategoryController extends Controller
         echo 'show';
     }
     public function edit($id) {
+        if (Auth::user()->hasRole('administrator')) {
+            //we dont have image function in model category, we only have thumbnail()
+            $category = Category::with('thumbnail')->find($id);
+            return view('category.categoryedit', ['category' => $category]);
+        }else{
+            return "You don't have the permission";
+        }
 
-        //we dont have image function in model category, we only have thumbnail()
-        $category = Category::with('thumbnail')->find($id);
-        return view('category.categoryedit',['category'=>$category]);
     }
     public function update(Request $request, $id) {
+
         $category= Category::find($id);
         $category->category_id = $request->get('category_id');
         $category->name = $request->get('name');
@@ -120,39 +133,44 @@ class CategoryController extends Controller
     }
 
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
+        if (Auth::user()->hasRole('administrator')) {
 
-        try{
-            //to get image of the category to be deleted. in Category model, there is function called image
-            $image = Category::find($id)->thumbnail;
+            try {
+                //to get image of the category to be deleted. in Category model, there is function called image
+                $image = Category::find($id)->thumbnail;
 
-            //delete category from database
-            $res['category'] = Category::destroy($id);
-            if ($image) {
+                //delete category from database
+                $res['category'] = Category::destroy($id);
+                if ($image) {
 
-                $file = public_path($image->location) . '\\' . $image->file_name;
+                    $file = public_path($image->location) . '\\' . $image->file_name;
 
 
-                //test if the image file exists or not
-                if (File::exists($file)) {
-                    //delete the file from the folder
-                    if (File::delete($file)) {
-                        //delete the image of the category from database;
-                        $res['image'] = $image->delete();
+                    //test if the image file exists or not
+                    if (File::exists($file)) {
+                        //delete the file from the folder
+                        if (File::delete($file)) {
+                            //delete the image of the category from database;
+                            $res['image'] = $image->delete();
+                        }
                     }
                 }
+
+
+                if ($res['category'])
+                    return [1];
+                else
+                    return [0];
+            } catch (\Exception $e) {
+                return [0, $e->getMessage()];
             }
 
 
-            if ($res['category'] )
-                return [1];
-            else
-                return [0];
-        }catch(\Exception $e){
-            return [0,$e->getMessage()];
+        }else{
+            return [0, "You don't have the permission"];
         }
-
-
     }
 
 
