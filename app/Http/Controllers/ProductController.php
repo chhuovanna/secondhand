@@ -375,12 +375,11 @@ class ProductController extends Controller
 // EOF;
     public function getproduct(){
 
-        $user = Auth::user();
-        $seller = $user->seller;
-        $id= 2;
+
+
 
         
-        if($user->id == 1){ //is admin, but need to modify
+        if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
             $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
                                     , 'description','view_number','status','pickup_address','pickup_time','created_at'
                                     ,'updated_at',  'file_name', 'location'])
@@ -388,6 +387,8 @@ class ProductController extends Controller
             ->with('category')
             ;
         }else{
+            $user = Auth::id();
+            $seller = Seller::where('user_id',$user);
             $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
                                     , 'description','view_number','status','pickup_address','pickup_time','created_at'
                                     ,'updated_at',  'file_name', 'location', 'temp1.seller_id'])

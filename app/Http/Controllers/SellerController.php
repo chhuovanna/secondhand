@@ -24,10 +24,10 @@ class SellerController extends Controller
         if (Auth::user()->hasRole('administrator')) {
             return view('category.sellercreate');
         }else{
-            return "You don't have the permission";
+            return "You don't have the permission"; // redirect back
         }
     }
-    public function store(Request $request) {
+    public function store(Request $request) { // add access control if else return you dont have pẻmission
         $seller = new Seller();
         //$seller->seller_ID = $request->get('seller_id');
         $seller->name = $request->get('name');
@@ -72,12 +72,24 @@ class SellerController extends Controller
         }
     }
     public function edit($id) {
+        if(Auth::user()->hasRole('administrator')){
             $seller = Seller::with('image')->find($id);
             return view('category.selleredit', ['seller' => $seller]);
+        }else{
+            $user = Auth::id();
+            $seller = Seller::where('user_id',$user)->first();
+            if ($seller->seller_id == $id){
+                $seller = Seller::with('image')->find($id);
+                return view('category.selleredit', ['seller' => $seller]);
+            }else{
+                return redirect()->back()->withFlashDanger("You dont have the permission");
+            }
 
         }
 
-    public function update(Request $request, $id) {
+    }
+
+    public function update(Request $request, $id) { // add access control
         $seller = Seller::find($id);
         $seller->seller_id = $request->get('seller_id');
         $seller->name = $request->get('name');
@@ -169,11 +181,11 @@ class SellerController extends Controller
         }
     }
 
-    public function getform(){
-        $sellers = seller::all();
-        $views = view::all();
-        return view('sellersign_up', [ 'sellers' => $sellers, 'views' => $views  ]);
-    }
+//    public function getform(){
+//        $sellers = seller::all();
+//        $views = view::all();
+//        return view('sellersign_up', [ 'sellers' => $sellers, 'views' => $views  ]);
+//    }
 
 //    public function savesign_up(Request $request){
 //
@@ -249,8 +261,14 @@ class SellerController extends Controller
             //$sellers = seller::select(['seller_id', 'name', 'address', 'email','phone','instant_massage_account','type','seller.created_at','seller.updated_at','seller.image_id','location','file_name']);
             $sellers = Seller::select(['seller_id', 'name', 'address', 'email', 'phone', 'message_account', 'type', 'seller.image_id', 'seller.created_at', 'seller.updated_at', 'location', 'file_name'])
                 ->leftJoin(DB::raw('(select image_id, file_name, location from image) AS temp'), 'seller.image_id', '=', 'temp.image_id');
-        }else{ $sellers = Seller::select(['seller_id', 'name', 'address', 'email', 'phone', 'message_account', 'type', 'seller.image_id', 'seller.created_at', 'seller.updated_at', 'location', 'file_name','temp1.product_id']);
-
+        }else{
+            $user = Auth::id();
+            $seller = Seller::where('user_id',$user)->first();
+            $sellers = Seller::select(['seller_id', 'name', 'address', 'email', 'phone'
+                , 'message_account', 'type', 'seller.image_id', 'seller.created_at'
+                , 'seller.updated_at', 'location', 'file_name'])
+                ->leftJoin(DB::raw('(select image_id, file_name, location from image) AS temp'), 'seller.image_id', '=', 'temp.image_id')
+                ->where('seller.seller_id',$seller->seller_id);
         }
         return Datatables::of($sellers)
 

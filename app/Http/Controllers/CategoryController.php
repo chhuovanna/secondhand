@@ -25,10 +25,12 @@ class CategoryController extends Controller
             return view('category.categorycreate');
 
         }else{
-            return "You don't have the permission";
+            return redirect()
+                ->back()
+                ->withFlashDanger("You don't have the pẻmission");
         }
     }
-    public function store(Request $request) {
+    public function store(Request $request) { //add access control
         $category = new Category();
         //$category->category_id = $request->get('category_id');
         $category->name = $request->get('name');
@@ -75,11 +77,11 @@ class CategoryController extends Controller
             $category = Category::with('thumbnail')->find($id);
             return view('category.categoryedit', ['category' => $category]);
         }else{
-            return "You don't have the permission";
+            return "You don't have the permission"; //redirect back
         }
 
     }
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id) { // add access control
 
         $category= Category::find($id);
         $category->category_id = $request->get('category_id');
@@ -175,11 +177,11 @@ class CategoryController extends Controller
 
 
 
-    public function getform(){
-        $category = category::all();
-        $sellers = seller::all();
-        return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
-    }
+// /*   public function getform(){
+//        $category = category::all();
+//        $sellers = seller::all();
+//        return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
+//    }*/
 
 //    public function saveseller_signup(Request $request){
 //
@@ -208,11 +210,11 @@ class CategoryController extends Controller
 //        }
 //    }
 
-
-    public function showrate(){
-        $category = category::all();
-        return view('categoryshowrate', [ 'category' => $category]);
-    }
+//
+//    public function showrate(){
+//        $category = category::all();
+//        return view('categoryshowrate', [ 'category' => $category]);
+//    }
 
 //    public function getseller_signup(Request $request){
 //        $add = $request->input('add');
@@ -275,92 +277,92 @@ class CategoryController extends Controller
 
     //phan moi them
 
-    public function home(){
+//    public function home(){
+//
+//        $categorys = Category::getCategorysWithImage();
+//        return view('frontend.index',['categorys'=>$categorys]);
+//    }
 
-        $categorys = Category::getCategorysWithImage();
-        return view('frontend.index',['categorys'=>$categorys]);
-    }
-
-    public function getcategorymore(Request $request){
-
-        $categorys = Category::getCategorysWithImage($request->get('offset'));
-
-        if(sizeof($categorys) > 0){
-            //$items = array();
-            $html = "";
-
-            foreach ($categorys as $category){
-                //$html = "";
-                $html .= <<<eot
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0">
-eot;
-                if($category->file_name){
-                    $location = asset($category->location);
-                    $html .= <<<eot
-							
-							<img src="$location/$category->file_name" alt="IMG-PRODUCT">
-eot;
-                }else{
-                    $location = asset('images/category');
-                    $html .= <<<eot
-
-							<img src="$location/default.png" alt="IMG-PRODUCT">
-eot;
-                }
-                $location = asset('cozastore');
-                $html .= <<<eot
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
-							</a>
-						</div>
-
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									$category->category_id
-								</a>
-
-								<span class="stext-105 cl3">
-									$category->Image
-								</span>
-
-								<span class="stext-105 cl3">
-									$category->Name
-								</span>
-								<span class="stext-105 cl3">
-									$category->Description
-								</span>
-								<span class="stext-105 cl3">
-									$category->Created_at
-								</span>
-								<span class="stext-105 cl3">
-									$category->Updated_at
-								</span>
-							</div>
-
- 							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
-								</a>
-							</div>
- 						</div>
-					</div>
-				</div>
-eot;
-                //$items[] = $html;
-            }
-
-
-            return [1,$html];
-            //return [1,$items];
-        }
-        else
-            return [0];
-    }
-
+//    public function getcategorymore(Request $request){
+//
+//        $categorys = Category::getCategorysWithImage($request->get('offset'));
+//
+//        if(sizeof($categorys) > 0){
+//            //$items = array();
+//            $html = "";
+//
+//            foreach ($categorys as $category){
+//                //$html = "";
+//                $html .= <<<eot
+//				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+//					<!-- Block2 -->
+//					<div class="block2">
+//						<div class="block2-pic hov-img0">
+//eot;
+//                if($category->file_name){
+//                    $location = asset($category->location);
+//                    $html .= <<<eot
+//
+//							<img src="$location/$category->file_name" alt="IMG-PRODUCT">
+//eot;
+//                }else{
+//                    $location = asset('images/category');
+//                    $html .= <<<eot
+//
+//							<img src="$location/default.png" alt="IMG-PRODUCT">
+//eot;
+//                }
+//                $location = asset('cozastore');
+//                $html .= <<<eot
+//							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+//								Quick View
+//							</a>
+//						</div>
+//
+//						<div class="block2-txt flex-w flex-t p-t-14">
+//							<div class="block2-txt-child1 flex-col-l ">
+//								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+//									$category->category_id
+//								</a>
+//
+//								<span class="stext-105 cl3">
+//									$category->Image
+//								</span>
+//
+//								<span class="stext-105 cl3">
+//									$category->Name
+//								</span>
+//								<span class="stext-105 cl3">
+//									$category->Description
+//								</span>
+//								<span class="stext-105 cl3">
+//									$category->Created_at
+//								</span>
+//								<span class="stext-105 cl3">
+//									$category->Updated_at
+//								</span>
+//							</div>
+//
+// 							<div class="block2-txt-child2 flex-r p-t-3">
+//								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+//									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+//									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+//								</a>
+//							</div>
+// 						</div>
+//					</div>
+//				</div>
+//eot;
+//                //$items[] = $html;
+//            }
+//
+//
+//            return [1,$html];
+//            //return [1,$items];
+//        }
+//        else
+//            return [0];
+//    }
+//
 
 }
