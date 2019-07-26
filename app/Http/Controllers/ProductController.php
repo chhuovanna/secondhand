@@ -405,6 +405,9 @@ class ProductController extends Controller
                         ->addColumn('action', function ($product) {
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
+                                                $html .= '<a data-id="'.$product->product_id.'" class="btn btn-success btn-sm product-featured">Featured</a>&nbsp;&nbsp;&nbsp;' ;
+                                                /*$html .= '<a data-id="'.$product->product_id.'" class="btn btn-success btn-sm product-featured"><i class="fas fa fa-check"></i></a>&nbsp;&nbsp;&nbsp;' ;*/
+
                                                 /*$html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;*/
 
                                                 return $html;

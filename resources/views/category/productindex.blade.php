@@ -107,7 +107,7 @@
         ],
         "order":[[0,'desc']]
         });
-
+    });
         $(document).off('click','.product-delete');
         $(document).on('click','.product-delete' , function(){
             var confirm_delete = confirm("Do you really want to delete this product?");
@@ -173,6 +173,11 @@
             });
 
         });
+        /*$(document).off('click','.product-featured');
+        $(document).on('click','.product-featured' , function(){});*/
+        $(document).off('click','.product-featured');
+        $(document).on('click','.product-featured' , function(){
+            alert($(this).data('id'));
         });
     </script>
 @endpush
