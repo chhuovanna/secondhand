@@ -148,9 +148,9 @@
 
             $topeContainer.isotope({
                 filter: function(){
-                    var year = parseInt($(this).find('.year').text());
+                    var price = parseInt($(this).find('.price').text());
                     var filter_by = $('.filter-year').val();
-                    var active_director = $('.how-active1').data('filter').substring(1);
+                    var active_name = $('.how-active1').data('filter').substring(1);
                    // alert('imaher');
 
                     //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
@@ -159,26 +159,26 @@
                    
                     if (isNaN(filter_by)){
                         if (filter_by  == 'all'){
-                            if ( active_director === '')
+                            if ( active_name === '')
                                 return true;
                             else
-                                return $(this).hasClass(active_director);
+                                return $(this).hasClass(active_name);
                         }else{
-                            if ( active_director === '')
-                                return (year >= 2000 );
+                            if ( active_name === '')
+                                return (price >= 200 );
                             else
-                                return (year >= 2000 ) && $(this).hasClass(active_director);    
+                                return (price >= 200 ) && $(this).hasClass(active_name);
                         }
                         
                     }else{
                         filter_by = parseInt(filter_by);
                         
-                        if (year >= (filter_by - 500) &&  year <= filter_by){
+                        if (price >= (filter_by - 50) &&  price <= filter_by){
 
-                            if ( active_director == '*')
+                            if ( active_name === '')
                                 return true;
                             else
-                                return $(this).hasClass(active_director);
+                                return $(this).hasClass(active_name);
                         }
                         else
                             return false;

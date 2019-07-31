@@ -529,7 +529,7 @@
 						All Products
 					</button>
 					@foreach($categories as $category)
-						@php /*$classname = str_replace(' ','-', $director->director); */ $classname='test';@endphp
+						@php /*$classname = str_replace(' ','-', $category->category);*/ $classname='test';@endphp
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
 						{{$category->name}}
 					</button>
@@ -573,7 +573,8 @@
 						</button>
 
 						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-					</div>	
+						
+					</div>
 				</div>
 
 				<!-- Filter -->
@@ -644,35 +645,35 @@
 								</li>
 
 								<li class="p-b-6">
-									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="500">
+									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="50">
 										0 - 50$
 										<!-- $0.00 - $50.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="1000">
+									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="100">
 										50$ - 100$
 										<!-- $50.00 - $100.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="1500">
+									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="150">
 										100$ - 150$
 										<!-- $100.00 - $150.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6"> 
-									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="2000">
+									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="200">
 										150$ - 200$
 										<!-- $150.00 - $200.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="after2000">
+									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="after200">
 										200$+
 									</a>
 								</li>
@@ -783,7 +784,7 @@
 			
 			<div class="row isotope-grid">
 				@foreach ($products as $product)
-					@php /*$director = str_replace(' ','-',$product->director); */ $director='test';@endphp
+					@php /*$director = str_replace(' ','-',$product->director);*/$director='test';@endphp
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$director}}" data-mid="{{$product->product_id}}">
 					<!-- Block2 -->
 					<div class="block2">

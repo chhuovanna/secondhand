@@ -121,17 +121,18 @@
                 ->class('col-md-2 form-control-label')
                 ->for('image_id') }}
 
-            <div class="col-md-3">
-                
 
-                {{ html()->input('file','image_id')
-                        ->class('form-control')
-                        ->placeholder('image')
-                        ->required()
-                    }}
-
-            </div><!--col-->
             @if(isset($source))
+                <div class="col-md-3">
+
+
+                    {{ html()->input('file','image_id')
+                            ->class('form-control')
+                            ->placeholder('image')
+
+                        }}
+
+                </div><!--col-->
 
                 <div class="old-image">
 
@@ -143,6 +144,17 @@
                         </button>
                     </div>
                 </div>
+            @else
+                <div class="col-md-3">
+
+
+                    {{ html()->input('file','image_id')
+                            ->class('form-control')
+                            ->placeholder('image')
+                            ->required()
+                        }}
+
+                </div><!--col-->
             @endif
         </div><!--form-group-->
         <div class="form-group row">

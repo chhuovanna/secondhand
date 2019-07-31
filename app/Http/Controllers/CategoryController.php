@@ -3,27 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File; //for deleting file
+use Illuminate\Support\Facades\File;//for deleting file
+use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Image; //need to use it to call new Image();
 use App\Seller;
 use App\Product;
 use Datatables;
 use DB;
-use Illuminate\Support\Facades\Auth;
+
 
 class CategoryController extends Controller
 {
     public function index() {
         return view('category.categoryindex');
     }
-    public function create() {
+    public function create()
+    {
         if (Auth::user()->hasRole('administrator')) {
+
             return view('category.categorycreate');
-        }else
-            return "You don't have the permission";
+
+        }else{
+            return redirect()
+                ->back()
+                ->withFlashDanger("You don't have the permission");
+        }
     }
-    public function store(Request $request) {
+    public function store(Request $request)
+    { //add access control
         if (Auth::user()->hasRole('administrator')) {
             $category = new Category();
             //$category->category_id = $request->get('category_id');
@@ -38,13 +46,13 @@ class CategoryController extends Controller
             //get file from input
             $file = $request->file('image_id');
             $image = new Image();
-            $image->file_name = rand(1111,9999).time().'.'.$file->getClientOriginalExtension();
+            $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
             $image->location = 'images\category'; //category is stored in public/images/category
 
             try {
                 $image->save();
                 //category the file to it's location on server
-                $file->move(public_path($image->location),$image->file_name);
+                $file->move(public_path($image->location), $image->file_name);
 
                 //image of category
                 $category->image_id = $image->image_id;
@@ -53,33 +61,36 @@ class CategoryController extends Controller
 
                 return redirect()->route('category.index')->withFlashSuccess('Category is added');
 
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return redirect()
                     ->back()
                     ->withInput($request->all())
-                    ->withFlashDanger("Category can't be added. ". $e->getMessage());
+                    ->withFlashDanger("Category can't be added. " . $e->getMessage());
 
             }
-
-        }else {
-            return "You dont have the permission";
+        }else{
+            return "You don't have the permission";
         }
     }
-    public function show($id) {
-        echo 'show';
-    }
+//    public function show($id) {
+//        echo 'show';
+//    }
     public function edit($id) {
         if (Auth::user()->hasRole('administrator')) {
+            //we dont have image function in model category, we only have thumbnail()
             $category = Category::with('thumbnail')->find($id);
-            return view('category.categoryedit',['category'=>$category]);
-        }else
-            return "You don't have the permission";
-        //we dont have image function in model category, we only have thumbnail()
+            return view('category.categoryedit', ['category' => $category]);
+        }else{
+            return redirect()
+                ->back()
+                ->withFlashDanger("You don't have the permission");
+        }
+
     }
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    { // add access control
         if (Auth::user()->hasRole('administrator')) {
-            $category= Category::find($id);
+            $category = Category::find($id);
             $category->category_id = $request->get('category_id');
             $category->name = $request->get('name');
             $category->description = $request->get('description');
@@ -91,29 +102,29 @@ class CategoryController extends Controller
                 'image_id' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
 
 
-            try{
+            try {
                 // test if image is updated or not
-                if($request->hasFile('image_id')){
+                if ($request->hasFile('image_id')) {
                     $file = $request->file('image_id');
                     $image = new Image();
-                    $image->file_name = rand(1111,9999).time().'.'.$file->getClientOriginalExtension();
+                    $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
                     $image->location = 'images\category';
 
-                    $file->move(public_path($image->location),$image->file_name);
+                    $file->move(public_path($image->location), $image->file_name);
                     $image->save();//save new image
 
 
                     $old_image = $category->image_id; // Keep the old image for removing if it exists
-                    $category->image_id = $image->image_id;	//change the image to the new one
+                    $category->image_id = $image->image_id;    //change the image to the new one
 
 
                 }
                 $category->save(); //save the update of seller
-                if(isset($old_image)){
+                if (isset($old_image)) {
                     $old_image = Image::find($old_image);
                     //remove old image from harddisk
-                    $file = public_path($old_image->location).'\\'.$old_image->file_name;
-                    if ( File::exists($file)) {
+                    $file = public_path($old_image->location) . '\\' . $old_image->file_name;
+                    if (File::exists($file)) {
                         File::delete($file);
                     }
 
@@ -121,24 +132,23 @@ class CategoryController extends Controller
                 }
 
                 return redirect()->route('category.index')->withFlashSuccess('Category is updated');
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 return redirect()
                     ->back()
                     ->withInput($request->all())
-                    ->withFlashDanger("Category can't be updated. ". $e->getMessage());
+                    ->withFlashDanger("Category can't be updated. " . $e->getMessage());
             }
 
-        }else
+        }else{
             return "You don't have the permission";
-
-
+        }
     }
 
-
-    public function destroy($id) {
-
+    public function destroy($id)
+    {
         if (Auth::user()->hasRole('administrator')) {
-            try{
+
+            try {
                 //to get image of the category to be deleted. in Category model, there is function called image
                 $image = Category::find($id)->thumbnail;
 
@@ -160,24 +170,27 @@ class CategoryController extends Controller
                 }
 
 
-                if ($res['category'] )
+                if ($res['category'])
                     return [1];
                 else
                     return [0];
-            }catch(\Exception $e){
-                return [0,$e->getMessage()];
+            } catch (\Exception $e) {
+                return [0, $e->getMessage()];
             }
-        }else
-            return [0,". You don't have the permission"];
+
+
+        }else{
+            return [0, "You don't have the permission"];
+        }
     }
 
 
 
-    // public function getform(){
-    //     $category = category::all();
-    //     $sellers = seller::all();
-    //     return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
-    // }
+// /*   public function getform(){
+//        $category = category::all();
+//        $sellers = seller::all();
+//        return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
+//    }*/
 
 //    public function saveseller_signup(Request $request){
 //
@@ -206,11 +219,11 @@ class CategoryController extends Controller
 //        }
 //    }
 
-
-    // public function showrate(){
-    //     $category = category::all();
-    //     return view('categoryshowrate', [ 'category' => $category]);
-    // }
+//
+//    public function showrate(){
+//        $category = category::all();
+//        return view('categoryshowrate', [ 'category' => $category]);
+//    }
 
 //    public function getseller_signup(Request $request){
 //        $add = $request->input('add');
@@ -271,94 +284,94 @@ class CategoryController extends Controller
             ->make(true);
     }
 
-    // //phan moi them
+    //phan moi them
 
-    // public function home(){
+//    public function home(){
+//
+//        $categorys = Category::getCategorysWithImage();
+//        return view('frontend.index',['categorys'=>$categorys]);
+//    }
 
-    //     $categorys = Category::getCategorysWithImage();
-    //     return view('frontend.index',['categorys'=>$categorys]);
-    // }
-
-//     public function getcategorymore(Request $request){
-
-//         $categorys = Category::getCategorysWithImage($request->get('offset'));
-
-//         if(sizeof($categorys) > 0){
-//             //$items = array();
-//             $html = "";
-
-//             foreach ($categorys as $category){
-//                 //$html = "";
-//                 $html .= <<<eot
-// 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-// 					<!-- Block2 -->
-// 					<div class="block2">
-// 						<div class="block2-pic hov-img0">
-// eot;
-//                 if($category->file_name){
-//                     $location = asset($category->location);
-//                     $html .= <<<eot
-
-// 							<img src="$location/$category->file_name" alt="IMG-PRODUCT">
-// eot;
-//                 }else{
-//                     $location = asset('images/category');
-//                     $html .= <<<eot
-
-// 							<img src="$location/default.png" alt="IMG-PRODUCT">
-// eot;
-//                 }
-//                 $location = asset('cozastore');
-//                 $html .= <<<eot
-// 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-// 								Quick View
-// 							</a>
+//    public function getcategorymore(Request $request){
+//
+//        $categorys = Category::getCategorysWithImage($request->get('offset'));
+//
+//        if(sizeof($categorys) > 0){
+//            //$items = array();
+//            $html = "";
+//
+//            foreach ($categorys as $category){
+//                //$html = "";
+//                $html .= <<<eot
+//				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+//					<!-- Block2 -->
+//					<div class="block2">
+//						<div class="block2-pic hov-img0">
+//eot;
+//                if($category->file_name){
+//                    $location = asset($category->location);
+//                    $html .= <<<eot
+//
+//							<img src="$location/$category->file_name" alt="IMG-PRODUCT">
+//eot;
+//                }else{
+//                    $location = asset('images/category');
+//                    $html .= <<<eot
+//
+//							<img src="$location/default.png" alt="IMG-PRODUCT">
+//eot;
+//                }
+//                $location = asset('cozastore');
+//                $html .= <<<eot
+//							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+//								Quick View
+//							</a>
+//						</div>
+//
+//						<div class="block2-txt flex-w flex-t p-t-14">
+//							<div class="block2-txt-child1 flex-col-l ">
+//								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+//									$category->category_id
+//								</a>
+//
+//								<span class="stext-105 cl3">
+//									$category->Image
+//								</span>
+//
+//								<span class="stext-105 cl3">
+//									$category->Name
+//								</span>
+//								<span class="stext-105 cl3">
+//									$category->Description
+//								</span>
+//								<span class="stext-105 cl3">
+//									$category->Created_at
+//								</span>
+//								<span class="stext-105 cl3">
+//									$category->Updated_at
+//								</span>
+//							</div>
+//
+// 							<div class="block2-txt-child2 flex-r p-t-3">
+//								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+//									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+//									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+//								</a>
+//							</div>
 // 						</div>
-
-// 						<div class="block2-txt flex-w flex-t p-t-14">
-// 							<div class="block2-txt-child1 flex-col-l ">
-// 								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-// 									$category->category_id
-// 								</a>
-
-// 								<span class="stext-105 cl3">
-// 									$category->Image
-// 								</span>
-
-// 								<span class="stext-105 cl3">
-// 									$category->Name
-// 								</span>
-// 								<span class="stext-105 cl3">
-// 									$category->Description
-// 								</span>
-// 								<span class="stext-105 cl3">
-// 									$category->Created_at
-// 								</span>
-// 								<span class="stext-105 cl3">
-// 									$category->Updated_at
-// 								</span>
-// 							</div>
-
-//  							<div class="block2-txt-child2 flex-r p-t-3">
-// 								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-// 									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
-// 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
-// 								</a>
-// 							</div>
-//  						</div>
-// 					</div>
-// 				</div>
-// eot;
-//                 //$items[] = $html;
-//             }
-
-
-//             return [1,$html];
-//             //return [1,$items];
-//         }
-//         else
-//             return [0];
-//     }
-
+//					</div>
+//				</div>
+//eot;
+//                //$items[] = $html;
+//            }
+//
+//
+//            return [1,$html];
+//            //return [1,$items];
+//        }
+//        else
+//            return [0];
+//    }
+//
 
 }
