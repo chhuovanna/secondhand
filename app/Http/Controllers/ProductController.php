@@ -414,7 +414,6 @@ class ProductController extends Controller
 // EOF;
     public function getproduct(){
 
-
         if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
             $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
                                     , 'description','view_number','status','pickup_address','pickup_time','created_at'
@@ -438,14 +437,12 @@ class ProductController extends Controller
         }
 
 
-        
+
         return Datatables::of($products)
                         ->addColumn('action', function ($product) {
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
-                                                $html .= '<a data-id="'.$product->product_id.'" class="btn btn-success btn-sm product-featured">Featured</a>&nbsp;&nbsp;&nbsp;' ;
-                                                /*$html .= '<a data-id="'.$product->product_id.'" class="btn btn-success btn-sm product-featured"><i class="fas fa fa-check"></i></a>&nbsp;&nbsp;&nbsp;' ;*/
-
+                                                $html .= '<a data-id="'.$product->product_id.'" class="btn btn-info btn-sm product-featured" data-toggle="modal" data-target="#featured_product_modal"><i class="fas fa-cog"></i></a>' ;
                                                 /*$html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;*/
 
                                                 return $html;
@@ -485,5 +482,43 @@ class ProductController extends Controller
             return [1, $html];
         }else
             return [0];
+    }
+    public function getactivefeatured(Request $request){
+        $product_id =$request->get('product_id');
+        $featured_product = Product::getactivefeatured($product_id);
+        if(sizeof($featured_product)  > 0){
+            return [1,$featured_product];
+        }else{
+            return [0];
+        }
+    }
+
+    public function savefeatured(Request $request){
+        $product_id = $request->get('product_id');
+        $start_date = $request->get('start_date');
+        $end_date = $request->get('end_date');
+        $featured_product = Product::getactivefeatured($product_id);
+
+        if($end_date == null){
+            $end_date = '9999-01-01';
+        }
+        if (sizeof($featured_product) == 1){
+
+           try{
+                Product::updatefeatured($product_id, $start_date, $end_date);
+                return[1];
+            }catch(\Exception $e){
+                return [0,$e->getMessage()];
+            }
+
+        }else{
+            try{
+                Product::savefeatured($product_id, $start_date, $end_date);
+                return[1];
+            }catch(\Exception $e){
+                return [0,$e->getMessage()];
+            }
+
+        }
     }
 }
