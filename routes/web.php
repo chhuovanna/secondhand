@@ -39,9 +39,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
 //Route::get('category','CategoryController@category');
 
 
-Route::get('admin/category/rate','CategoryController@getform')->name('category.rate');
-Route::post('admin/category/saveseller','CategoryController@saveseller');
-Route::get('admin/category/showrate','CategoryController@showrate')->name('category.showrate');
+//Route::get('admin/category/rate','CategoryController@getform')->name('category.rate');
+//Route::post('admin/category/saveseller','CategoryController@saveseller');
+//Route::get('admin/category/showrate','CategoryController@showrate')->name('category.showrate');
 //Route::get('admin/category/getseller','CategoryController@getseller')->name('category.getcategory');
 Route::get('admin/category/getseller','SellerController@getseller')->name('seller.getseller');
 Route::get('admin/category/getcategory', 'CategoryController@getcategory')->name('category.getcategory');
@@ -52,6 +52,8 @@ Route::get('admin/category/getcategorymore', 'CategoryController@getcategorymore
 Route::get('admin/category/getsellermore', 'SellerController@getsellermore');
 Route::get('admin/product/createwithpost/{post}', 'ProductController@createwitholdpost')->name('product.create.with.oldpost');;
 Route::get('admin/product/getphotos', 'ProductController@getphotos');
+Route::get('admin/product/getactivefeatured','ProductController@getactivefeatured');
+Route::get('admin/product/savefeatured','ProductController@savefeatured');
 
 Route::resource('admin/category','CategoryController');
 Route::resource('admin/seller','SellerController');

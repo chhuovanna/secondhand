@@ -46,6 +46,43 @@ class Product extends Model
 
     }
 
+    public static function getactivefeatured($product_id){
+        $sql = <<<EOT
+        select date(start_date_time) as start_date, date(end_date_time) as end_date
+        from featured_product
+        where product_id = $product_id and (date(end_date_time) > curdate()
+            or date(end_date_time) = '9999-01-01')
+        order by updated_at desc
+        limit 0, 1;
+EOT;
+        return DB::select($sql);
 
+
+    }
+
+    public static function savefeatured($product_id, $start_date, $end_date){
+        $sql = <<<EOT
+        insert into featured_product(product_id, start_date_time, end_date_time)
+        values($product_id, '$start_date', '$end_date');
+EOT;
+        return DB::insert($sql);
+
+    }
+
+    public static function updatefeatured($product_id, $start_date, $end_date){
+        $old_featured = Product::getactivefeatured($product_id);
+        $old_featured = $old_featured[0];
+        $sql = <<<EOT
+        update featured_product set
+            start_date_time = '$start_date',
+            end_date_time = '$end_date'
+        where product_id = $product_id
+            and date(start_date_time) = '$old_featured->start_date'
+            and date(end_date_time) = '$old_featured->end_date';
+
+EOT;
+        return DB::update($sql);
+
+    }
 
 }

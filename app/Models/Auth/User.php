@@ -76,19 +76,4 @@ class User extends Authenticatable
         'active' => 'boolean',
         'confirmed' => 'boolean',
     ];
-
-
-    public function role()
-    {
-        return $this->belongsToMany('App\role', 'role_user', 'id', 'role_id');
-    }
-//
-//    public function roles()
-//    {
-//        return $this->belongsToMany('App\Role')->withPivot('created_at', 'updated_at');
-//    }
-    //added by vanna
-    public function seller(){
-        return $this->hasOne('App\Seller','user_id','id');
-    }
 }

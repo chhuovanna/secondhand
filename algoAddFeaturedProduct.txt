@@ -1,0 +1,20 @@
+featured product
+1. add featured product
+    - add button for each product on the list :productcontroller@getproduct
+    - add action listener (js) on the button in :productindex
+        - promp the start_date (default=now) and end_date (empty for unlimited)
+        - create ajax request send to url: product/featuredproduct/add, data:start_date, end_date, product_id
+    - create route get product/featuredproduct/add associated with productcontroller@addFeaturedProduct :web.php
+    - create function addFeaturedProduct:productcontroller
+        - get start_date and end_date and product_id from request
+        - check if there is any active featured_product for the product
+            - yes: update
+            - no : insert to table featured_product
+                - if end_date is blank set it to 9999-01-01
+                - if end_date < current date , insert fail
+
+
+access control:
+- include use Illuminate\Support\Facades\Auth; to controller
+- see productcontroller, get product : Auth::user()->hasRole('administrator')
+
