@@ -127,12 +127,29 @@ class ProductController extends Controller
         echo 'showlalal'.$id;
     }
     public function edit($id) {
-        $product = Product::with('thumbnail')->with('photo')->find($id);
+
+        $product = Product::with('thumbnail')->with('photo')->with('post')->find($id);
+        $post = $product->post;
+        $seller = Seller::find($post->seller_id);
+
         $categories = Category::getSelectOptions();
-        return view('category.productedit',['categories'=>$categories, 'product'=>$product]);
+
+
+
+        if (Auth::user()->hasRole('administrator')) {
+            return view('category.productedit', ['categories' => $categories, 'product' => $product]);
+        }elseif ($seller->user_id == Auth::id()){
+            return view('category.productedit', ['categories' => $categories, 'product' => $product]);
+        }else{
+            return redirect()->back()->withFlashDanger("You don't have the permission");
+        }
+
     }
     public function update(Request $request, $id) {
-        $product = Product::with('thumbnail')->with('photo')->find($id);
+        $product = Product::with('thumbnail')->with('photo')->with('post')->find($id);
+        $post = $product->post;
+        $seller = Seller::find($post->seller_id);
+
         $product->product_id = $request->get('product_id');
         $product->name = $request->get('name');
         $product->price = $request->get('price');
@@ -377,7 +394,6 @@ class ProductController extends Controller
 
 
 
-
         
         if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
             $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
@@ -388,7 +404,8 @@ class ProductController extends Controller
             ;
         }else{
             $user = Auth::id();
-            $seller = Seller::where('user_id',$user);
+            $seller = Seller::where('user_id',$user)->first();
+
             $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
                                     , 'description','view_number','status','pickup_address','pickup_time','created_at'
                                     ,'updated_at',  'file_name', 'location', 'temp1.seller_id'])

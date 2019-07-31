@@ -72,7 +72,10 @@ class SellerController extends Controller
                     ->withFlashDanger("Seller can't be added. " . $e->getMessage());
 
             }
-        }else{ return "You don't have the permission";
+        }else{
+            return redirect()
+                ->back()
+                ->withFlashDanger("You don't have the permission"); // redirect back
         }
     }
     public function edit($id) {
@@ -94,7 +97,22 @@ class SellerController extends Controller
     }
 
     public function update(Request $request, $id) { // add access control
+        $permit = false;
         if (Auth::user()->hasRole('administrator')) {
+            $permit = true;
+        }else{
+            $user = Auth::id();
+            $seller = Seller::where('user_id',$user)->first();
+            if ($seller->seller_id == $id){
+                $permit = true;
+            }else{
+                return redirect()
+                    ->back()
+                    ->withFlashDanger("You dont have the permission " );
+            }
+        }
+
+        if($permit){
             $seller = Seller::find($id);
             $seller->seller_id = $request->get('seller_id');
             $seller->name = $request->get('name');
@@ -148,8 +166,6 @@ class SellerController extends Controller
                     ->withInput($request->all())
                     ->withFlashDanger("Seller can't be updated. " . $e->getMessage());
             }
-        }else{
-            return "You don't have the permission";
         }
     }
     public function destroy($id) {
