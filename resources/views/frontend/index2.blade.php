@@ -605,7 +605,7 @@
 								</li> -->
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 sort-by" data-sort="title">
-										Title
+										Name
 									</a>
 								</li>
 
