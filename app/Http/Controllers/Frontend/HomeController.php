@@ -28,5 +28,9 @@ class HomeController extends Controller
         return view('frontend.index2',['products' => $products, 'categories' => $categories]);
     }
 
+    public function shop(){
+        return view('frontend.shop');
+    }
+
 
 }

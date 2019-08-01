@@ -449,6 +449,16 @@ class ProductController extends Controller
             ->with('category')
             ->where('temp1.seller_id' , $seller->seller_id)
             ;
+            return Datatables::of($products)
+                        ->addColumn('action', function ($product) {
+                                                $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
+                                                $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
+                                                //$html .= '<a data-id="'.$product->product_id.'" class="btn btn-info btn-sm product-featured" data-toggle="modal" data-target="#featured_product_modal"><i class="fas fa-cog"></i></a>' ;
+                                                /*$html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;*/
+
+                                                return $html;
+                                            })
+                        ->make(true);
         }
 
 
@@ -502,32 +512,23 @@ class ProductController extends Controller
 
     //add access control
     public function getactivefeatured(Request $request){
-        $product = Product::with('thumbnail')->with('photo')->with('post')->find();
+        $product_id = $request->get('product_id');
+        $product = Product::with('thumbnail')->with('photo')->with('post')->find($product_id);
         $permit = false;
         if (Auth::user()->hasRole('administrator')) {
-            $permit = false;
-        } else {
-            $post = $product->post;
-            $admin = Admin::find($post->post_id);
-            // $user = Auth::id();
-            //$seller = Seller::where('user_id', $user)->first();
-            if ($admin->user_id == Auth::id()) {
-                $permit = true;
-            } else {
-                return redirect()
-                    ->back()
-                    ->withFlashDanger("You dont have the permission ");
-            }
+            $permit = true;
         }
 
         if ($permit) {
-            $product_id = $request->get('product_id');
+
             $featured_product = Product::getactivefeatured($product_id);
             if (sizeof($featured_product) > 0) {
                 return [1, $featured_product];
             } else {
                 return [0];
             }
+        }else{
+            return [2,"You don't have the permission. "];
         }
     }
 
@@ -535,26 +536,16 @@ class ProductController extends Controller
 
     public function savefeatured(Request $request)
     {
-        $product = Product::with('thumbnail')->with('photo')->with('post')->find();
+        $product_id = $request->get('product_id');
+        $product = Product::with('thumbnail')->with('photo')->with('post')->find($product_id);
         $permit = false;
         if (Auth::user()->hasRole('administrator')) {
-            $permit = false;
-        } else {
-            $post = $product->post;
-            $admin = Admin::find($post->post_id);
-            // $user = Auth::id();
-            //$seller = Seller::where('user_id', $user)->first();
-            if ($admin->user_id == Auth::id()) {
-                $permit = true;
-            } else {
-                return redirect()
-                    ->back()
-                    ->withFlashDanger("You dont have the permission ");
-            }
+            $permit = true;
         }
+
         if ($permit) {
 
-            $product_id = $request->get('product_id');
+
             $start_date = $request->get('start_date');
             $end_date = $request->get('end_date');
             $featured_product = Product::getactivefeatured($product_id);
@@ -580,6 +571,8 @@ class ProductController extends Controller
                 }
 
             }
+        }else{
+            return [2,"You don't have the permission. "];
         }
     }
 }

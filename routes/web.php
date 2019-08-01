@@ -55,6 +55,7 @@ Route::get('admin/product/getphotos', 'ProductController@getphotos');
 Route::get('admin/product/getactivefeatured','ProductController@getactivefeatured');
 Route::get('admin/product/savefeatured','ProductController@savefeatured');
 
+
 Route::resource('admin/category','CategoryController');
 Route::resource('admin/seller','SellerController');
 Route::resource('admin/product','ProductController');
