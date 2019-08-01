@@ -145,7 +145,11 @@
                 "order":[[0,'desc']]
                 });
         });
+<<<<<<< HEAD
     });
+=======
+
+>>>>>>> aaa19cf20856d4ccddbec228e43fb5bf489f7c57
         $(document).off('click','.product-delete');
         $(document).on('click','.product-delete' , function(){
             var confirm_delete = confirm("Do you really want to delete this product?");
@@ -281,7 +285,7 @@
         });
 
         $(document).off('click','#featured-close');
-        $(document).on('click','#featured-close', function(){
+        $(document).on('click','#featured-close', function() {
 
             $('#start_date').val('');
             $('#end_date').val('');
@@ -290,6 +294,7 @@
 
     </script>
 @endpush
+
 @push('after-styles')
     <style type="text/css">
         .lg-backdrop.in {
@@ -297,3 +302,4 @@
         }
     </style>
 @endpush
+
