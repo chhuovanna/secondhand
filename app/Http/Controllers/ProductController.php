@@ -508,10 +508,10 @@ class ProductController extends Controller
             $permit = false;
         } else {
             $post = $product->post;
-            $seller = Seller::find($post->seller_id);
+            $admin = Admin::find($post->post_id);
             // $user = Auth::id();
             //$seller = Seller::where('user_id', $user)->first();
-            if ($seller->user_id == Auth::id()) {
+            if ($admin->user_id == Auth::id()) {
                 $permit = true;
             } else {
                 return redirect()
@@ -541,10 +541,10 @@ class ProductController extends Controller
             $permit = false;
         } else {
             $post = $product->post;
-            $seller = Seller::find($post->seller_id);
+            $admin = Admin::find($post->post_id);
             // $user = Auth::id();
             //$seller = Seller::where('user_id', $user)->first();
-            if ($seller->user_id == Auth::id()) {
+            if ($admin->user_id == Auth::id()) {
                 $permit = true;
             } else {
                 return redirect()

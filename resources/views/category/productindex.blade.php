@@ -281,17 +281,17 @@
         });
 
         $(document).off('click','#featured-close');
-        $(document).on('click','#featured-close', function(){
+        $(document).on('click','#featured-close', function() {
 
             $('#start_date').val('');
             $('#end_date').val('');
             $('#modal_product_id').val('');
+
         });
-
-
 
     </script>
 @endpush
+
 @push('after-styles')
     <style type="text/css">
         .lg-backdrop.in {
@@ -299,3 +299,4 @@
         }
     </style>
 @endpush
+
