@@ -528,8 +528,20 @@
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
 						All Products
 					</button>
+                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
+                        {{--Women--}}
+                    {{--</button>--}}
+                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
+                        {{--Men--}}
+                    {{--</button>--}}
+                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
+                        {{--Shoes--}}
+                    {{--</button>--}}
+                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
+                        {{--Watches--}}
+                    {{--</button>--}}
 					@foreach($categories as $category)
-						@php /*$classname = str_replace(' ','-', $category->category);*/ $classname='test';@endphp
+						@php /*$classname = str_replace(' ','-', $category->category);*/$classname='test';@endphp
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
 						{{$category->name}}
 					</button>
@@ -548,7 +560,7 @@
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
 						Watches
 					</button> -->
-					<input type="hidden" class="filter-year" value='all'>
+					<input type="hidden" class="filter-price" value='all'>
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
@@ -646,35 +658,35 @@
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="50">
-										0 - 50$
+										$0 - $50
 										<!-- $0.00 - $50.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="100">
-										50$ - 100$
+										$50 - $100
 										<!-- $50.00 - $100.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="150">
-										100$ - 150$
+										$100 - $150
 										<!-- $100.00 - $150.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6"> 
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="200">
-										150$ - 200$
+										$150 - $200
 										<!-- $150.00 - $200.00 -->
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="after200">
-										200$+
+										$200+
 									</a>
 								</li>
 							</ul>

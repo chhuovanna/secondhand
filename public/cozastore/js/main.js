@@ -149,7 +149,7 @@
             $topeContainer.isotope({
                 filter: function(){
                     var price = parseInt($(this).find('.price').text());
-                    var filter_by = $('.filter-year').val();
+                    var filter_by = $('.filter-price').val();
                     var active_name = $('.how-active1').data('filter').substring(1);
                    // alert('imaher');
 
@@ -337,7 +337,7 @@
         $.ajax({
             type:"GET",
             url:"admin/product/getproductdetail",
-            data:{ mid:$(this).data('mid')  }   ,
+            data:{ product_id:$(this).data('product_id')  }   ,
             success: function (data) {
                 console.log(data);
                 if(data[0] == 1){
@@ -400,7 +400,7 @@
                     html = html + '<span class="mtext-106 cl2">'+product.price+'</span>';
                     html = html + '<p class="stext-102 cl3 p-t-23">Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.</p>';
                     html = html + '<p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">'
-                            +product.director+'</a></p>';
+                            +product.name+'</a></p>';
                     html = html 
                             +'<p class="stext-102 cl3 p-t-23">'
                              +   '<b>Pick up address:</b> 12, sangkat Phnom penh, kan phnom penh, city phnom penh'
@@ -591,12 +591,12 @@
            
             if (isNaN(filter_by)){
                 if (filter_by  == 'all'){
-                    if ( active_name == '')
+                    if ( active_name === '')
                         return true;
                     else
                         return $(this).hasClass(active_name);
                 }else{
-                    if ( active_name == '')
+                    if ( active_name ==='')
                         return (price >= 200 );
                     else
                         return (price >= 200 ) && $(this).hasClass(active_name);
@@ -607,7 +607,7 @@
                 
                 if (price >= (filter_by - 50) &&  price <= filter_by){
 
-                    if ( active_name == '')
+                    if ( active_name === '')
                         return true;
                     else
                         return $(this).hasClass(active_name);
