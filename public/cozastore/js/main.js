@@ -23,7 +23,7 @@
         overlayParentElement : 'html',
         transition: function(url){ window.location.href = url; }
     });
-    
+
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height()/2;
@@ -52,26 +52,26 @@
     else {
         var posWrapHeader = 0;
     }
-    
+
 
     if($(window).scrollTop() > posWrapHeader) {
         $(headerDesktop).addClass('fix-menu-desktop');
-        $(wrapMenu).css('top',0); 
-    }  
+        $(wrapMenu).css('top',0);
+    }
     else {
         $(headerDesktop).removeClass('fix-menu-desktop');
-        $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop()); 
+        $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop());
     }
 
     $(window).on('scroll',function(){
         if($(this).scrollTop() > posWrapHeader) {
             $(headerDesktop).addClass('fix-menu-desktop');
-            $(wrapMenu).css('top',0); 
-        }  
+            $(wrapMenu).css('top',0);
+        }
         else {
             $(headerDesktop).removeClass('fix-menu-desktop');
-            $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop()); 
-        } 
+            $(wrapMenu).css('top',posWrapHeader - $(this).scrollTop());
+        }
     });
 
 
@@ -104,7 +104,7 @@
                     $(arrowMainMenu).removeClass('turn-arrow-main-menu-m');
                 }
             });
-                
+
         }
     });
 
@@ -137,9 +137,9 @@
             var filterValue = $(this).attr('data-filter');
             $topeContainer.isotope({filter: filterValue});
         });
-        
+
     });
-*/    
+*/
 
     /////////////////////edited by vanna
     $filter.each(function () {
@@ -149,14 +149,14 @@
             $topeContainer.isotope({
                 filter: function(){
                     var price = parseInt($(this).find('.price').text());
-                    var filter_by = $('.filter-year').val();
+                    var filter_by = $('.filter-price').val();
                     var active_name = $('.how-active1').data('filter').substring(1);
                    // alert('imaher');
 
                     //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
-                    
-                    
-                   
+
+
+
                     if (isNaN(filter_by)){
                         if (filter_by  == 'all'){
                             if ( active_name === '')
@@ -169,10 +169,10 @@
                             else
                                 return (price >= 200 ) && $(this).hasClass(active_name);
                         }
-                        
+
                     }else{
                         filter_by = parseInt(filter_by);
-                        
+
                         if (price >= (filter_by - 50) &&  price <= filter_by){
 
                             if ( active_name === '')
@@ -186,7 +186,7 @@
                 }
             });
         });
-        
+
     })
 
     // init Isotope
@@ -225,7 +225,7 @@
         if($('.js-show-search').hasClass('show-search')) {
             $('.js-show-search').removeClass('show-search');
             $('.panel-search').slideUp(400);
-        }    
+        }
     });
 
     $('.js-show-search').on('click',function(){
@@ -235,7 +235,7 @@
         if($('.js-show-filter').hasClass('show-filter')) {
             $('.js-show-filter').removeClass('show-filter');
             $('.panel-filter').slideUp(400);
-        }    
+        }
     });
 
 
@@ -314,7 +314,7 @@
             }
         });
     });
-    
+
     /*==================================================================
     [ Show modal1 ]*/
 /*
@@ -337,7 +337,7 @@
         $.ajax({
             type:"GET",
             url:"admin/product/getproductdetail",
-            data:{ mid:$(this).data('mid')  }   ,
+            data:{ product_id:$(this).data('product_id')  }   ,
             success: function (data) {
                 console.log(data);
                 if(data[0] == 1){
@@ -349,7 +349,7 @@
                     var size;
                     var i;
                     var temp;
-                    
+
 
                     if (product['photos'].length > 0){
                         //alert('hter');
@@ -368,7 +368,7 @@
                             html = html + '<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'
                                         +location+'">';
                             html = html + '<i class="fa fa-expand"></i></a></div></div>';
-                            
+
                         }
                         gl_container.prepend(html);
                         html = "";
@@ -377,7 +377,7 @@
 
                     if (product['thumbnail'] !== null){
                         location = product['thumbnail']['location']+'\\'+product['thumbnail']['file_name'];
-                        
+
                     }else{
                         location = product['thumbnail_id'];
                     }
@@ -388,11 +388,11 @@
                     html = html + '<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'
                                 +location+'">';
                     html = html + '<i class="fa fa-expand"></i></a></div></div>';
-                    
+
 /*                    html = html + '<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'
                                 +location+'">';
                     html = html + '<i class="fa fa-expand"></i></a>';
-*/                    
+*/
                     gl_container.prepend(html);
                     html = "";
 
@@ -400,8 +400,8 @@
                     html = html + '<span class="mtext-106 cl2">'+product.price+'</span>';
                     html = html + '<p class="stext-102 cl3 p-t-23">Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.</p>';
                     html = html + '<p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">'
-                            +product.director+'</a></p>';
-                    html = html 
+                            +product.name+'</a></p>';
+                    html = html
                             +'<p class="stext-102 cl3 p-t-23">'
                              +   '<b>Pick up address:</b> 12, sangkat Phnom penh, kan phnom penh, city phnom penh'
                             +'</p>'
@@ -421,7 +421,7 @@
                             +'<p class="stext-102 cl3 p-t-23">'
                              +   '<b>Email:</b> seller@gmail.com'
                             +'</p>'
-                            
+
                            + '<p class="stext-102 cl3 p-t-23">'
                             +    '<b>Instant Message:</b> seller (kakao)'
                             +'</p>';
@@ -440,7 +440,7 @@
 
                     $('.wrap-slick3').each(function(){
                         var ele = $(this).find('.slick3');
-                        
+
                         if (ele !== null){
 
                             ele.slick({
@@ -462,20 +462,20 @@
                                 customPaging: function(slick, index) {
                                     var portrait = $(slick.$slides[index]).data('thumb');
                                     return '<img src=" ' + portrait + ' "/><div class="slick3-dot-overlay"></div>';
-                                },  
+                                },
                             });
 
                         }
                     });
-                    
+
                 }
             },
             error: function(data){
                 console.log(data);
             }
-    
+
         });
-        
+
     });
 
     $(document).off('click','.js-hide-modal1');
@@ -492,10 +492,10 @@
 
     /*===================================================================[ Load more ]*/
 
-    
+
     $(document).off('click','#loadmore');
     $(document).on('click', '#loadmore', function(){
-           
+
         var offset = parseInt($('#offset').val());
         offset = offset + 20;
         //alert(offset);
@@ -520,8 +520,8 @@
                     error: function(data){
                         console.log(data);
                     }
-            }); 
-    
+            });
+
     });
  /*===================================================================[ sort by ]*/
 
@@ -570,44 +570,44 @@
     $(document).off('click','.filter-by');
     $(document).on('click','.filter-by', function(){
         var old_active = $('.filter-link-active.filter-by');
-        
+
 
         $(this).addClass('filter-link-active');
         old_active.removeClass('filter-link-active');
-        
+
         $('.filter-price').val($(this).data('filter'));
 
 
-        
+
         $topeContainer.isotope({
-         
+
           filter: function() {
             var price = parseInt($(this).find('.price').text());
             var filter_by = $('.filter-price').val();
             var active_name = $('.how-active1').data('filter').substring(1);
 
             //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
-            
-           
+
+
             if (isNaN(filter_by)){
                 if (filter_by  == 'all'){
-                    if ( active_name == '')
+                    if ( active_name === '')
                         return true;
                     else
                         return $(this).hasClass(active_name);
                 }else{
-                    if ( active_name == '')
+                    if ( active_name ==='')
                         return (price >= 200 );
                     else
                         return (price >= 200 ) && $(this).hasClass(active_name);
                 }
-                
+
             }else{
                 filter_by = parseInt(filter_by);
-                
+
                 if (price >= (filter_by - 50) &&  price <= filter_by){
 
-                    if ( active_name == '')
+                    if ( active_name === '')
                         return true;
                     else
                         return $(this).hasClass(active_name);
@@ -617,9 +617,10 @@
             }
           }
         });
-        
+
 
     })
+
 
 
 })(jQuery);

@@ -153,15 +153,16 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::with('thumbnail')->with('photo')->with('post')->find($id);
-        $post = $product->post;
-        $seller = Seller::find($post->seller_id);
-        $permit = true;
+
+        $permit = false;
         if (Auth::user()->hasRole('administrator')) {
-            $permit = true;
+            $permit = false;
         } else {
-            $user = Auth::id();
-            $seller = Seller::where('user_id', $user)->first();
-            if ($seller->seller_id == $id) {
+            $post = $product->post;
+            $seller = Seller::find($post->seller_id);
+           // $user = Auth::id();
+            //$seller = Seller::where('user_id', $user)->first();
+            if ($seller->user_id == Auth::id()) {
                 $permit = true;
             } else {
                 return redirect()
@@ -170,8 +171,8 @@ class ProductController extends Controller
             }
         }
         if ($permit) {
-            $product = Product::find($id);
-            $product->product_id = $request->get('product_id');
+            //$product = Product::find($id);
+            //$product->product_id = $request->get('product_id');
             $product->name = $request->get('name');
             $product->price = $request->get('price');
             $product->description = $request->get('description');
@@ -281,65 +282,79 @@ class ProductController extends Controller
     }
 
     public function destroy($id){
-        if (Auth::user()->hasRole('administrator')) {
+                $product = Product::with('thumbnail')->with('photo')->with('post')->find($id);
+                $permit = false;
+                if (Auth::user()->hasRole('administrator')) {
+                    $permit = false;
+                } else {
+                    $post = $product->post;
+                    $seller = Seller::find($post->seller_id);
+                    // $user = Auth::id();
+                    //$seller = Seller::where('user_id', $user)->first();
+                    if ($seller->user_id == Auth::id()) {
+                        $permit = true;
+                    } else {
+                        return redirect()
+                            ->back()
+                            ->withFlashDanger("You dont have the permission ");
+                    }
+                }
+                if ($permit) {
+                try {
 
-        try {
+                    //to get the array of photos of the product
+                    $product = Product::with('photo')->with('thumbnail')->find($id);
+                    $photos = $product->photo;
+                    $res['photos'] = true;
+                    if ($photos) {
+                        foreach ($photos as $photo) {
+                            $file = public_path($photo->location) . '\\' . $photo->file_name;
+                            if (File::exists($file)) {
 
-            //to get the array of photos of the product
-            $product = Product::with('photo')->with('thumbnail')->find($id);
-            $photos = $product->photo;
-            $res['photos'] = true;
-            if ($photos) {
-                foreach ($photos as $photo) {
-                    $file = public_path($photo->location) . '\\' . $photo->file_name;
-                    if (File::exists($file)) {
+                                if (File::delete($file)) {//delete the file from the folder
+                                    $res['photos'] = $res['photos'] && $photo->delete(); //delete the file from database
+                                }
 
-                        if (File::delete($file)) {//delete the file from the folder
-                            $res['photos'] = $res['photos'] && $photo->delete(); //delete the file from database
+                            }
                         }
 
                     }
-                }
-
-            }
 
 
-            //to get thumbnail of the product to be deleted. in product model, there is function called thumbnail
-            $thumbnail = $product->thumbnail;
+                    //to get thumbnail of the product to be deleted. in product model, there is function called thumbnail
+                    $thumbnail = $product->thumbnail;
 
-            $post = $product->post;
+                    $post = $product->post;
 
-            //delete product from database
-            $res['product'] = Product::destroy($id);
+                    //delete product from database
+                    $res['product'] = Product::destroy($id);
 
-            $otherproduct = $post->product;
-            if (sizeof($otherproduct) == 0) {
-                $post->delete();
-            }
-
-            if ($thumbnail) {
-                $file = $file = public_path($thumbnail->location) . '\\' . $thumbnail->file_name;
-                //test if the thumbnail file exists or not
-                if (File::exists($file)) {
-                    //delete the file from the folder
-                    if (File::delete($file)) {
-                        //delete the thumbnail of the product from database;
-                        $res['thumbnail'] = $thumbnail->delete();
+                    $otherproduct = $post->product;
+                    if (sizeof($otherproduct) == 0) {
+                        $post->delete();
                     }
+
+                    if ($thumbnail) {
+                        $file = $file = public_path($thumbnail->location) . '\\' . $thumbnail->file_name;
+                        //test if the thumbnail file exists or not
+                        if (File::exists($file)) {
+                            //delete the file from the folder
+                            if (File::delete($file)) {
+                                //delete the thumbnail of the product from database;
+                                $res['thumbnail'] = $thumbnail->delete();
+                            }
+                        }
+                    }
+
+
+                    if ($res['product'])
+                        return [1];
+                    else
+                        return [0];
+                } catch (\Exception $e) {
+                    return [0, $e->getMessage()];
                 }
             }
-
-
-            if ($res['product'])
-                return [1];
-            else
-                return [0];
-        } catch (\Exception $e) {
-            return [0, $e->getMessage()];
-        }
-    }else{
-            return [0, "You don't have the permission"];
-        }
 }
 
 
@@ -434,6 +449,16 @@ class ProductController extends Controller
             ->with('category')
             ->where('temp1.seller_id' , $seller->seller_id)
             ;
+            return Datatables::of($products)
+                        ->addColumn('action', function ($product) {
+                                                $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
+                                                $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
+                                                //$html .= '<a data-id="'.$product->product_id.'" class="btn btn-info btn-sm product-featured" data-toggle="modal" data-target="#featured_product_modal"><i class="fas fa-cog"></i></a>' ;
+                                                /*$html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;*/
+
+                                                return $html;
+                                            })
+                        ->make(true);
         }
 
 
@@ -483,42 +508,71 @@ class ProductController extends Controller
         }else
             return [0];
     }
+
+
+    //add access control
     public function getactivefeatured(Request $request){
-        $product_id =$request->get('product_id');
-        $featured_product = Product::getactivefeatured($product_id);
-        if(sizeof($featured_product)  > 0){
-            return [1,$featured_product];
+        $product_id = $request->get('product_id');
+        $product = Product::with('thumbnail')->with('photo')->with('post')->find($product_id);
+        $permit = false;
+        if (Auth::user()->hasRole('administrator')) {
+            $permit = true;
+        }
+
+        if ($permit) {
+
+            $featured_product = Product::getactivefeatured($product_id);
+            if (sizeof($featured_product) > 0) {
+                return [1, $featured_product];
+            } else {
+                return [0];
+            }
         }else{
-            return [0];
+            return [2,"You don't have the permission. "];
         }
     }
 
-    public function savefeatured(Request $request){
+    //add access control
+
+    public function savefeatured(Request $request)
+    {
         $product_id = $request->get('product_id');
-        $start_date = $request->get('start_date');
-        $end_date = $request->get('end_date');
-        $featured_product = Product::getactivefeatured($product_id);
-
-        if($end_date == null){
-            $end_date = '9999-01-01';
+        $product = Product::with('thumbnail')->with('photo')->with('post')->find($product_id);
+        $permit = false;
+        if (Auth::user()->hasRole('administrator')) {
+            $permit = true;
         }
-        if (sizeof($featured_product) == 1){
 
-           try{
-                Product::updatefeatured($product_id, $start_date, $end_date);
-                return[1];
-            }catch(\Exception $e){
-                return [0,$e->getMessage()];
+        if ($permit) {
+
+
+            $start_date = $request->get('start_date');
+            $end_date = $request->get('end_date');
+            $featured_product = Product::getactivefeatured($product_id);
+
+            if ($end_date == null) {
+                $end_date = '9999-01-01';
             }
+            if (sizeof($featured_product) == 1) {
 
+                try {
+                    Product::updatefeatured($product_id, $start_date, $end_date);
+                    return [1];
+                } catch (\Exception $e) {
+                    return [0, $e->getMessage()];
+                }
+
+            } else {
+                try {
+                    Product::savefeatured($product_id, $start_date, $end_date);
+                    return [1];
+                } catch (\Exception $e) {
+                    return [0, $e->getMessage()];
+                }
+
+            }
         }else{
-            try{
-                Product::savefeatured($product_id, $start_date, $end_date);
-                return[1];
-            }catch(\Exception $e){
-                return [0,$e->getMessage()];
-            }
-
+            return [2,"You don't have the permission. "];
         }
     }
 }

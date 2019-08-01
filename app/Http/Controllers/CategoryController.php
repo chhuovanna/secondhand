@@ -274,14 +274,21 @@ class CategoryController extends Controller
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) AS temp'),'category.image_id', '=', 'temp.image_id')
         ;///need to use subquery with DB::raw to avoid ambigous of created_at and updated_at when search
 
-        return Datatables::of($categorys)
-            ->addColumn('action', function ($category) {
-                $html = '<a href="'.route('category.edit', ['category_id' => $category->category_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
-                $html .= '<a data-id="'.$category->category_id.'" class="btn btn-danger btn-sm category-delete"><i class="far fa-trash-alt"></i></i> Delete</a>&nbsp;&nbsp;&nbsp;' ;
+        if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
+            return Datatables::of($categorys)
+                ->addColumn('action', function ($category) {
+                    $html = '<a href="'.route('category.edit', ['category_id' => $category->category_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
+                    $html .= '<a data-id="'.$category->category_id.'" class="btn btn-danger btn-sm category-delete"><i class="far fa-trash-alt"></i></i> Delete</a>&nbsp;&nbsp;&nbsp;' ;
 
-                return $html;
-            })
-            ->make(true);
+                    return $html;
+                })
+                ->make(true);
+        }else{
+            return Datatables::of($categorys)
+            ->addColumn('action', function ($category) {
+                                return "No action";
+            })->make(true);
+        }
     }
 
     //phan moi them

@@ -53,7 +53,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Featured Product Setting</h4>
-                    <button type="button" class="close " id="featured-close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close featured-close" data-dismiss="modal">&times;</button>
 
                 </div>
                 <div class="modal-body">
@@ -73,7 +73,7 @@
                     <input type="hidden" id="modal_product_id" value="">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="featured-close" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary featured-close"  data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="featured-ok" data-dismiss="modal">Ok</button>
 
                 </div>
@@ -146,7 +146,7 @@
                 });
         });
 
-    // });
+
         $(document).off('click','.product-delete');
         $(document).on('click','.product-delete' , function(){
             var confirm_delete = confirm("Do you really want to delete this product?");
@@ -214,7 +214,7 @@
         });
 
         $(document).off('click','.product-featured');
-        $(document).on('click','.product-featured', function(){
+        $(document).on('click','.product-featured', function( ){
 
             $('#modal_product_id').val($(this).data('id'));
 
@@ -233,7 +233,7 @@
                         $('#start_date').val(mydate.start_date);
                         $('#end_date').val(mydate.end_date);
 
-                    }else{
+                    }else if (data[0]==0){
                         $('.operation').empty();
                         $('.operation').append('<h5>Add</h5>');
                         var today = new Date();
@@ -243,6 +243,9 @@
 
                         today = yyyy+'-'+mm+'-'+dd;
                         $('#start_date').val(today);
+                    }else if(data[0]==2){
+                        $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >'+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                        //e.stopPropagation();
                     }
                 },
                 error: function(data){
@@ -251,8 +254,8 @@
             });
         });
 
-        $(document).off('click','#featured-ok');
-        $(document).on('click','#featured-ok', function(){
+        $(document).off('click','.featured-ok');
+        $(document).on('click','.featured-ok', function(){
             $.ajax({
                 type:"GET",
                 url:"product/savefeatured",
@@ -265,8 +268,10 @@
                     if (data[0] == 1){
                         $('.col').prepend('</div><div class="alert alert-success alert-dismissible fade show success-msg" role="alert" >Featured Product Saved<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 
-                    }else{
+                    }else if (data[0]==0){
                         $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to save featured product. '+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                    }else if (data[0] == 2){
+                        $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >'+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                     }
 
                 },
@@ -282,17 +287,16 @@
         });
 
         $(document).off('click','#featured-close');
-        $(document).on('click','#featured-close', function(){
+        $(document).on('click','#featured-close', function() {
 
             $('#start_date').val('');
             $('#end_date').val('');
             $('#modal_product_id').val('');
         });
 
-
-
     </script>
 @endpush
+
 @push('after-styles')
     <style type="text/css">
         .lg-backdrop.in {
@@ -300,3 +304,4 @@
         }
     </style>
 @endpush
+

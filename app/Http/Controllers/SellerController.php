@@ -292,6 +292,15 @@ class SellerController extends Controller
                 , 'seller.updated_at', 'location', 'file_name'])
                 ->leftJoin(DB::raw('(select image_id, file_name, location from image) AS temp'), 'seller.image_id', '=', 'temp.image_id')
                 ->where('seller.seller_id',$seller->seller_id);
+                return Datatables::of($sellers)
+
+                ->addColumn('action', function ($seller) {
+                    $html = '<a href="'.route('seller.edit', ['seller_id' => $seller->seller_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>&nbsp;&nbsp;&nbsp;';
+                    //$html .= '<a data-id="'.$seller->seller_id.'" class="btn btn-danger btn-sm seller-delete"><i class="far fa-trash-alt"></i></i> Delete</a>&nbsp;&nbsp;&nbsp;' ;
+
+                    return $html;
+                })
+                ->make(true);
         }
         return Datatables::of($sellers)
 
