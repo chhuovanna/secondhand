@@ -145,10 +145,8 @@
                 "order":[[0,'desc']]
                 });
         });
-<<<<<<< HEAD
-=======
-    });
->>>>>>> 19b566c91a7729f54cb31832877a2405e28185ee
+
+    // });
         $(document).off('click','.product-delete');
         $(document).on('click','.product-delete' , function(){
             var confirm_delete = confirm("Do you really want to delete this product?");

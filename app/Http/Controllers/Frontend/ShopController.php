@@ -9,12 +9,12 @@ use App\category;
 /**
  * Class HomeController.
  */
-class HomeController extends Controller
+class ShopController extends Controller
 {
     /**
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function shop()
     {
         $categories = Category::all();
         $products = Product::all();
