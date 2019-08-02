@@ -22,7 +22,7 @@ class CreateFeaturedProductTable extends Migration
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             //add primary key
-            $table->primary(['product_id', 'start_date_time']);
+            $table->primary(['product_id', 'start_date_time','end_date_time']);
             $table->engine = 'InnoDB';
 
         });

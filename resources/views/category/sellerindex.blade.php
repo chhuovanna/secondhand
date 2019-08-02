@@ -36,9 +36,9 @@
 
                             <th>Type</th>
 
-                            <th>Created_at</th>
+                            {{--<th>Created_at</th>--}}
 
-                            <th>Updated_at</th>
+                            {{--<th>Updated_at</th>--}}
 
                             <th>Action</th>
 
@@ -91,8 +91,8 @@
                     {data: 'phone', name: 'phone'},
                     {data: 'message_account', name: 'message_account'},
                     {data: 'type', name: 'type'},
-                    {data: 'created_at', name: 'created_at'},
-                    {data: 'updated_at', name: 'updated_at'},
+                    // {data: 'created_at', name: 'created_at'},
+                    // {data: 'updated_at', name: 'updated_at'},
                     {data:'action', name: 'action', orderable: false, searchable: false}
 
                 ]
@@ -115,7 +115,7 @@
                                 $('.col').prepend('</div><div class="alert alert-success alert-dismissible fade show success-msg" role="alert" >Deleted<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                                 oTable.ajax.reload(null, false);
                             }else{
-                                $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to delete'+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                                $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to delete. '+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                                 console.log(data);
                             }
 

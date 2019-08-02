@@ -16,7 +16,7 @@ class Post extends Model
     }
 
     public function seller(){ //create seller function
-        return $this->belongTo('App\Seller','seller_id','seller_id');
+        return $this->belongsTo('App\Seller','seller_id','seller_id');
 
     }
 }

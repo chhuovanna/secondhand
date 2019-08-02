@@ -16,7 +16,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $categories = Category::all();
+        $products = Product::all();
+        return view('frontend.index2', ['categories' => $categories, 'products' => $products]);
     }
 
     public function test()
@@ -24,6 +26,10 @@ class HomeController extends Controller
     	$categories = Category::get();
     	$products = Product::with('thumbnail')->with('category')->skip(0)->take(10)->get();
         return view('frontend.index2',['products' => $products, 'categories' => $categories]);
+    }
+
+    public function shop(){
+        return view('frontend.shop');
     }
 
 
