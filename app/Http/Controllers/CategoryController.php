@@ -29,6 +29,7 @@ class CategoryController extends Controller
                 ->back()
                 ->withFlashDanger("You don't have the permission");
         }
+        
     }
     public function store(Request $request)
     { //add access control
@@ -91,12 +92,12 @@ class CategoryController extends Controller
     { // add access control
         if (Auth::user()->hasRole('administrator')) {
             $category = Category::find($id);
-            $category->category_id = $request->get('category_id');
+            //$category->category_id = $request->get('category_id');
             $category->name = $request->get('name');
             $category->description = $request->get('description');
             //$category->image_id = $request->get('image_id');
-            $category->created_at = $request->get('created_at');
-            $category->updated_at = $request->get('updated_at');
+            //$category->created_at = $request->get('created_at');
+            //$category->updated_at = $request->get('updated_at');
 
             $validateData = $request->validate([
                 'image_id' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
@@ -130,6 +131,7 @@ class CategoryController extends Controller
 
                     $old_image->delete(); //delete the old image if user add a new one
                 }
+                
 
                 return redirect()->route('category.index')->withFlashSuccess('Category is updated');
             } catch (\Exception $e) {
