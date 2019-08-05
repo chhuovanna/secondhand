@@ -87,6 +87,36 @@
                             </div><!--row-->
                         @endif
 
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+
+                                {{--{{ html()->label('Register as seller? ')->for('is_reg_seller') }}--}}
+
+                                {{--{{ html()->checkbox('is_reg_seller',false)--}}
+
+                                    {{--->placeholder('Register as seller')--}}
+                                {{--}}--}}
+
+                                Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()">
+
+                                <p id="text" style="display:none">Register as seller?</p>
+
+                                <script>
+                                    function myFunction() {
+                                        var checkBox = document.getElementById("myCheck");
+                                        var text = document.getElementById("text");
+                                        if (checkBox.checked == true){
+                                            text.style.display = "block";
+                                        } else {
+                                            text.style.display = "none";
+                                        }
+                                    }
+                                </script>
+
+                            </div><!--form-group-->
+                        </div><!--col-->
+                    </div><!--row-->
                         <div class="row">
                             <div class="col">
                                 <div class="form-group mb-0 clearfix">
@@ -94,6 +124,8 @@
                                 </div><!--form-group-->
                             </div><!--col-->
                         </div><!--row-->
+
+
                     {{ html()->form()->close() }}
 
                     <div class="row">

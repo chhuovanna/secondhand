@@ -18,6 +18,7 @@ Route::post('contact/send', [ContactController::class, 'send'])->name('contact.s
 Route::get('shop','HomeController@shop');
 
 
+
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'
