@@ -116,7 +116,7 @@
 							</li>
 
 							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
+								<a href="{{url('/features')}}">Features</a>
 							</li>
 
 							<!-- <li>
@@ -124,11 +124,11 @@
 							</li> -->
 
 							<li class='menu-about'>
-								<a href="about.html">About</a>
+								<a href="{{url('/about')}}">About</a>
 							</li>
 
 							<li class="menu-contact">
-								<a href="contact.html">Contact</a>
+								<a href="{{url('/contact')}}">Contact</a>
 							</li>
 						</ul>
 					</div>
