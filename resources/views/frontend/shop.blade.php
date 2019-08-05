@@ -1,12 +1,14 @@
 @extends('frontend.layouts.indexlayout')
 @section('content')
 
+
 <section class="bg0 p-t-23 p-b-140">
         <div class="container">
             <div class="filter-col4 p-b-27">
                             <div class="mtext-102 cl2 p-b-15 testoutput">
                                 <!-- Director -->
                             </div>
+
 
                             <div class="flex-w p-t-4 m-r--5">
                                 </div>
