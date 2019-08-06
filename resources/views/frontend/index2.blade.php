@@ -16,18 +16,7 @@
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
 						All Products
 					</button>
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Women--}}
-                    {{--</button>--}}
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Men--}}
-                    {{--</button>--}}
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Shoes--}}
-                    {{--</button>--}}
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Watches--}}
-                    {{--</button>--}}
+
 					@foreach($categories as $category)
 						@php /*$classname = str_replace(' ','-', $category->category);*/$classname='test';@endphp
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
@@ -36,19 +25,23 @@
 					@endforeach
 
 
-<!--
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-						Bag
-					</button>
+					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".Women">--}}
+						{{--Women--}}
+					{{--</button>--}}
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-						Shoes
-					</button>
+					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".Men">--}}
+						{{--Men--}}
+					{{--</button>--}}
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-						Watches
-					</button> -->
-					<input type="hidden" class="filter-price" value='all'>
+					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">--}}
+						{{--Shoes--}}
+					{{--</button>--}}
+
+					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">--}}
+						{{--Watches--}}
+					{{--</button> --}}
+					{{--<input type="hidden" class="filter-price" value='all'>--}}
+
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
@@ -71,9 +64,40 @@
 						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</button>
-
 						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+						{{--<ul>--}}
+						{{----}}
+						{{--<li class="p-b-6">--}}
+							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-link-active filter-by" data-filter="all">--}}
+								{{--All Products--}}
+							{{--</a>--}}
+						{{--</li>--}}
 
+						{{--<li class="p-b-6">--}}
+							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="women">--}}
+							{{--Women--}}
+							{{--</a>--}}
+						{{--</li>--}}
+
+						{{--<li class="p-b-6">--}}
+							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="men">--}}
+								{{--Men--}}
+							{{--</a>--}}
+						{{--</li>--}}
+
+						{{--<li class="p-b-6">--}}
+							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="shoes">--}}
+							{{--Shoes--}}
+							{{--</a>--}}
+						{{--</li>--}}
+
+						{{--<li class="p-b-6">--}}
+							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="watches ">--}}
+								{{--Watches--}}
+							{{--</a>--}}
+						{{--</li>--}}
+
+						{{--</ul>--}}
 					</div>
 				</div>
 
@@ -284,8 +308,15 @@
 
 			<div class="row isotope-grid">
 				@foreach ($products as $product)
-					@php /*$director = str_replace(' ','-',$product->director);*/$director='test';@endphp
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$director}}" data-mid="{{$product->product_id}}">
+					@php
+						$category = '';
+						$categories = $product->category ;
+						foreach ($categories as $ele){
+							$category .= str_replace(' ','-',$ele->name) . ' ';
+						}
+
+					@endphp
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$category}}" data-mid="{{$product->product_id}}">
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">

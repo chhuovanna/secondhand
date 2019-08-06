@@ -575,4 +575,103 @@ class ProductController extends Controller
             return [2,"You don't have the permission. "];
         }
     }
+    public function home(){
+
+        $products = Product::getProductsWithThumbnail();
+        $categorys = Product::select(DB::raw('distinct if(isnull(category),"Unknown",category) as category'))->get();
+        return view('frontend.index',['products'=>$products
+            , 'categorys'=>$categorys]);
+    }
+    public function getproductmore(Request $request){
+
+        $products = Product::getProductsWithThumbnail($request->get('offset(0)'));
+
+        if(sizeof($products) > 0){
+            $items = array();
+
+            foreach ($products as $product){
+                $category = str_replace(' ','-',$product->category);
+                $html = "";
+                $html .= <<<eot
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category" data-product_id="$product>Product_ID">
+					<!-- Block2 -->
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+eot;
+                if($product->file_name){
+                    $location = asset($product->location);
+                    $html .= <<<eot
+							
+							<img src="$location/$->file_name" alt="IMG-PRODUCT">
+eot;
+                }else{
+                    $location = asset('images/thumbnail');
+                    $html .= <<<eot
+
+							<img src="$location/default.png" alt="IMG-PRODUCT">
+eot;
+                }
+                $location = asset('cozastore');
+                $html .= <<<eot
+							<a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="$product->product_ID">
+								Quick View
+							</a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								
+
+								<span class="stext-105 cl3">
+									<b class='title'>$product->name</b>
+								</span>
+
+								<span class="stext-105 cl3 price">
+									$product->price
+								</span>
+
+								<span class="stext-105 cl3 category">
+									$product->category
+								</span>
+							</div>
+
+ 							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</div>
+ 						</div>
+					</div>
+				</div>
+eot;
+                $items[] = $html;
+            }
+
+
+            //return [1,$html];
+            return [1,$items];
+        }
+        else
+            return [0];
+    }
+    public function getproductdetail(Request $request){
+        $product = Product::with('photos')->with('thumbnail')->find($request->get('product_id'));
+        if(isset($product->thumbnail)){
+            $location = asset(str_replace('\\','/',$product->thumbnail->location));
+            $product->thumbnail->location = $location;
+        }else{
+            $product->thumbnail_id = asset('images/thumbnail').'/default.png';
+        }
+
+        if(isset($product->photos)){
+            $size = sizeof($product->photos);
+            for($i = 0 ; $i < $size; $i ++){
+                $location = asset(str_replace('\\','/',$product->photos[$i]->location));
+                $product->photos[$i]->location = $location;
+            }
+
+        }
+        return [1,$product];
+    }
 }

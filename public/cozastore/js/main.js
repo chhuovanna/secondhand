@@ -150,7 +150,7 @@
                 filter: function(){
                     var price = parseInt($(this).find('.price').text());
                     var filter_by = $('.filter-price').val();
-                    var active_name = $('.how-active1').data('filter').substring(1);
+                    var active_category = $('.how-active1').data('filter').substring(1);
                    // alert('imaher');
 
                     //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
@@ -159,15 +159,15 @@
 
                     if (isNaN(filter_by)){
                         if (filter_by  == 'all'){
-                            if ( active_name === '')
+                            if ( active_category === '')
                                 return true;
                             else
-                                return $(this).hasClass(active_name);
+                                return $(this).hasClass(active_category);
                         }else{
-                            if ( active_name === '')
+                            if ( active_category === '')
                                 return (price >= 200 );
                             else
-                                return (price >= 200 ) && $(this).hasClass(active_name);
+                                return (price >= 200 ) && $(this).hasClass(active_category);
                         }
 
                     }else{
@@ -175,10 +175,10 @@
 
                         if (price >= (filter_by - 50) &&  price <= filter_by){
 
-                            if ( active_name === '')
+                            if ( active_category === '')
                                 return true;
                             else
-                                return $(this).hasClass(active_name);
+                                return $(this).hasClass(active_category);
                         }
                         else
                             return false;
@@ -527,7 +527,7 @@
 
     $topeContainer.isotope({
         getSortData: {
-            product_id: '[data-mid] parseInt',
+            product_id: '[data-product_id] parseInt',
             name: '.name',
             price: '.price parseInt'
         },

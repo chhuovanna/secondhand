@@ -8,6 +8,7 @@ use App\Helpers\Frontend\Auth\Socialite;
 use App\Events\Frontend\Auth\UserRegistered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Repositories\Frontend\Auth\UserRepository;
+use App\Seller;
 
 /**
  * Class RegisterController.
@@ -38,7 +39,16 @@ class RegisterController extends Controller
      */
     public function redirectPath()
     {
-        return route(home_route());
+        //added by vanna
+        $user_id = auth()->id();
+        $seller = Seller::where('user_id',$user_id)->first();
+        //first time login
+        if (isset($seller) && is_null($seller->image_id )){
+            return url('admin/seller/'.$seller->seller_id.'/edit');
+        }else{
+            return route(home_route());
+        }
+
     }
 
     /**
@@ -64,7 +74,7 @@ class RegisterController extends Controller
     {
         abort_unless(config('access.registration'), 404);
 
-        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password'));
+        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password','is_seller'));
 
         // If the user must confirm their email or their account requires approval,
         // create the account but don't log them in.
