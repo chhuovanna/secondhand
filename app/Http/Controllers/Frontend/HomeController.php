@@ -45,8 +45,9 @@ class HomeController extends Controller
     }
 
     public function about(){
+        $contact = Contact::first();
         
-        return view('frontend.about');
+        return view('frontend.about',['contact' => $contact]);
         
     }
 
