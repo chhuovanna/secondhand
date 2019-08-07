@@ -3,6 +3,7 @@
 use App\Helpers\General\Timezone;
 use App\Helpers\General\HtmlHelper;
 
+
 /*
  * Global helpers file with misc functions.
  */

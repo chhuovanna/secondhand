@@ -91,28 +91,35 @@
                         <div class="col">
                             <div class="form-group">
 
-                                {{--{{ html()->label('Register as seller? ')->for('is_reg_seller') }}--}}
+                                <!-- Default switch -->
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="is_seller" name="is_seller" value="1">
+                                    <label class="custom-control-label" for="is_seller">Register as seller?</label>
+                                </div>
+
+
+                            {{--{{ html()->label('Register as seller? ')->for('is_reg_seller') }}--}}
 
                                 {{--{{ html()->checkbox('is_reg_seller',false)--}}
 
                                     {{--->placeholder('Register as seller')--}}
                                 {{--}}--}}
 
-                                Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()">
+                                {{--Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()">--}}
 
-                                <p id="text" style="display:none">Register as seller?</p>
+                                {{--<p id="text" style="display:none">Register as seller?</p>--}}
 
-                                <script>
-                                    function myFunction() {
-                                        var checkBox = document.getElementById("myCheck");
-                                        var text = document.getElementById("text");
-                                        if (checkBox.checked == true){
-                                            text.style.display = "block";
-                                        } else {
-                                            text.style.display = "none";
-                                        }
-                                    }
-                                </script>
+                                {{--<script>--}}
+                                    {{--function myFunction() {--}}
+                                        {{--var checkBox = document.getElementById("myCheck");--}}
+                                        {{--var text = document.getElementById("text");--}}
+                                        {{--if (checkBox.checked == true){--}}
+                                            {{--text.style.display = "block";--}}
+                                        {{--} else {--}}
+                                            {{--text.style.display = "none";--}}
+                                        {{--}--}}
+                                    {{--}--}}
+                                {{--</script>--}}
 
                             </div><!--form-group-->
                         </div><!--col-->

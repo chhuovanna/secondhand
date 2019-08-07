@@ -54,6 +54,8 @@ Route::get('admin/product/createwithpost/{post}', 'ProductController@createwitho
 Route::get('admin/product/getphotos', 'ProductController@getphotos');
 Route::get('admin/product/getactivefeatured','ProductController@getactivefeatured');
 Route::get('admin/product/savefeatured','ProductController@savefeatured');
+Route::get('admin/product/getproductmore,ProductController@getproductmore');
+Route::get('admin/product/getproductdetail,ProductController@getproductdetail');
 
 
 Route::resource('admin/category','CategoryController');
