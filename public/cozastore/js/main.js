@@ -501,7 +501,7 @@
         //alert(offset);
         $.ajax({
                     type:"GET",
-                    url:"admin/product/getproductmore",
+                    url:"admin/product/getproductmore/",
                     data:{ offset: offset  }   ,
                     success: function (data) {
                         console.log(data);
@@ -514,6 +514,8 @@
                                 $('.isotope-grid').append( $content );
                                 $('.isotope-grid').isotope( 'insert', $content );
                             }
+
+                            offset = (offset - 20) +items.length;
                             $('#offset').val(offset);
                         }
                     },

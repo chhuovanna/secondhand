@@ -575,25 +575,32 @@ class ProductController extends Controller
             return [2,"You don't have the permission. "];
         }
     }
-    public function home(){
+    /*public function home(){
 
-        $products = Product::getProductsWithThumbnail();
-        $categorys = Product::select(DB::raw('distinct if(isnull(category),"Unknown",category) as category'))->get();
+        $products = Product::getProductsWithThumbnailCategory();
+        $categorys = Category::all();
         return view('frontend.index',['products'=>$products
             , 'categorys'=>$categorys]);
-    }
+    }*/
     public function getproductmore(Request $request){
 
-        $products = Product::getProductsWithThumbnail($request->get('offset(0)'));
+        $products = Product::getProductsWithThumbnailCategory($request->get('offset'));
 
         if(sizeof($products) > 0){
             $items = array();
 
             foreach ($products as $product){
-                $category = str_replace(' ','-',$product->category);
+                $category = "";
+                $category_name = "";
+                $categories = $product->category;
+                foreach ($categories as $ele){
+                    $category .= str_replace(' ','-',$ele->name). " ";
+                    $category_name .= $ele->name. ", ";
+                }
+                $category_name = substr($category_name,0,strlen($category_name )-2);
                 $html = "";
                 $html .= <<<eot
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category" data-product_id="$product>Product_ID">
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category" data-product_id="$product->product_id">
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
@@ -601,8 +608,8 @@ eot;
                 if($product->file_name){
                     $location = asset($product->location);
                     $html .= <<<eot
-							
-							<img src="$location/$->file_name" alt="IMG-PRODUCT">
+
+							<img src="$location/$product->file_name" alt="IMG-PRODUCT">
 eot;
                 }else{
                     $location = asset('images/thumbnail');
@@ -613,17 +620,17 @@ eot;
                 }
                 $location = asset('cozastore');
                 $html .= <<<eot
-							<a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="$product->product_ID">
+							<a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="$product->product_id">
 								Quick View
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								
+
 
 								<span class="stext-105 cl3">
-									<b class='title'>$product->name</b>
+									<b class='pname'>$product->name</b>
 								</span>
 
 								<span class="stext-105 cl3 price">
@@ -631,7 +638,7 @@ eot;
 								</span>
 
 								<span class="stext-105 cl3 category">
-									$product->category
+									$category_name
 								</span>
 							</div>
 
