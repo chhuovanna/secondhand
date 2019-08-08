@@ -25,6 +25,11 @@ class ContactController extends Controller
         return view('frontend.shop');
     }
 
+    public function contact()
+    {
+        return view('frontend.contact');
+    }
+
     /**
      * @param SendContactRequest $request
      *

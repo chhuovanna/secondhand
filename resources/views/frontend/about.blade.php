@@ -2,7 +2,7 @@
 @section('content')
 
 
-tel:{{$contact->phone}}
+
 
 @endsection
 
