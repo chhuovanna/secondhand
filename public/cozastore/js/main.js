@@ -497,7 +497,7 @@
     $(document).on('click', '#loadmore', function(){
 
         var offset = parseInt($('#offset').val());
-        offset = offset + 20;
+
         //alert(offset);
         $.ajax({
                     type:"GET",
@@ -515,7 +515,7 @@
                                 $('.isotope-grid').isotope( 'insert', $content );
                             }
 
-                            offset = (offset - 20) +items.length;
+                            offset = offset  +items.length;
                             $('#offset').val(offset);
                         }
                     },

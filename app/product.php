@@ -94,6 +94,7 @@ EOT;
             ->with('category')
             ->offset($offset)
             ->take(20)
+            ->orderBy('product.product_id','desc')
             ->get();
 
         return $products;
