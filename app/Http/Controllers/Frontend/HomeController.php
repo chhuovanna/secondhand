@@ -17,9 +17,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $products = Product::getProductsWithThumbnailCategory();
         $categories = Category::all();
-        //$products = Product::offset(0)->take(20);
-        $products = Product::all();
         return view('frontend.index2', ['categories' => $categories, 'products' => $products]);
     }
 

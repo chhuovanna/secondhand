@@ -65,39 +65,6 @@
 							<i class="zmdi zmdi-search"></i>
 						</button>
 						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-						{{--<ul>--}}
-						{{----}}
-						{{--<li class="p-b-6">--}}
-							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-link-active filter-by" data-filter="all">--}}
-								{{--All Products--}}
-							{{--</a>--}}
-						{{--</li>--}}
-
-						{{--<li class="p-b-6">--}}
-							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="women">--}}
-							{{--Women--}}
-							{{--</a>--}}
-						{{--</li>--}}
-
-						{{--<li class="p-b-6">--}}
-							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="men">--}}
-								{{--Men--}}
-							{{--</a>--}}
-						{{--</li>--}}
-
-						{{--<li class="p-b-6">--}}
-							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="shoes">--}}
-							{{--Shoes--}}
-							{{--</a>--}}
-						{{--</li>--}}
-
-						{{--<li class="p-b-6">--}}
-							{{--<a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-by" data-filter="watches ">--}}
-								{{--Watches--}}
-							{{--</a>--}}
-						{{--</li>--}}
-
-						{{--</ul>--}}
 					</div>
 				</div>
 
@@ -309,23 +276,26 @@
 			<div class="row isotope-grid">
 				@foreach ($products as $product)
 					@php
-						$category = '';
-						$categories = $product->category ;
+						$category = "";
+						$category_name = "";
+						$categories = $product->category;
 						foreach ($categories as $ele){
-							$category .= str_replace(' ','-',$ele->name) . ' ';
+							$category .= str_replace(' ','-',$ele->name). " ";
+							$category_name .= $ele->name. ", ";
 						}
+						$category_name = substr($category_name,0,strlen($category_name )-2);
 
 					@endphp
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$category}}" data-mid="{{$product->product_id}}">
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$category}}" data-product_id="{{$product->product_id}}">
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
-							@if($product->thumbnail->file_name)
-							<img src="{{asset($product->thumbnail->location)}}/{{$product->thumbnail->file_name}}" alt="IMG-PRODUCT">
+							@if($product->file_name)
+							<img src="{{asset($product->location)}}/{{$product->file_name}}" alt="IMG-PRODUCT">
 							@else
 							<img src="{{asset('images/thumbnail')}}/default.png" alt="IMG-PRODUCT">
 							@endif
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-mid="{{$product->product_id}}">
+							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="{{$product->product_id}}">
 								Quick View
 							</a>
 						</div>
@@ -335,16 +305,16 @@
 
 
 								<span class="stext-105 cl3 ">
-									<b class="title">{{$product->name}}</b>
+									<b class="pname">{{$product->name}}</b>
 								</span>
 
 
-								<span class="stext-105 cl3 year">
+								<span class="stext-105 cl3 price">
 									{{$product->price}}
 								</span>
 
-								<span class="stext-105 cl3 director">
-									{{$product->description}}
+								<span class="stext-105 cl3 category">
+									{{$category_name}}
 								</span>
 							</div>
 
@@ -364,7 +334,9 @@
 
 			<!-- Load more -->
 			<div class="flex-c-m flex-w w-full p-t-45">
-				<input id="offset" value="0" type='hidden'>
+				@php $num_product = sizeof($products);@endphp
+
+				<input id="offset" value="{{$num_product}}" type='hidden'>
 				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore">
 					Load More
 				</a>

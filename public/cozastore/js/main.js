@@ -497,11 +497,11 @@
     $(document).on('click', '#loadmore', function(){
 
         var offset = parseInt($('#offset').val());
-        offset = offset + 20;
+
         //alert(offset);
         $.ajax({
                     type:"GET",
-                    url:"admin/product/getproductmore",
+                    url:"admin/product/getproductmore/",
                     data:{ offset: offset  }   ,
                     success: function (data) {
                         console.log(data);
@@ -514,6 +514,8 @@
                                 $('.isotope-grid').append( $content );
                                 $('.isotope-grid').isotope( 'insert', $content );
                             }
+
+                            offset = offset  +items.length;
                             $('#offset').val(offset);
                         }
                     },

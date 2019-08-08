@@ -85,4 +85,22 @@ EOT;
 
     }
 
+    public static function getProductsWithThumbnailCategory($offset=0){
+        $products = Product::select(['product.product_id', 'product.name', 'price'
+            , 'description','view_number','status','pickup_address','pickup_time','created_at'
+            ,'updated_at',  'file_name', 'location'])
+            ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
+                ,'product.image_id', '=', 'temp.image_id')
+            ->with('category')
+            ->offset($offset)
+            ->take(20)
+            ->orderBy('product.product_id','desc')
+            ->get();
+
+        return $products;
+
+    }
+
+
+
 }
