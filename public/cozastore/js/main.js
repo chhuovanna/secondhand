@@ -148,7 +148,7 @@
 
             $topeContainer.isotope({
                 filter: function(){
-                    var price = parseInt($(this).find('.price').text());
+                    var price = Number($(this).find('.price').text());
                     var filter_by = $('.filter-price').val();
                     var active_category = $('.how-active1').data('filter').substring(1);
                    // alert('imaher');
@@ -171,7 +171,7 @@
                         }
 
                     }else{
-                        filter_by = parseInt(filter_by);
+                        filter_by = Number(filter_by);
 
                         if (price >= (filter_by - 50) &&  price <= filter_by){
 
@@ -330,7 +330,6 @@
 */
 
     //added by vanna
-
     $(document).off('click', '.js-show-modal1');
     $(document).on('click', '.js-show-modal1',function(e){
         $('.js-modal1').addClass('show-modal1');
@@ -584,39 +583,41 @@
         $topeContainer.isotope({
 
           filter: function() {
-            var price = parseInt($(this).find('.price').text());
-            var filter_by = $('.filter-price').val();
-            var active_name = $('.how-active1').data('filter').substring(1);
+              var price = Number($(this).find('.price').text());
+              var filter_by = $('.filter-price').val();
+              var active_category = $('.how-active1').data('filter').substring(1);
+              // alert('imaher');
 
-            //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
+              //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
 
 
-            if (isNaN(filter_by)){
-                if (filter_by  == 'all'){
-                    if ( active_name === '')
-                        return true;
-                    else
-                        return $(this).hasClass(active_name);
-                }else{
-                    if ( active_name ==='')
-                        return (price >= 200 );
-                    else
-                        return (price >= 200 ) && $(this).hasClass(active_name);
-                }
 
-            }else{
-                filter_by = parseInt(filter_by);
+              if (isNaN(filter_by)){
+                  if (filter_by  == 'all'){
+                      if ( active_category === '')
+                          return true;
+                      else
+                          return $(this).hasClass(active_category);
+                  }else{
+                      if ( active_category === '')
+                          return (price >= 200 );
+                      else
+                          return (price >= 200 ) && $(this).hasClass(active_category);
+                  }
 
-                if (price >= (filter_by - 50) &&  price <= filter_by){
+              }else{
+                  filter_by = Number(filter_by);
 
-                    if ( active_name === '')
-                        return true;
-                    else
-                        return $(this).hasClass(active_name);
-                }
-                else
-                    return false;
-            }
+                  if (price >= (filter_by - 50) &&  price <= filter_by){
+
+                      if ( active_category === '')
+                          return true;
+                      else
+                          return $(this).hasClass(active_category);
+                  }
+                  else
+                      return false;
+              }
           }
         });
 

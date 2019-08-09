@@ -156,7 +156,7 @@ class ProductController extends Controller
 
         $permit = false;
         if (Auth::user()->hasRole('administrator')) {
-            $permit = false;
+            $permit = true;
         } else {
             $post = $product->post;
             $seller = Seller::find($post->seller_id);
@@ -267,6 +267,22 @@ class ProductController extends Controller
                         $file->move(public_path($photo->location), $photo->file_name);
 
 
+                    }
+                }
+                $category = $request->get('category_id');
+                $old_category = $product->category;
+                $array_old_category = $old_category->pluck('category_id')->toArray();
+                print_r($array_old_category);
+
+                foreach ($old_category as $ele){
+                    if (!in_array ( $ele->category_id, $category )){
+                        $product->category()->detach($ele->category_id);
+                    }
+                }
+
+                foreach ($category as $ele){
+                    if (!in_array ( $ele, $array_old_category )){
+                        $product->category()->attach($ele);
                     }
                 }
 

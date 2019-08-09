@@ -40,7 +40,7 @@
 					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">--}}
 						{{--Watches--}}
 					{{--</button> --}}
-					{{--<input type="hidden" class="filter-price" value='all'>--}}
+					<input type="hidden" class="filter-price" value='all'>
 
 				</div>
 
@@ -272,6 +272,7 @@
 			</div>
 
 
+{{--Load more and quick View for home page--}}
 
 			<div class="row isotope-grid">
 				@foreach ($products as $product)
