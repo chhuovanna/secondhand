@@ -11,6 +11,7 @@ use App\Image; //need to use it to call new Image();
 use App\Category;
 use Datatables;
 
+
 use DB;
 
 
