@@ -32,8 +32,8 @@ class HomeController extends Controller
 
 
     public function shop(){
-        $categories = Category::all();
-        $sellers = Seller::all();
+            $sellers = Seller::getSellersWithThumbnailCategory();
+            $categories = Category::all();
         return view('frontend.shop', ['categories' => $categories, 'sellers' => $sellers]);
         //return view('frontend.shop');
     }

@@ -312,6 +312,74 @@ class SellerController extends Controller
             })
             ->make(true);
     }
+//for shop
+     public function getsellermore(Request $request){
+        $sellers = Seller::getSellersWithThumbnailCategory($request->get('offset'));
+        if(sizeof($sellers) > 0){
+            $items = array();
+            foreach ($sellers as $seller){
+                $category = "";
+                $category_name = "";
+                $categories = $seller->category;
+                foreach ($categories as $ele){
+                    $category .= str_replace(' ','-',$ele->name). " ";
+                    $category_name .= $ele->name. ", ";
+                }
+                $category_name = substr($category_name,0,strlen($category_name )-2);
+                $html = "";
+                $html .= <<<eot
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category" data-seller_id="$seller->seller_id">
+                    <!-- Block2 -->
+                    <div class="block2">
+                        <div class="block2-pic hov-img0">
+eot;
+                if($seller->file_name){
+                    $location = asset($seller->location);
+                    $html .= <<<eot
+                            <img src="$location/$seller->file_name" alt="IMG-SELLER">
+eot;
+                }else{
+                    $location = asset('images/thumbnail');
+                    $html .= <<<eot
+                            <img src="$location/default.png" alt="IMG-SELLER">
+eot;
+                }
+                $location = asset('cozastore');
+                $html .= <<<eot
+                            <a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-seller_id="$seller->seller_id">
+                                Quick View
+                            </a>
+                        </div>
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt-child1 flex-col-l ">
+                                <span class="stext-105 cl3">
+                                    <b class='pname'>$seller->name</b>
+                                </span>
+                                <span class="stext-105 cl3 price">
+                                    $seller->price
+                                </span>
+                                <span class="stext-105 cl3 category">
+                                    $category_name
+                                </span>
+                            </div>
+                            <div class="block2-txt-child2 flex-r p-t-3">
+                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                    <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+                                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+eot;
+                $items[] = $html;
+            }
+            //return [1,$html];
+            return [1,$items];
+        }
+        else
+            return [0];
+    }
 //    //phan moi them
 //
 //    public function home(){
