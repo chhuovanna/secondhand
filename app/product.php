@@ -93,7 +93,7 @@ EOT;
                 ,'product.image_id', '=', 'temp.image_id')
             ->with('category')
             ->offset($offset)
-            ->take(20)
+            ->take(4)
             ->orderBy('product.product_id','desc')
             ->get();
 

@@ -18,7 +18,7 @@
 					</button>
 
 					@foreach($categories as $category)
-						@php /*$classname = str_replace(' ','-', $category->category);*/$classname='test';@endphp
+						@php $classname = str_replace(' ','-', $category->name);@endphp
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
 						{{$category->name}}
 					</button>
@@ -330,6 +330,9 @@
 				</div>
 
 				@endforeach
+
+
+				
 			</div>
 
 

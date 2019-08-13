@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 
-use App\product;
-use App\category;
-use App\seller;
+use App\Product;
+use App\Category;
+use App\Seller;
+use App\About;
 /**
  * Class HomeController.
  */
@@ -32,9 +33,9 @@ class HomeController extends Controller
 
 
     public function shop(){
-        $categories = Category::all();
-        $sellers = Seller::all();
-        return view('frontend.shop', ['categories' => $categories, 'sellers' => $sellers]);
+            $sellers = Seller::getSellersWithImage();
+            
+        return view('frontend.shop', ['sellers' => $sellers]);
         //return view('frontend.shop');
     }
 
@@ -45,9 +46,10 @@ class HomeController extends Controller
     }
 
     public function about(){
-        $contact = Contact::first();
+    
+        $about = About::first();
         
-        return view('frontend.about',['contact' => $contact]);
+        return view('frontend.about' , ['about' => $about]);
         
     }
 
