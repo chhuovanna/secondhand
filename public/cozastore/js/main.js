@@ -570,7 +570,7 @@
         //alert(offset);
         $.ajax({
                     type:"GET",
-                    url:"admin/seller/getsellermore/",
+                    url:"admin/product/getproductmore/",
                     data:{ offset: offset  }   ,
                     success: function (data) {
                         console.log(data);
@@ -600,8 +600,11 @@
     $topeContainer.isotope({
         getSortData: {
             product_id: '[data-product_id] parseInt',
-            name: '.name',
-            price: '.price parseInt'
+            name: '.pname',
+            price:function( itemElem ) { // function
+                var price = $( itemElem ).find('.price').text();
+                return parseFloat(price );
+              }
         },
     });
 
@@ -641,6 +644,8 @@
 /*===================================================================[ filter by ]*/
     $(document).off('click','.filter-by');
     $(document).on('click','.filter-by', function(){
+
+       
         var old_active = $('.filter-link-active.filter-by');
 
 
