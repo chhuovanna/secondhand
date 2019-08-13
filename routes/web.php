@@ -57,6 +57,8 @@ Route::get('admin/product/savefeatured','ProductController@savefeatured');
 Route::get('admin/product/getproductmore','ProductController@getproductmore');
 Route::get('admin/seller/getsellermore','SellerController@getsellermore');
 Route::get('admin/product/getproductdetail','ProductController@getproductdetail');
+//Route::get('contact/create','ContactController@store');
+
 
 
 Route::resource('admin/category','CategoryController');
