@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\Category;
 use App\Seller;
+use App\About;
 /**
  * Class HomeController.
  */
@@ -46,8 +47,9 @@ class HomeController extends Controller
 
     public function about(){
     
+        $about = About::first();
         
-        return view('frontend.about');
+        return view('frontend.about' , ['about' => $about]);
         
     }
 

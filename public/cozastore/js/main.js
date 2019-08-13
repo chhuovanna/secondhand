@@ -524,6 +524,40 @@
             });
 
     });
+
+
+    $(document).off('click','#loadmore_shop');
+    $(document).on('click', '#loadmore_shop', function(){
+
+        var offset = parseInt($('#offset').val());
+
+        //alert(offset);
+        $.ajax({
+                    type:"GET",
+                    url:"admin/seller/getsellermore/",
+                    data:{ offset: offset  }   ,
+                    success: function (data) {
+                        console.log(data);
+                        if(data[0] == 1){
+                            var i;
+                            var items = data[1];
+                            var $content;
+                            for (i=0; i< items.length; i ++){
+                                $content = $(items[i]);
+                                $('.isotope-grid').append( $content );
+                                $('.isotope-grid').isotope( 'insert', $content );
+                            }
+
+                            offset = offset  +items.length;
+                            $('#offset').val(offset);
+                        }
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+            });
+
+    });
  /*===================================================================[ sort by ]*/
 
  // for seller

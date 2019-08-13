@@ -11,13 +11,13 @@
 	<h5>INFORMATION</h5>
 <table class="label">
 <tr><td class="text-left"><i class="fa fa-phone" style="font-size:24px"></i>
-    		+855 023 / 81 881 887</td></tr>
+    		+(855) {{$about->phone}}</td></tr>
 <tr><td class="text-left"><i class="fa fa-envelope" style="font-size:24px"></i>
-    		info@ctr-system.com</td></tr>
+    		{{$about->email}}</td></tr>
 <tr><td class="text-left"><i class="fa fa-globe" style="font-size:24px"></i>
-    		www.ctr-system.com</td></tr>
+    		{{$about->website}}</td></tr>
 <tr><td class="text-left"><i class="fa fa-map-marker" style="font-size:24px"></i>
-    		St 259, Sangkat Toek Laak 1, Khan Toul Kork,<br> Phnom Penh, Cambodia.</td></tr>
+    		{{$about->address}}</td></tr>
 </table>
 
 

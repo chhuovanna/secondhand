@@ -315,21 +315,12 @@ class SellerController extends Controller
     }
 //for shop
      public function getsellermore(Request $request){
-        $sellers = Seller::getSellersWithThumbnailCategory($request->get('offset'));
+        $sellers = Seller::getSellersWithImage($request->get('offset'));
         if(sizeof($sellers) > 0){
             $items = array();
             foreach ($sellers as $seller){
-                $category = "";
-                $category_name = "";
-                $categories = $seller->category;
-                foreach ($categories as $ele){
-                    $category .= str_replace(' ','-',$ele->name). " ";
-                    $category_name .= $ele->name. ", ";
-                }
-                $category_name = substr($category_name,0,strlen($category_name )-2);
-                $html = "";
-                $html .= <<<eot
-                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category" data-seller_id="$seller->seller_id">
+                $html = <<<eot
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" data-seller_id="$seller->seller_id">
                     <!-- Block2 -->
                     <div class="block2">
                         <div class="block2-pic hov-img0">
@@ -353,15 +344,26 @@ eot;
                         </div>
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">
-                                <span class="stext-105 cl3">
-                                    <b class='pname'>$seller->name</b>
-                                </span>
-                                <span class="stext-105 cl3 price">
-                                    $seller->price
-                                </span>
-                                <span class="stext-105 cl3 category">
-                                    $category_name
-                                </span>
+                            <span class="stext-105 cl3 ">
+                                <b class="sname">$seller->name</b>
+                            </span>
+
+
+                            <span class="stext-105 cl3 address">
+                                $seller->address
+                            </span>
+                            <span class="stext-105 cl3 email">
+                                $seller->email
+                            </span>
+                            <span class="stext-105 cl3 phone">
+                                $seller->phone
+                            </span>
+                            <span class="stext-105 cl3 message_account">
+                                $seller->message_account
+                            </span>
+                            <span class="stext-105 cl3 type">
+                                $seller->type
+                            </span>
                             </div>
                             <div class="block2-txt-child2 flex-r p-t-3">
                                 <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">

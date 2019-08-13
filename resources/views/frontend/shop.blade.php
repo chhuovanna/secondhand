@@ -71,11 +71,11 @@
 
 
                                 <span class="stext-105 cl3 ">
-                                    <b class="pname">{{$seller->name}}</b>
+                                    <b class="sname">{{$seller->name}}</b>
                                 </span>
 
 
-                                <span class="stext-105 cl3 price">
+                                <span class="stext-105 cl3 address">
                                     {{$seller->address}}
                                 </span>
                                 <span class="stext-105 cl3 email">
@@ -87,7 +87,9 @@
                                 <span class="stext-105 cl3 message_account">
                                     {{$seller->message_account}}
                                 </span>
-
+                                <span class="stext-105 cl3 type">
+                                    {{$seller->type}}
+                                </span>
                                
                             </div>
 
@@ -110,7 +112,7 @@
                 @php $num_seller = sizeof($sellers);@endphp
 
                 <input id="offset" value="{{$num_seller}}" type='hidden'>
-                <a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore">
+                <a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore_shop">
                     Load More
                 </a>
             </div>
@@ -120,3 +122,9 @@
 
 
 @endsection
+@push('after-scripts')
+    <script>
+        $('.active-menu').removeClass('active-menu');
+        $('.menu-shop').addClass('active-menu');
+    </script>
+@endpush		
