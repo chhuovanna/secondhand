@@ -529,8 +529,8 @@
     $topeContainer.isotope({
         getSortData: {
             product_id: '[data-product_id] parseInt',
-            name: '.name',
-            price: '.price parseInt'
+            name: '.pname',
+            price: '.price Number'
         },
     });
 
@@ -547,7 +547,7 @@
             });
         }else if(sort_by == 'name'){
             $topeContainer.isotope({
-                sortBy: 'name'
+                sortBy: 'pname'
             });
         }else if(sort_by == 'newness'){
             $topeContainer.isotope({
