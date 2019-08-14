@@ -679,7 +679,11 @@ eot;
             return [0];
     }
     public function getproductdetail(Request $request){
-        $product = Product::with('photos')->with('thumbnail')->find($request->get('product_id'));
+        $product = Product::with('photo')->with('thumbnail')->with('category')->find($request->get('product_id'));
+
+        $post = Post::where('post_id',$product->post_id)->first();
+        $seller = Seller::where('seller_id',$post->seller_id)->first();
+
         if(isset($product->thumbnail)){
             $location = asset(str_replace('\\','/',$product->thumbnail->location));
             $product->thumbnail->location = $location;
@@ -688,13 +692,13 @@ eot;
         }
 
         if(isset($product->photos)){
-            $size = sizeof($product->photos);
+            $size = sizeof($product->photo);
             for($i = 0 ; $i < $size; $i ++){
                 $location = asset(str_replace('\\','/',$product->photos[$i]->location));
                 $product->photos[$i]->location = $location;
             }
 
         }
-        return [1,$product];
+        return [1,$product, $seller];
     }
 }
