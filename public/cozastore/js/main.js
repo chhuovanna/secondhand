@@ -330,6 +330,7 @@
 */
 
     //added by vanna
+    // Quick View
     $(document).off('click', '.js-show-modal1');
     $(document).on('click', '.js-show-modal1',function(e){
         $('.js-modal1').addClass('show-modal1');
@@ -348,11 +349,13 @@
                     var size;
                     var i;
                     var temp;
+                    var category_name;
+                    var category;
 
 
-                    if (product['photos'].length > 0){
+                    if (product['photo'].length > 0){
                         //alert('hter');
-                        size = product['photos'].length;
+                        size = product['photo'].length;
                         for (i = 0; i< size ; i++){
 /*
                             location = movie['photos'][i]['location']+'\\'+movie['photos'][i]['file_name'];
@@ -360,7 +363,7 @@
                                         +location+'">';
                             html = html + '<i class="fa fa-expand"></i></a>';
 */
-                            location = product['photos'][i]['location']+'\\'+product['photos'][i]['file_name'];
+                            location = product['photo'][i]['location']+'\\'+product['photo'][i]['file_name'];
                             html = html + '<div class="item-slick3" data-thumb="'+location+'">';
                             html = html + '<div class="wrap-pic-w pos-relative">';
                             html = html + '<img src="'+location+'" alt="IMG-PRODUCT">';
@@ -395,34 +398,44 @@
                     gl_container.prepend(html);
                     html = "";
 
+                    category_name = "";
+                    category = product['category'];
+                    //alert(category);
+                    for (i = 0 ; i < category.length; i++){
+
+                        category_name = category_name + category[i].name +  ", ";
+                    }
+                    category_name = category_name.substring(0, category_name.length - 2);
+
+
                     html = '<h4 class="mtext-105 cl2 js-name-detail p-b-14">'+product.name+'</h4>';
                     html = html + '<span class="mtext-106 cl2">'+product.price+'</span>';
                     html = html + '<p class="stext-102 cl3 p-t-23">Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.</p>';
                     html = html + '<p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">'
-                            +product.name+'</a></p>';
+                            +category_name+'</a></p>';
                     html = html
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Pick up address:</b> 12, sangkat Phnom penh, kan phnom penh, city phnom penh'
+                             +   '<b>Name:</b> Lam Thi Tha'
                             +'</p>'
 
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Pick up time:</b> Weekend from 9 am to 4 pm'
+                             +   '<b>Address</b> # Street 336, Sangkat Boeung Salang,Khan Toul Kork, Phnom Penh'
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Seller name:</b> <a href="#">Dara Sok</a>'
+                             +   '<b>Email:</b> <a href="#">lamthitha.itc@gmail.com</a>'
                             +'</p>'
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Tel:</b> 0121234569'
+                             +   '<b>Phone:</b> 0715454520'
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Email:</b> seller@gmail.com'
+                             +   '<b>Message Account:</b> sdfg'
                             +'</p>'
 
                            + '<p class="stext-102 cl3 p-t-23">'
-                            +    '<b>Instant Message:</b> seller (kakao)'
+                            +    '<b>Type:</b> Individual/Shop '
                             +'</p>';
 
                     text_container.prepend(html);
@@ -486,7 +499,7 @@
 
     });
 
-
+    //end quick view
     //added by vanna
 
     /*===================================================================[ Load more ]*/

@@ -679,7 +679,7 @@ eot;
             return [0];
     }
     public function getproductdetail(Request $request){
-        $product = Product::with('photo')->with('thumbnail')->find($request->get('product_id'));
+        $product = Product::with('photo')->with('thumbnail')->with('category')->find($request->get('product_id'));
 
         $post = Post::where('post_id',$product->post_id)->first();
         $seller = Seller::where('seller_id',$post->seller_id)->first();
