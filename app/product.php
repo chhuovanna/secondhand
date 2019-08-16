@@ -28,6 +28,7 @@ class Product extends Model
         return $this->belongsToMany('App\Category','product_category', 'product_id','category_id'); //belong to many category
     }
 
+    
     public function thumbnail()
     {
         return $this->belongsTo('App\Image','image_id','image_id');
