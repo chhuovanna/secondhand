@@ -40,10 +40,11 @@ class MessageController extends Controller
     }
 
     public function markread(Request $request){
-        $product_id = $request->get('product_id');
+        $message_id = $request->get('id');
         $message = Message::find($message_id);
         $message->status = 1;
         $message->save();
+        return redirect()->back();
     }
 
 }

@@ -1,19 +1,13 @@
 @extends('backend.layouts.app')
-
 @section('title', app_name() . ' | ' . __('strings.backend.dashboard.title'))
-
 @section('content')
     <div class="row">
         <div class="col">
-
             <div class="card">
-
                 <div class="card-header">
                     <strong>@lang('strings.backend.dashboard.welcome') {{ $logged_in_user->name }}!</strong>
-                </div><!--card-header-->
-                
+                </div><!--card-header-->                
                     <table id="message" class="table table-hover table-condensed" style="width:100%">
-
                         <thead>
                         <tr>
                             <th>Id</th>
@@ -75,7 +69,7 @@
                     {data: 'status', name: 'status',
                         render:function ( data, type, row, meta ) {
                             if (data == 0){
-                                return 'New';
+                                return '<b>Unread</b><span class="badge badge-pill badge-danger"><b>New<b></span>';
                             }else{
                                 return "Read";
                             }

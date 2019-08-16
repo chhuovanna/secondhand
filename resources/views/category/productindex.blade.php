@@ -1,17 +1,14 @@
-
 @extends('backend.layouts.app')
 @section('title', app_name() . ' | ' . __('strings.backend.dashboard.title'))
 @section('content')
     <div class="row">
         <div class="col">
-
             <div class="card">
                 <div class="card-header">
                     <strong>@lang('strings.backend.dashboard.welcome') {{ $logged_in_user->name }}!</strong>
                 </div><!--card-header-->
                 <div class="card-body">
                     <div style="padding:10px"><a href="{!!route('product.create')!!}"><button type="button" class="btn btn-success btn-sm pull-right">Add Product</button></a></div>
-
                     <table id="product" class="table table-hover table-condensed" style="width:100%">
                         <thead>
                         <tr>
