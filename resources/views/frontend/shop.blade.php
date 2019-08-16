@@ -55,7 +55,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" data-seller_id="{{$seller->seller_id}}">
                     <!-- Block2 -->
                     <div class="block2">
-                        <div class="block2-pic hov-img0">
+                        <div class="block2-pic hov-img0" style="height:100%">
                             @if($seller->file_name)
                             <img src="{{asset($seller->location)}}/{{$seller->file_name}}" alt="IMG-SELLER">
                             @else
