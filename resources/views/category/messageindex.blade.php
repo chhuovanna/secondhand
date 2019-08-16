@@ -6,7 +6,8 @@
             <div class="card">
                 <div class="card-header">
                     <strong>@lang('strings.backend.dashboard.welcome') {{ $logged_in_user->name }}!</strong>
-                </div><!--card-header-->                
+                </div><!--card-header--> 
+                <div class="card-body">
                     <table id="message" class="table table-hover table-condensed" style="width:100%">
                         <thead>
                         <tr>
@@ -84,6 +85,26 @@
                 "order":[[0,'desc']]
             });
  });
+
+// // add by hoa
+//         $(document).off('click','.list-message');
+//         $(document).on('click','.list-message' , function(){
+//             var confirm_delete = confirm("Do you really want to delete this product?");
+//             if (confirm_delete == true) {
+//                 $.ajax({
+//                     type:"READ",
+//                     url:"message/"+$(this).data('id'),
+//                     data:{ _token: $('meta[name="csrf-token"]').attr('content'), message: $(this).data('id')},
+//                     success: function (data) {
+                        
+//                     },
+//                     error: function(data){
+//                         $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to delete. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+//                         console.log(data);
+//                     }
+                
+            
+
     </script>
 
 @endpush

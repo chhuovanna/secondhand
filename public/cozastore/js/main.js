@@ -410,7 +410,7 @@
 
                     html = '<h4 class="mtext-105 cl2 js-name-detail p-b-14">'+product.name+'</h4>';
                     html = html + '<span class="mtext-106 cl2">'+product.price+'</span>';
-                    html = html + '<p class="stext-102 cl3 p-t-23">Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.</p>';
+                    html = html + '<p class="stext-102 cl3 p-t-23">'+product.description+'</p>';
                     html = html + '<p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">'
                             +category_name+'</a></p>';
                     html = html

@@ -71,12 +71,12 @@
 
 
                                 <span class="stext-105 cl3 ">
-                                    <b class="sname">{{$seller->name}}</b>
+                                    <b class="sname">Name: {{$seller->name}}</b>
                                 </span>
 
 
                                 <span class="stext-105 cl3 address">
-                                    {{$seller->address}}
+                                    Address: {{$seller->address}}
                                 </span>
                                 <span class="stext-105 cl3 email">
                                     {{$seller->email}}

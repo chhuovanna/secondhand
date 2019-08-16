@@ -906,12 +906,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		});
 
 		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			//var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
+				//swal( "is added to wishlist !", "success");
 
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
+				if(!$(this).hasClass('js-addedwish-b2')){
+					$(this).addClass('js-addedwish-b2');
+
+				}else{
+					$(this).removeClass('js-addedwish-b2');
+				}
+				//$(this).off('click');
 			});
 		});
 
