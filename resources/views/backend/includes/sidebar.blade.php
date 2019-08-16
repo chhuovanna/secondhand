@@ -90,7 +90,11 @@
                     List Product
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/message/listmessage')) }}" href="{{ url('admin/message/listmessage') }}">
+                    List Message
+                </a>
+            </li>
 
         </ul>
     </nav>

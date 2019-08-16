@@ -57,7 +57,10 @@ Route::get('admin/product/savefeatured','ProductController@savefeatured');
 Route::get('admin/product/getproductmore','ProductController@getproductmore');
 Route::get('admin/seller/getsellermore','SellerController@getsellermore');
 Route::get('admin/product/getproductdetail','ProductController@getproductdetail');
-//Route::get('contact/create','ContactController@store');
+Route::get('admin/message/listmessage', 'MessageController@index')->name('message.listmessage');
+Route::get('admin/message/getmessage', 'MessageController@getmessage')->name('message.getmessage');
+Route::get('admin/message/markread', 'MessageController@markread')->name('message.markread');
+    
 
 
 

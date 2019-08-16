@@ -23,14 +23,27 @@ class MessageController extends Controller
     public function getmessage(){
 
         // to be change
-        $messages = Message::select(['category_id', 'name', 'description'
-            ,'category.image_id','category.created_at','category.updated_at'
-            ,'location','file_name']);
+        $messages = Message::select(['message_id', 'full_name','email','phone', 'message','status','message.created_at','message.updated_at'])->get();
 
-        if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
-            return Datatables::of($categorys)
+       // if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
+            //return Datatables::of($messages)
+            return Datatables::of($messages)
+             
+                 ->addColumn('action', function ($message) {
+                                                $html = '<a href="'.route('message.markread', ['id' => $message->message_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
+                                                
+
+                                                return $html;
+                                            })
                 ->make(true);
-        }
+       // }
+    }
+
+    public function markread(Request $request){
+        $product_id = $request->get('product_id');
+        $message = Message::find($message_id);
+        $message->status = 1;
+        $message->save();
     }
 
 }

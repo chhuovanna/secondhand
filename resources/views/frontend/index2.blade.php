@@ -23,23 +23,6 @@
 						{{$category->name}}
 					</button>
 					@endforeach
-
-
-					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".Women">--}}
-						{{--Women--}}
-					{{--</button>--}}
-
-					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".Men">--}}
-						{{--Men--}}
-					{{--</button>--}}
-
-					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">--}}
-						{{--Shoes--}}
-					{{--</button>--}}
-
-					{{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">--}}
-						{{--Watches--}}
-					{{--</button> --}}
 					<input type="hidden" class="filter-price" value='all'>
 
 				</div>
@@ -83,17 +66,6 @@
 									</a>
 								</li>
 
-							<!-- 	<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										Popularity
-									</a>
-								</li> -->
-
-								<!-- <li class="p-b-6">
-									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 sort-by" data-sort="avgrating">
-										Average rating
-									</a>
-								</li> -->
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 sort-by" data-sort="name">
 										Name
