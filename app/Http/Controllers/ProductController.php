@@ -619,7 +619,7 @@ class ProductController extends Controller
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category" data-product_id="$product->product_id">
 					<!-- Block2 -->
 					<div class="block2">
-						<div class="block2-pic hov-img0">
+						<div class="block2-pic hov-img0" style="height:100%">
 eot;
                 if($product->file_name){
                     $location = asset($product->location);

@@ -338,7 +338,7 @@
             url:"admin/product/getproductdetail",
             data:{ product_id:$(this).data('product_id')  }   ,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 if(data[0] == 1){
                     var gl_container = $('.gallery-lb');
                     var text_container = $('.detail-text');
