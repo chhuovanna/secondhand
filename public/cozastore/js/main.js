@@ -415,27 +415,33 @@
                             +category_name+'</a></p>';
                     html = html
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Name:</b> Lam Thi Tha'
+                             +   '<b>Name:</b>'
+                            +seller.name
                             +'</p>'
 
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Address</b> # Street 336, Sangkat Boeung Salang,Khan Toul Kork, Phnom Penh'
+                             +   '<b>Address:</b>'
+                            +seller.address
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Email:</b> <a href="#">lamthitha.itc@gmail.com</a>'
+                             +   '<b>Email:</b><a href="#">'
+                            +seller.email</a>
                             +'</p>'
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Phone:</b> 0715454520'
+                             +   '<b>Phone:</b>'
+                            +seller.phone
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Message Account:</b> sdfg'
+                             +   '<b>Message_Account:</b>'
+                            +seller.message_account
                             +'</p>'
 
                            + '<p class="stext-102 cl3 p-t-23">'
-                            +    '<b>Type:</b> Individual/Shop '
+                            +    '<b>Type:</b>'
+                            +seller.type
                             +'</p>';
 
                     text_container.prepend(html);
