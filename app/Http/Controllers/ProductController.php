@@ -8,6 +8,7 @@ use App\Image;
 use App\Category;
 use App\Post;
 use App\Seller;
+use App\Like;
 use Datatables;
 use DB;
 
@@ -599,8 +600,15 @@ class ProductController extends Controller
             , 'categorys'=>$categorys]);
     }*/
     public function getproductmore(Request $request){
+        
+        if(Auth::check()){
+            $products = Product::getProductsWithThumbnailCategoryLike($request->get('offset'));
 
-        $products = Product::getProductsWithThumbnailCategory($request->get('offset'));
+        }else{
+            $products = Product::getProductsWithThumbnailCategory($request->get('offset'));
+
+        }
+
 
         if(sizeof($products) > 0){
             $items = array();
@@ -658,11 +666,42 @@ eot;
 								</span>
 							</div>
 
- 							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
-								</a>
+                             <div class="block2-txt-child2 flex-r p-t-3">
+eot;
+                $like = $product->like;
+                $location = asset('cozastore');
+                if(sizeof($like) > 0){
+                    
+                    $user_id = optional(auth()->user())->id;
+                    foreach($like as $ele){
+                        if($user_id && $user_id == $ele->user_id){
+                            $html .= <<<eot
+                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="$product->product_id">
+                                <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+                            </a>
+eot;
+                        }else{
+                            $html .= <<<eot
+                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
+                                <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+                            </a>
+eot;
+                        }
+                    }
+                    
+                }else{
+                    $html .= <<<eot
+                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
+                    <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+                </a>
+eot;
+                }               
+
+
+                $html .= <<<eot
 							</div>
  						</div>
 					</div>
@@ -705,34 +744,38 @@ eot;
 // add by hoa
     public function likeUnlike(Request $request)
        {
-           $product_id = $request['productId'];
-           $is_like = $request['isLike'] === 'true';
-           $update = false;
-           $product = Product::find($product_id);
-           if (!$product) {
-               return null;
+           if(Auth::check()){
+                $product_id = $request->get('product_id');
+                $operation = $request->get('operation');
+    
+    
+                $product = Product::find($product_id);
+                if (!$product) {
+                    return 0;
+                }
+                
+                $user_id = Auth::id();
+                if($operation == 'like'){
+                    $like = new Like();
+                    $like->user_id = $user_id;
+                    $like->product_id = $product_id;
+                    
+                    $like->save();
+                    return 1;
+                }elseif ($operation == 'unlike'){
+                    $like = Like::where('product_id',$product_id)
+                    ->where('user_id',$user_id)->first();
+                    if($like){
+                        DB::table('like')
+                        ->where('product_id',$product_id)
+                        ->where('user_id',$user_id)
+                        ->delete();
+                    }
+                    return 1;
+                }
            }
-           $user = Auth::user();
-           $like = $user->likes()->where('product_id', $product_id)->first();
-           if ($like) {
-               $already_like = $like->like;
-               $update = true;
-               if ($already_like == $is_like) {
-                   $like->delete();
-                   return null;
-               }
-           } else {
-               $like = new Like();
-           }
-           $like->like = $is_like;
-           $like->user_id = $user->id;
-           $like->product_id = $product->id;
-           if ($update) {
-               $like->update();
-           } else {
-               $like->save();
-           }
-           return null;
+           
+           return 0;
        }
 }
-}
+

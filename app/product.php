@@ -94,7 +94,7 @@ EOT;
                 ,'product.image_id', '=', 'temp.image_id')
             ->with('category')
             ->offset($offset)
-            ->take(20)
+            ->take(4)
             ->orderBy('product.product_id','desc')
             ->get();
 
@@ -102,6 +102,27 @@ EOT;
 
     }
 
+    public function like()
+    {
+        return $this->hasMany('App\Like','product_id', 'product_id'); //belong to many category
+    }
+
+    public static function getProductsWithThumbnailCategoryLike($offset=0){
+        $products = Product::select(['product.product_id', 'product.name', 'price'
+            , 'description','view_number','status','pickup_address','pickup_time','created_at'
+            ,'updated_at',  'file_name', 'location'])
+            ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
+                ,'product.image_id', '=', 'temp.image_id')
+            ->with('category')
+            ->with('like')
+            ->offset($offset)
+            ->take(4)
+            ->orderBy('product.product_id','desc')
+            ->get();
+
+        return $products;
+
+    }
 
 
 }

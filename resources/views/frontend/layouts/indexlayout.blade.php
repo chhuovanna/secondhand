@@ -909,31 +909,52 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			//var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
 			$(this).on('click', function(){
 				//swal( "is added to wishlist !", "success");
+				var ele = $(this);
 
 				if(!$(this).hasClass('js-addedwish-b2')){
-					$(this).addClass('js-addedwish-b2');
-// add by hoa
-	$('.like').on('click', function(event) {
-    event.preventDefault();
-    productId = event.target.parentNode.parentNode.dataset['productid'];
-    var isLike = event.target.previousElementSibling == null;
-    $.ajax({
-        method: 'POST',
-        url: Like,
-        data: {isLike: isLike, productId: productId, _token: token}
-    })
-        .done(function() {
-            event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this product' : 'Like' : event.target.innerText == 'Unlike' ? 'You do not like product' : 'Unlikelike';
-			if (isLike) {
-                event.target.nextElementSibling.innerText = 'Unlike';
-            } else {
-                event.target.previousElementSibling.innerText = 'Like';
-            }
-        });
+					
 
-// ------------------------------------------------------------------------
+					$.ajax({
+						method: 'GET',
+						url: "admin/product/likeUnlike",
+						data: {product_id: $(this).data('product_id'),operation:'like'},
+						success: function (data) {
+	
+							if (data == 1){
+								console.log(data);
+								ele.addClass('js-addedwish-b2');						
+								
+							}else{
+								alert('You have to login to like the product');
+							}
+								
+						},
+						error: function(data){
+							console.log(data);
+						}
+					})
+					
+
 				}else{
-					$(this).removeClass('js-addedwish-b2');
+					$.ajax({
+						method: 'GET',
+						url: "admin/product/likeUnlike",
+						data: {product_id: $(this).data('product_id'),operation:'unlike'},
+						success: function (data) {
+							if (data == 1){
+								console.log(data);
+
+								ele.removeClass('js-addedwish-b2');
+								
+							}else{
+								alert('You have to login to like the product');
+							}
+							
+						},
+						error: function(data){
+							console.log(data);
+						}
+					})
 				}
 				//$(this).off('click');
 			});

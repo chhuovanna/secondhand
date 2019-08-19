@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 use App\Product;
 use App\Category;
 use App\Seller;
 use App\About;
+use PharIo\Manifest\Author;
+
 /**
  * Class HomeController.
  */
@@ -18,8 +22,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::getProductsWithThumbnailCategory();
         $categories = Category::all();
+
+        if (Auth::check()){
+            $products = Product::getProductsWithThumbnailCategoryLike();
+        }else{
+            $products = Product::getProductsWithThumbnailCategory();
+        }
         return view('frontend.index2', ['categories' => $categories, 'products' => $products]);
     }
 
