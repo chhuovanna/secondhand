@@ -61,9 +61,9 @@
                             @else
                             <img src="{{asset('images/thumbnail')}}/default.png" alt="IMG-SELLER">
                             @endif
-                            <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-seller_id="{{$seller->seller_id}}">
+                            <!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-seller_id="{{$seller->seller_id}}">
                                 Quick View
-                            </a>
+                            </a> -->
                         </div>
 
                         <div class="block2-txt flex-w flex-t p-t-14">
@@ -76,19 +76,19 @@
 
 
                                 <span class="stext-105 cl3 address">
-                                    Address: {{$seller->address}}
+                                    <strong>Address:</strong>{{$seller->address}}
                                 </span>
                                 <span class="stext-105 cl3 email">
-                                    {{$seller->email}}
+                                    <strong>Email:</strong>{{$seller->email}}
                                 </span>
                                 <span class="stext-105 cl3 phone">
-                                    {{$seller->phone}}
+                                    <strong>Phone:</strong>{{$seller->phone}}
                                 </span>
                                 <span class="stext-105 cl3 message_account">
-                                    {{$seller->message_account}}
+                                    <strong>Message Account:</strong>{{$seller->message_account}}
                                 </span>
                                 <span class="stext-105 cl3 type">
-                                    {{$seller->type}}
+                                    <strong>Type:</strong>{{$seller->type}}
                                 </span>
                                
                             </div>

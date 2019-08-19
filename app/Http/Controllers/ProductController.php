@@ -701,4 +701,38 @@ eot;
         }
         return [1,$product, $seller];
     }
+
+// add by hoa
+    public function likeUnlike(Request $request)
+       {
+           $product_id = $request['productId'];
+           $is_like = $request['isLike'] === 'true';
+           $update = false;
+           $product = Product::find($product_id);
+           if (!$product) {
+               return null;
+           }
+           $user = Auth::user();
+           $like = $user->likes()->where('product_id', $product_id)->first();
+           if ($like) {
+               $already_like = $like->like;
+               $update = true;
+               if ($already_like == $is_like) {
+                   $like->delete();
+                   return null;
+               }
+           } else {
+               $like = new Like();
+           }
+           $like->like = $is_like;
+           $like->user_id = $user->id;
+           $like->product_id = $product->id;
+           if ($update) {
+               $like->update();
+           } else {
+               $like->save();
+           }
+           return null;
+       }
+}
 }

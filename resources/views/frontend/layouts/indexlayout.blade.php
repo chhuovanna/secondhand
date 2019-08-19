@@ -912,7 +912,26 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 				if(!$(this).hasClass('js-addedwish-b2')){
 					$(this).addClass('js-addedwish-b2');
+// add by hoa
+	$('.like').on('click', function(event) {
+    event.preventDefault();
+    productId = event.target.parentNode.parentNode.dataset['productid'];
+    var isLike = event.target.previousElementSibling == null;
+    $.ajax({
+        method: 'POST',
+        url: Like,
+        data: {isLike: isLike, productId: productId, _token: token}
+    })
+        .done(function() {
+            event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this product' : 'Like' : event.target.innerText == 'Unlike' ? 'You do not like product' : 'Unlikelike';
+			if (isLike) {
+                event.target.nextElementSibling.innerText = 'Unlike';
+            } else {
+                event.target.previousElementSibling.innerText = 'Like';
+            }
+        });
 
+// ------------------------------------------------------------------------
 				}else{
 					$(this).removeClass('js-addedwish-b2');
 				}
