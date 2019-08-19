@@ -351,6 +351,7 @@
                     var temp;
                     var category_name;
                     var category;
+                    var seller = data[2];
 
 
                     if (product['photo'].length > 0){
@@ -415,19 +416,19 @@
                             +category_name+'</a></p>';
                     html = html
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Name:</b>'
+                             +   '<b>Name: </b>'
                             +seller.name
                             +'</p>'
 
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Address:</b>'
+                             +   '<b>Address: </b>'
                             +seller.address
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
                              +   '<b>Email:</b><a href="#">'
-                            +seller.email</a>
+                            +seller.email+'</a>'
                             +'</p>'
                             +'<p class="stext-102 cl3 p-t-23">'
                              +   '<b>Phone:</b>'
