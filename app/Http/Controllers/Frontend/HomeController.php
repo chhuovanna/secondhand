@@ -50,8 +50,12 @@ class HomeController extends Controller
 
 
     public function features(){
+            $categories = Category::all();
 
-        return view('frontend.features');
+            $products = Product::getactivefeatured();
+    
+        return view('frontend.features', ['categories' => $categories, 'products' => $products]);
+
     }
 
     public function about(){
