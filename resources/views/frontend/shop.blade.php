@@ -74,29 +74,29 @@
 
 
                                 <span class="stext-105 cl3 address">
-                                    <strong>Address:</strong>{{$seller->address}}
+                                    <strong>Address: </strong>{{$seller->address}}
                                 </span>
                                 <span class="stext-105 cl3 email">
-                                    <strong>Email:</strong>{{$seller->email}}
+                                    <strong>Email: </strong>{{$seller->email}}
                                 </span>
                                 <span class="stext-105 cl3 phone">
-                                    <strong>Phone:</strong>{{$seller->phone}}
+                                    <strong>Phone: </strong>{{$seller->phone}}
                                 </span>
                                 <span class="stext-105 cl3 message_account">
-                                    <strong>Message Account:</strong>{{$seller->message_account}}
+                                    <strong>Message Account: </strong>{{$seller->message_account}}
                                 </span>
                                 <span class="stext-105 cl3 type">
-                                    <strong>Type:</strong>{{$seller->type}}
+                                    <strong>Type: </strong>{{$seller->type}}
                                 </span>
 
                             </div>
 
-                            <div class="block2-txt-child2 flex-r p-t-3">
+                            <!-- <div class="block2-txt-child2 flex-r p-t-3">
                                 <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                     <img class="icon-heart1 dis-block trans-04" src="{{asset('cozastore')}}/images/icons/icon-heart-01.png" alt="ICON">
                                     <img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('cozastore')}}/images/icons/icon-heart-02.png" alt="ICON">
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
