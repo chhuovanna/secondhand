@@ -61,7 +61,8 @@ Route::get('admin/message/listmessage', 'MessageController@index')->name('messag
 Route::get('admin/message/getmessage', 'MessageController@getmessage')->name('message.getmessage');
 Route::get('admin/message/markread', 'MessageController@markread')->name('message.markread');
 Route::get('admin/product/likeUnlike', 'ProductController@likeUnlike');
-    
+Route::get('admin/product/getproductmorefeature','ProductController@getproductmorefeature');
+
 
 
 
