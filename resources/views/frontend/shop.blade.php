@@ -1,7 +1,5 @@
 @extends('frontend.layouts.indexlayout')
 @section('content')
-
-
     <!-- Product -->
     <section class="bg0 p-t-23 p-b-140">
         <div class="container">
