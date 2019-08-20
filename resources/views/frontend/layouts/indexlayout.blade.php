@@ -901,63 +901,66 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!--===============================================================================================-->
 	<script src="{{asset('cozastore')}}/vendor/sweetalert/sweetalert.min.js"></script>
 	<script>
-		$('.js-addwish-b2').on('click', function(e){
-			e.preventDefault();
-		});
+		// $('.js-addwish-b2').on('click', function(e){
+		// 	e.preventDefault();
+		// });
 
-		$('.js-addwish-b2').each(function(){
-			//var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				//swal( "is added to wishlist !", "success");
-				var ele = $(this);
+		$(document).off('click','.js-addwish-b2');
+		$(document).on('click','.js-addwish-b2',function(e){
 
-				if(!$(this).hasClass('js-addedwish-b2')){
-					
+            var ele = e.target.parentElement;
+           // console.log(ele);
+            if(!$(ele).hasClass('js-addedwish-b2')){
 
-					$.ajax({
-						method: 'GET',
-						url: "admin/product/likeUnlike",
-						data: {product_id: $(this).data('product_id'),operation:'like'},
-						success: function (data) {
-	
-							if (data == 1){
-								console.log(data);
-								ele.addClass('js-addedwish-b2');						
-								
-							}else{
-								alert('You have to login to like the product');
-							}
-								
-						},
-						error: function(data){
-							console.log(data);
-						}
-					})
-					
 
-				}else{
-					$.ajax({
-						method: 'GET',
-						url: "admin/product/likeUnlike",
-						data: {product_id: $(this).data('product_id'),operation:'unlike'},
-						success: function (data) {
-							if (data == 1){
-								console.log(data);
+                $.ajax({
+                    method: 'GET',
+                    url: "admin/product/likeUnlike",
+                    data: {product_id: $(ele).data('product_id'),operation:'like'},
+                    success: function (data) {
 
-								ele.removeClass('js-addedwish-b2');
-								
-							}else{
-								alert('You have to login to like the product');
-							}
-							
-						},
-						error: function(data){
-							console.log(data);
-						}
-					})
-				}
-				//$(this).off('click');
-			});
+                        if (data == 1){
+                            //console.log(data);
+                            $(ele).addClass('js-addedwish-b2');
+
+                        }else if (data == 2){
+                            alert('You have to login to like the product');
+                        }else{
+                            alert('Fail to like');
+                        }
+
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                })
+
+
+            }else{
+                $.ajax({
+                    method: 'GET',
+                    url: "admin/product/likeUnlike",
+                    data: {product_id: $(ele).data('product_id'),operation:'unlike'},
+                    success: function (data) {
+                        if (data == 1){
+                            //console.log(data);
+
+                            $(ele).removeClass('js-addedwish-b2');
+
+                        }else if(data == 2){
+                            alert('You have to login to like the product');
+                        }else{
+                            alert('Fail to like');
+                        }
+
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                })
+            }
+
+
 		});
 
 		$('.js-addwish-detail').each(function(){

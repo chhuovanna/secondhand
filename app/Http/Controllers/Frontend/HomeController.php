@@ -43,29 +43,40 @@ class HomeController extends Controller
 
     public function shop(){
             $sellers = Seller::getSellersWithImage();
-            
+
         return view('frontend.shop', ['sellers' => $sellers]);
         //return view('frontend.shop');
     }
 
-    
+
     public function features(){
-        
+
         return view('frontend.features');
     }
 
     public function about(){
-    
+
         $about = About::first();
-        
+        if (!$about){
+
+            $about = new About();
+            $about->phone = '012 123 456';
+            $about->email = 'secondhand.gmail.com';
+            $about->website = 'www.secondhand.com';
+            $about->address = '#12, Happy Ave. Phnom Penh Cambodia';
+            $about->save();
+
+        }
         return view('frontend.about' , ['about' => $about]);
-        
+
+
+
     }
 
     public function contact(){
-        
+
         return view('frontend.contact');
-        
+
     }
 
 }

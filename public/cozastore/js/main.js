@@ -410,38 +410,39 @@
 
 
                     html = '<h4 class="mtext-105 cl2 js-name-detail p-b-14">'+product.name+'</h4>';
-                    html = html + '<span class="mtext-106 cl2">'+product.price+'</span>';
-                    html = html + '<p class="stext-102 cl3 p-t-23">'+product.description+'</p>';
+                    html = html + '<span class="mtext-106 cl2">Price : '+product.price+'</span>';
+                    html = html + '<p class="stext-102 cl3 p-t-23">Description : '+product.description+'</p>';
+                    html = html + '<p class="stext-102 cl3 p-t-23">Availability : '+product.status+'</p>';
                     html = html + '<p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">'
                             +category_name+'</a></p>';
                     html = html
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Name: </b>'
+                             +   '<b>Seller : </b>'
                             +seller.name
                             +'</p>'
 
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Address: </b>'
+                             +   '<b>Address : </b>'
                             +seller.address
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Email:</b><a href="#">'
+                             +   '<b>Email : </b><a href="#">'
                             +seller.email+'</a>'
                             +'</p>'
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Phone:</b>'
+                             +   '<b>Phone : </b>'
                             +seller.phone
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Message_Account:</b>'
+                             +   '<b>Message_Account : </b>'
                             +seller.message_account
                             +'</p>'
 
                            + '<p class="stext-102 cl3 p-t-23">'
-                            +    '<b>Type:</b>'
+                            +    '<b>Type : </b>'
                             +seller.type
                             +'</p>';
 
@@ -641,7 +642,7 @@
             });
         }else if(sort_by == 'name'){
             $topeContainer.isotope({
-                sortBy: 'pname'
+                sortBy: 'name'
             });
         }else if(sort_by == 'newness'){
             $topeContainer.isotope({
@@ -665,7 +666,7 @@
     $(document).off('click','.filter-by');
     $(document).on('click','.filter-by', function(){
 
-       
+
         var old_active = $('.filter-link-active.filter-by');
 
 

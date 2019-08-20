@@ -6,6 +6,7 @@ use App\view;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; // for deleting file
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Frontend\Auth\UserRepository;
 use App\Seller;
 use App\Image; //need to use it to call new Image();
 use App\Category;
@@ -18,6 +19,23 @@ use DB;
 
 class SellerController extends Controller
 {
+
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * RegisterController constructor.
+     *
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index() {
         return view('category.sellerindex');
     }
@@ -62,6 +80,24 @@ class SellerController extends Controller
 
                 //image of seller
                 $seller->image_id = $image->image_id;
+
+                //create new user for selelr
+
+                $test = array(
+                    'first_name'        => $seller->name,
+                    'last_name'         => "",
+                    'email'             => $seller->email,
+                    'password'          => $seller->email,
+                    'backend'         => 1
+                );
+
+
+                $user = $this->userRepository->create($test);
+                if ($user){
+                    $user->assignRole('executive');
+                }
+
+                $seller->user_id = $user->id;
                 $seller->save();
                 //echo $seller->image_id;
                 return redirect()->route('seller.index')->withFlashSuccess('seller is added');
@@ -118,6 +154,9 @@ class SellerController extends Controller
             $seller->seller_id = $request->get('seller_id');
             $seller->name = $request->get('name');
             $seller->address = $request->get('address');
+            if ($seller->email != $request->get('email')){
+                $changeemail = true;
+            }
             $seller->email = $request->get('email');
             $seller->phone = $request->get('phone');
             $seller->message_account = $request->get('message_account');
@@ -148,6 +187,9 @@ class SellerController extends Controller
                 }
 
                 $seller->save();//save the update of category
+                if($changeemail){
+                    DB::update('update users set email = ? where id = ?', [$seller->email,$seller->user_id]);
+                }
                 if (isset($old_image)) {
                     $old_image = Image::find($old_image);
                     //remove old image from harddisk
@@ -322,8 +364,8 @@ class SellerController extends Controller
                 $html = <<<eot
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" data-seller_id="$seller->seller_id">
                     <!-- Block2 -->
-                    <div class="block2">
-                        <div class="block2-pic hov-img0" style="height:100%">
+                    <div class="block2" style="height:100%">
+                        <div class="block2-pic hov-img0" >
 eot;
                 if($seller->file_name){
                     $location = asset($seller->location);

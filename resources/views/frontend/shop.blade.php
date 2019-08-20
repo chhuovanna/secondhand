@@ -12,13 +12,13 @@
             </div> -->
 
             <div class="flex-w flex-sb-m p-b-52">
-               
+
                 </div>
 
                 <!-- Search product -->
                 <div class="dis-none panel-search w-full p-t-10 p-b-15">
                     <div class="bor8 dis-flex p-l-15">
-                        
+
                     </div>
                 </div>
 
@@ -26,11 +26,11 @@
                 <div class="dis-none panel-filter w-full p-t-10">
                     <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
                         <div class="filter-col1 p-r-15 p-b-27">
-                            
+
                         </div>
 
                         <div class="filter-col2 p-r-15 p-b-27">
-                            
+
 
                         <div class="filter-col4 p-b-27">
                             <div class="mtext-102 cl2 p-b-15 testoutput">
@@ -39,7 +39,7 @@
 
                             <div class="flex-w p-t-4 m-r--5">
 
-                                
+
                             </div>
                         </div>
                     </div>
@@ -51,11 +51,11 @@
 
             <div class="row isotope-grid">
                 @foreach ($sellers as $seller)
-                    
+
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" data-seller_id="{{$seller->seller_id}}">
                     <!-- Block2 -->
-                    <div class="block2">
-                        <div class="block2-pic hov-img0" style="height:100%">
+                    <div class="block2" style="height:100%">
+                        <div class="block2-pic hov-img0" >
                             @if($seller->file_name)
                             <img src="{{asset($seller->location)}}/{{$seller->file_name}}" alt="IMG-SELLER">
                             @else
@@ -90,7 +90,7 @@
                                 <span class="stext-105 cl3 type">
                                     <strong>Type:</strong>{{$seller->type}}
                                 </span>
-                               
+
                             </div>
 
                             <div class="block2-txt-child2 flex-r p-t-3">
@@ -127,4 +127,4 @@
         $('.active-menu').removeClass('active-menu');
         $('.menu-shop').addClass('active-menu');
     </script>
-@endpush		
+@endpush

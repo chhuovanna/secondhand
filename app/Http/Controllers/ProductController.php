@@ -600,7 +600,7 @@ class ProductController extends Controller
             , 'categorys'=>$categorys]);
     }*/
     public function getproductmore(Request $request){
-        
+
         if(Auth::check()){
             $products = Product::getProductsWithThumbnailCategoryLike($request->get('offset'));
 
@@ -624,10 +624,10 @@ class ProductController extends Controller
                 $category_name = substr($category_name,0,strlen($category_name )-2);
                 $html = "";
                 $html .= <<<eot
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category" data-product_id="$product->product_id">
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category"  data-product_id="$product->product_id">
 					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0" style="height:100%">
+					<div class="block2" style="height:100%">
+						<div class="block2-pic hov-img0" >
 eot;
                 if($product->file_name){
                     $location = asset($product->location);
@@ -642,6 +642,9 @@ eot;
 							<img src="$location/default.png" alt="IMG-PRODUCT">
 eot;
                 }
+
+
+
                 $location = asset('cozastore');
                 $html .= <<<eot
 							<a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="$product->product_id">
@@ -653,8 +656,24 @@ eot;
 							<div class="block2-txt-child1 flex-col-l ">
 
 
-								<span class="stext-105 cl3">
-									<b class='pname'>$product->name</b>
+                                <span class="stext-105 cl3">
+eot;
+                $active_featured_product = Product::getactivefeatured($product->product_id);
+                if (sizeof($active_featured_product) == 1){
+                    $html .= <<<eot
+
+
+                                    <b class='pname'>$product->name</b>
+                                    <sup style="color:white;background-color:red;">Hot</sup>
+eot;
+
+                }else{
+                    $html .= <<<eot
+                    <b class='pname'>$product->name</b>
+eot;
+                }
+
+                $html .= <<<eot
 								</span>
 
 								<span class="stext-105 cl3 price">
@@ -671,34 +690,34 @@ eot;
                 $like = $product->like;
                 $location = asset('cozastore');
                 if(sizeof($like) > 0){
-                    
+
                     $user_id = optional(auth()->user())->id;
                     foreach($like as $ele){
                         if($user_id && $user_id == $ele->user_id){
                             $html .= <<<eot
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="$product->product_id">
+                            <a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="$product->product_id">
                                 <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
                                 <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
                             </a>
 eot;
                         }else{
                             $html .= <<<eot
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
+                            <a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
                                 <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
                                 <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
                             </a>
 eot;
                         }
                     }
-                    
+
                 }else{
                     $html .= <<<eot
-                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
+                    <a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
                     <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
                     <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
                 </a>
 eot;
-                }               
+                }
 
 
                 $html .= <<<eot
@@ -747,19 +766,19 @@ eot;
            if(Auth::check()){
                 $product_id = $request->get('product_id');
                 $operation = $request->get('operation');
-    
-    
+
+
                 $product = Product::find($product_id);
                 if (!$product) {
                     return 0;
                 }
-                
+
                 $user_id = Auth::id();
                 if($operation == 'like'){
                     $like = new Like();
                     $like->user_id = $user_id;
                     $like->product_id = $product_id;
-                    
+
                     $like->save();
                     return 1;
                 }elseif ($operation == 'unlike'){
@@ -773,9 +792,11 @@ eot;
                     }
                     return 1;
                 }
+           }else{
+               return 2;
+
            }
-           
-           return 0;
+
        }
 }
 
