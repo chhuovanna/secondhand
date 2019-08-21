@@ -51,7 +51,13 @@ class HomeController extends Controller
 
     public function features(){
         $categories = Category::all();
-        $products = Product::getProductsWithThumbnailCategoryLikeFeatured();
+        if(Auth::check()){
+            $products = Product::getProductsWithThumbnailCategoryLikeFeatured();
+
+        }else{
+            $products = Product::getProductsWithThumbnailCategoryFeatured();
+
+        }
 
         return view('frontend.features', ['categories' => $categories, 'products' => $products]);
 

@@ -52,7 +52,7 @@
 				</div>
 
 
-				
+
 
 				<!-- Filter -->
 				<div class="dis-none panel-filter w-full p-t-10">
@@ -294,7 +294,7 @@
                                     @if($featured)
 
                                         <b class='pname'>{{$product->name}}</b>
-                                        <sup style="color:white;background-color:red;">Hot</sup>
+                                        <sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
 
                                     @else
                                     <b class='pname'>{{$product->name}}</b>

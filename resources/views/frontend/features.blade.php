@@ -90,7 +90,8 @@
                                     @if($featured)
 
                                         <b class='pname'>{{$product->name}}</b>
-                                        <sup style="color:white;background-color:red;">Hot</sup>
+                                        <sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
+
 
                                     @else
                                     <b class='pname'>{{$product->name}}</b>

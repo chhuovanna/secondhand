@@ -664,7 +664,8 @@ eot;
 
 
                                     <b class='pname'>$product->name</b>
-                                    <sup style="color:white;background-color:red;">Hot</sup>
+                                    <sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
+
 eot;
 
                 }else{
@@ -744,7 +745,7 @@ eot;
             $products = Product::getProductsWithThumbnailCategoryLikeFeatured($request->get('offset'));
 
         }else{
-            $products = Product::getProductsWithThumbnailCategory($request->get('offset'));
+            $products = Product::getProductsWithThumbnailCategoryFeatured($request->get('offset'));
 
         }
 
@@ -803,7 +804,7 @@ eot;
 
 
                                     <b class='pname'>$product->name</b>
-                                    <sup style="color:white;background-color:red;">Hot</sup>
+                                    <sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
 eot;
 
                 }else{
