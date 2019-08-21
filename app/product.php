@@ -94,7 +94,7 @@ EOT;
                 ,'product.image_id', '=', 'temp.image_id')
             ->with('category')
             ->offset($offset)
-            ->take(4)
+            ->take(20)
             ->orderBy('product.product_id','desc')
             ->get();
 
@@ -116,7 +116,7 @@ EOT;
             ->with('category')
             ->with('like')
             ->offset($offset)
-            ->take(4)
+            ->take(20)
             ->orderBy('product.product_id','desc')
             ->get();
 
@@ -135,7 +135,7 @@ EOT;
             ->with('category')
             ->with('like')
             ->offset($offset)
-            ->take(4)
+            ->take(20)
             ->orderBy('product.product_id','desc')
             ->get();
 
