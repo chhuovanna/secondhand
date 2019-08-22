@@ -43,8 +43,8 @@ class HomeController extends Controller
 
     public function shop(){
             $sellers = Seller::getSellersWithImage();
-
-        return view('frontend.shop', ['sellers' => $sellers]);
+            $categories = Category::all();
+        return view('frontend.shop', ['sellers' => $sellers, 'categories' => $categories]);
         //return view('frontend.shop');
     }
 
@@ -64,7 +64,7 @@ class HomeController extends Controller
     }
 
     public function about(){
-
+        $categories = Category::all();
         $about = About::first();
         if (!$about){
 
@@ -76,15 +76,15 @@ class HomeController extends Controller
             $about->save();
 
         }
-        return view('frontend.about' , ['about' => $about]);
+        return view('frontend.about' , ['about' => $about, 'categories' => $categories]);
 
 
 
     }
 
     public function contact(){
-
-        return view('frontend.contact');
+        $categories = Category::all();
+        return view('frontend.contact',[ 'categories' => $categories]);
 
     }
 
