@@ -213,37 +213,34 @@
 			</ul>
 
 			<ul class="main-menu-m">
-				<li>
-					<a href="index.html">Home</a>
-<!-- 					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
-						<li><a href="home-03.html">Homepage 3</a></li>
-					</ul>
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
- -->				</li>
+				<li class="menu-home active-menu">
+								<a href="{{url('/')}}">Home</a>
+								<!-- <ul class="sub-menu">
+									<li><a href="{{url('/')}}">Homepage 1</a></li>
+									<li><a href="{{url('/')}}">Homepage 2</a></li>
+									<li><a href="{{url('/')}}">Homepage 3</a></li>
+								</ul> -->
+							</li>
 
-				<li>
-					<a href="product.html">Shop</a>
-				</li>
+							<li class="menu-shop">
+								<a href="{{url('/shop')}}">Shop</a>
+							</li>
 
-				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
-				</li>
+							<li class="label1" data-label1="hot">
+								<a href="{{url('/features')}}">Features</a>
+							</li>
 
-				<!-- <li>
-					<a href="blog.html">Blog</a>
-				</li> -->
+							<!-- <li>
+								<a href="blog.html">Blog</a>
+							</li> -->
 
-				<li>
-					<a href="about.html">About</a>
-				</li>
+							<li class='menu-about'>
+								<a href="{{url('/about')}}">About</a>
+							</li>
 
-				<li>
-					<a href="contact.html">Contact</a>
-				</li>
+							<li class="menu-contact">
+								<a href="{{url('/contact')}}">Contact</a>
+							</li>
 			</ul>
 		</div>
 
@@ -525,39 +522,19 @@
 					<h4 class="stext-301 cl0 p-b-30">
 						Categories
 					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
-							</a>
-						</li>
-					</ul>
+					@foreach($categories as $category)
+						@php $classname = str_replace(' ','-', $category->name);@endphp
+					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
+						{{$category->name}}
+					</button>
+					@endforeach
 				</div>
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
+					<!-- <h4 class="stext-301 cl0 p-b-30">
 						Help
 					</h4>
-
+ -->
 					<ul>
 					<!-- 	<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
@@ -577,11 +554,11 @@
 							</a>
 						</li> -->
 
-						<li class="p-b-10">
+						<!-- <li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
 								FAQs
 							</a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 
@@ -591,7 +568,8 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+						Any questions? Let us know in store at St123,Phompenh,Cambodia
+ or call us on (+855) 12345678
 					</p>
 
 					<div class="p-t-27">
@@ -609,7 +587,7 @@
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- <div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
 						Newsletter
 					</h4>
@@ -626,7 +604,7 @@
 							</button>
 						</div>
 					</form>
-				</div>
+				</div> -->
 			</div>
 
 			<div class="p-t-40">
