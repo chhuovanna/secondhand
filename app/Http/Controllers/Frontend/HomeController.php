@@ -43,29 +43,49 @@ class HomeController extends Controller
 
     public function shop(){
             $sellers = Seller::getSellersWithImage();
-            
-        return view('frontend.shop', ['sellers' => $sellers]);
+            $categories = Category::all();
+        return view('frontend.shop', ['sellers' => $sellers, 'categories' => $categories]);
         //return view('frontend.shop');
     }
 
-    
+
     public function features(){
-        
-        return view('frontend.features');
+        $categories = Category::all();
+        if(Auth::check()){
+            $products = Product::getProductsWithThumbnailCategoryLikeFeatured();
+
+        }else{
+            $products = Product::getProductsWithThumbnailCategoryFeatured();
+
+        }
+
+        return view('frontend.features', ['categories' => $categories, 'products' => $products]);
+
     }
 
     public function about(){
-    
+        $categories = Category::all();
         $about = About::first();
-        
-        return view('frontend.about' , ['about' => $about]);
-        
+        if (!$about){
+
+            $about = new About();
+            $about->phone = '012 123 456';
+            $about->email = 'secondhand.gmail.com';
+            $about->website = 'www.secondhand.com';
+            $about->address = '#12, Happy Ave. Phnom Penh Cambodia';
+            $about->save();
+
+        }
+        return view('frontend.about' , ['about' => $about, 'categories' => $categories]);
+
+
+
     }
 
     public function contact(){
-        
-        return view('frontend.contact');
-        
+        $categories = Category::all();
+        return view('frontend.contact',[ 'categories' => $categories]);
+
     }
 
 }

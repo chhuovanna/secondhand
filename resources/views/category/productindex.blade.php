@@ -251,8 +251,9 @@
             });
         });
 
-        $(document).off('click','.featured-ok');
-        $(document).on('click','.featured-ok', function(){
+        $(document).off('click','#featured-ok');
+        $(document).on('click','#featured-ok', function(){
+            //alert(' ima her');
             $.ajax({
                 type:"GET",
                 url:"product/savefeatured",

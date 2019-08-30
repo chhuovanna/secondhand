@@ -74,7 +74,7 @@ class Seller extends Model
 
 //     }
 
-    // 
+    //
 
 
 
@@ -90,7 +90,7 @@ class Seller extends Model
             ->with('category')
 
             ->offset($offset)
-            ->take(20)
+            ->take(4)
             ->orderBy('seller.seller_id','desc')
             ->get();
         return $sellers;

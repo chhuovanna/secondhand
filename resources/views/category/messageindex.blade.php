@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>@lang('strings.backend.dashboard.welcome') {{ $logged_in_user->name }}!</strong>
-                </div><!--card-header--> 
+                </div><!--card-header-->
                 <div class="card-body">
                     <table id="message" class="table table-hover table-condensed" style="width:100%">
                         <thead>
@@ -22,15 +22,15 @@
                             <th>Status</th>
                             <th>Created_at</th>
                             <th>Update_at</th>
-                            
+
                              <th>Action</th>
                             <!-- <th>Updated At</th> -->
 
 
-                            
+
                         </tr>
                         </thead>
-                        
+
                     </table>
                 </div><!--card-body-->
             </div><!--card-->
@@ -54,17 +54,17 @@
                 "columns": [
                     {data: 'message_id', name: 'message_id'},
 
-                   
+
 
                     {data: 'full_name', name: 'full_name'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
-                    {data: 'message', name: 'message'
-                       /* render:function ( data, type, row, meta ) {
-                            return type === 'display' && data && data.length > 20 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data;
-                        }*/
+                    {data: 'message', name: 'message',
+                        render:function ( data, type, row, meta ) {
+                            return type === 'display' && data && data.length > 20 ? '<span title="'+data+'">'+data+'...</span>' : data;
+                        }
                     },
-                    
+
                     // {data: 'created_at', name: 'created_at'},
                     // {data: 'updated_at', name: 'updated_at'},
                     {data: 'status', name: 'status',
@@ -96,14 +96,14 @@
 //                     url:"message/"+$(this).data('id'),
 //                     data:{ _token: $('meta[name="csrf-token"]').attr('content'), message: $(this).data('id')},
 //                     success: function (data) {
-                        
+
 //                     },
 //                     error: function(data){
 //                         $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to delete. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 //                         console.log(data);
 //                     }
-                
-            
+
+
 
     </script>
 

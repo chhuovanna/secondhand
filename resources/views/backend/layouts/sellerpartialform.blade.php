@@ -76,7 +76,8 @@
             <div class="col-md-3">
                 {{ html()->email('email',$email)
                     ->class('form-control')
-                    ->placeholder('Email') }}
+                    ->placeholder('Email')
+                    ->required() }}
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
@@ -115,7 +116,7 @@
 
             </div><!--col-->
         </div><!--form-group-->
-        
+
         <div class="form-group row">
             {{ html()->label('Image')
                 ->class('col-md-2 form-control-label')
@@ -181,6 +182,6 @@
                      ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->
-        
+
     </div><!--col-->
 </div><!--row-->

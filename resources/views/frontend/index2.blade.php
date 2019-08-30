@@ -34,11 +34,11 @@
 						 Filter
 					</div>
 
-					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+					<!-- <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
 						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
 						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
 						Search
-					</div>
+					</div> -->
 				</div>
 
 				<!-- Search product -->
@@ -50,6 +50,9 @@
 						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
 					</div>
 				</div>
+
+
+
 
 				<!-- Filter -->
 				<div class="dis-none panel-filter w-full p-t-10">
@@ -259,10 +262,10 @@
 						$category_name = substr($category_name,0,strlen($category_name )-2);
 
 					@endphp
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$category}}" data-product_id="{{$product->product_id}}">
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$category}}"  data-product_id="{{$product->product_id}}">
 					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0" style="height=100%">
+					<div class="block2" style="height=100%">
+						<div class="block2-pic hov-img0" >
 							@if($product->file_name)
 							<img src="{{asset($product->location)}}/{{$product->file_name}}" alt="IMG-PRODUCT">
 							@else
@@ -278,7 +281,25 @@
 
 
 								<span class="stext-105 cl3 ">
-									<b class="pname">{{$product->name}}</b>
+
+                                    @php
+
+                                    $active_featured_product = App\Product::getactivefeatured($product->product_id);
+                                    if (sizeof($active_featured_product) == 1){
+                                        $featured = true;
+                                    }else {
+                                        $featured = false;
+                                    }
+                                    @endphp
+                                    @if($featured)
+
+                                        <b class='pname'>{{$product->name}}</b>
+                                        <sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
+
+                                    @else
+                                    <b class='pname'>{{$product->name}}</b>
+                                    @endif
+
 								</span>
 
 
@@ -295,7 +316,7 @@
 
 								@php
 									$is_like = false;
-									
+
 									if($product->like){
 
 										$like = $product->like;
@@ -303,23 +324,23 @@
 										foreach($like as $ele){
 											if($user_id && $user_id == $ele->user_id){
 												$is_like = true;
-												break;												
+												break;
 											}
 										}
 									}
 								@endphp
 								@if($is_like)
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="{{$product->product_id}}">
+								<a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="{{$product->product_id}}">
 									<img class="icon-heart1 dis-block trans-04" src="{{asset('cozastore')}}/images/icons/icon-heart-01.png" alt="ICON">
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('cozastore')}}/images/icons/icon-heart-02.png" alt="ICON">
 								</a>
 								@else
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="{{$product->product_id}}">
+								<a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="{{$product->product_id}}">
 									<img class="icon-heart1 dis-block trans-04" src="{{asset('cozastore')}}/images/icons/icon-heart-01.png" alt="ICON">
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('cozastore')}}/images/icons/icon-heart-02.png" alt="ICON">
 								</a>
-								@endif 
-								
+								@endif
+
 							</div>
  						</div>
 					</div>
@@ -328,7 +349,7 @@
 				@endforeach
 
 
-				
+
 			</div>
 
 

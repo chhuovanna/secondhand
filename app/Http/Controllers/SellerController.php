@@ -6,6 +6,7 @@ use App\view;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; // for deleting file
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Frontend\Auth\UserRepository;
 use App\Seller;
 use App\Image; //need to use it to call new Image();
 use App\Category;
@@ -18,6 +19,23 @@ use DB;
 
 class SellerController extends Controller
 {
+
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * RegisterController constructor.
+     *
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index() {
         return view('category.sellerindex');
     }
@@ -62,6 +80,24 @@ class SellerController extends Controller
 
                 //image of seller
                 $seller->image_id = $image->image_id;
+
+                //create new user for selelr
+
+                $test = array(
+                    'first_name'        => $seller->name,
+                    'last_name'         => "",
+                    'email'             => $seller->email,
+                    'password'          => $seller->email,
+                    'backend'         => 1
+                );
+
+
+                $user = $this->userRepository->create($test);
+                if ($user){
+                    $user->assignRole('executive');
+                }
+
+                $seller->user_id = $user->id;
                 $seller->save();
                 //echo $seller->image_id;
                 return redirect()->route('seller.index')->withFlashSuccess('seller is added');
@@ -118,6 +154,9 @@ class SellerController extends Controller
             $seller->seller_id = $request->get('seller_id');
             $seller->name = $request->get('name');
             $seller->address = $request->get('address');
+            if ($seller->email != $request->get('email')){
+                $changeemail = true;
+            }
             $seller->email = $request->get('email');
             $seller->phone = $request->get('phone');
             $seller->message_account = $request->get('message_account');
@@ -148,6 +187,9 @@ class SellerController extends Controller
                 }
 
                 $seller->save();//save the update of category
+                if($changeemail){
+                    DB::update('update users set email = ? where id = ?', [$seller->email,$seller->user_id]);
+                }
                 if (isset($old_image)) {
                     $old_image = Image::find($old_image);
                     //remove old image from harddisk
@@ -322,8 +364,8 @@ class SellerController extends Controller
                 $html = <<<eot
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" data-seller_id="$seller->seller_id">
                     <!-- Block2 -->
-                    <div class="block2">
-                        <div class="block2-pic hov-img0" style="height:100%">
+                    <div class="block2" style="height:100%">
+                        <div class="block2-pic hov-img0" >
 eot;
                 if($seller->file_name){
                     $location = asset($seller->location);
@@ -338,39 +380,32 @@ eot;
                 }
                 $location = asset('cozastore');
                 $html .= <<<eot
-                            <a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-seller_id="$seller->seller_id">
-                                Quick View
-                            </a>
+                            
                         </div>
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">
                             <span class="stext-105 cl3 ">
-                                <b class="sname">$seller->name</b>
-                            </span>
+                                    <b class="sname">Name: $seller->name</b>
+                                </span>
 
 
-                            <span class="stext-105 cl3 address">
-                                $seller->address
-                            </span>
-                            <span class="stext-105 cl3 email">
-                                $seller->email
-                            </span>
-                            <span class="stext-105 cl3 phone">
-                                $seller->phone
-                            </span>
-                            <span class="stext-105 cl3 message_account">
-                                $seller->message_account
-                            </span>
-                            <span class="stext-105 cl3 type">
-                                $seller->type
-                            </span>
+                                <span class="stext-105 cl3 address">
+                                    <strong>Address: </strong>$seller->address
+                                </span>
+                                <span class="stext-105 cl3 email">
+                                    <strong>Email: </strong>$seller->email
+                                </span>
+                                <span class="stext-105 cl3 phone">
+                                    <strong>Phone: </strong>$seller->phone
+                                </span>
+                                <span class="stext-105 cl3 message_account">
+                                    <strong>Message Account: </strong>$seller->message_account
+                                </span>
+                                <span class="stext-105 cl3 type">
+                                    <strong>Type: </strong>$seller->type
+                                </span>
                             </div>
-                            <div class="block2-txt-child2 flex-r p-t-3">
-                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                    <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
-                                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
-                                </a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

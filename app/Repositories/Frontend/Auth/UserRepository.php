@@ -110,6 +110,7 @@ class UserRepository extends BaseRepository
                  */
                 //added by vanna
                 if(isset($data['is_seller'])){
+
                     $user->assignRole('executive');
                     //create seller for the user
                     $seller = new Seller();
@@ -117,9 +118,12 @@ class UserRepository extends BaseRepository
                     $seller->email = $data['email'];
                     $seller->message_account = $data['email'];
                     $seller->user_id = $user->id;
-                    $seller -> save();
+                    $seller->save();
 
-                }else{
+                }elseif(isset($data['backend'])){
+                    $user->assignRole('executive');
+                }
+                else{
                     $user->assignRole(config('access.users.default_role'));
                 }
             }
