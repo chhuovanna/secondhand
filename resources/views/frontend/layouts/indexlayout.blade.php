@@ -901,9 +901,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!--===============================================================================================-->
 	<script src="{{asset('cozastore')}}/vendor/sweetalert/sweetalert.min.js"></script>
 	<script>
-		$('.js-addwish-b2').on('click', function(e){
+		// $('.js-addwish-b2').on('click', function(e){
+		// 	e.preventDefault();
+		// });
+		$(document).on('click', '.js-addwish-b2', function(e){
 			e.preventDefault();
-		});
+		})
 
 		$('.js-addwish-b2').each(function(){
 			//var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
