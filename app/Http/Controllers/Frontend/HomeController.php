@@ -23,13 +23,14 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
+        $about = About::first();
 
         if (Auth::check()){
             $products = Product::getProductsWithThumbnailCategoryLike();
         }else{
             $products = Product::getProductsWithThumbnailCategory();
         }
-        return view('frontend.index2', ['categories' => $categories, 'products' => $products]);
+        return view('frontend.index2', ['categories' => $categories, 'products' => $products , 'about' => $about]);
     }
 
     public function test()
@@ -44,13 +45,15 @@ class HomeController extends Controller
     public function shop(){
             $sellers = Seller::getSellersWithImage();
             $categories = Category::all();
-        return view('frontend.shop', ['sellers' => $sellers, 'categories' => $categories]);
+            $about = About::first();
+        return view('frontend.shop', ['sellers' => $sellers, 'categories' => $categories, 'about' => $about]);
         //return view('frontend.shop');
     }
 
 
     public function features(){
         $categories = Category::all();
+        $about = About::first();
         if(Auth::check()){
             $products = Product::getProductsWithThumbnailCategoryLikeFeatured();
 
@@ -59,7 +62,7 @@ class HomeController extends Controller
 
         }
 
-        return view('frontend.features', ['categories' => $categories, 'products' => $products]);
+        return view('frontend.features', ['categories' => $categories, 'products' => $products, 'about' => $about]);
 
     }
 
@@ -84,7 +87,8 @@ class HomeController extends Controller
 
     public function contact(){
         $categories = Category::all();
-        return view('frontend.contact',[ 'categories' => $categories]);
+        $about = About::first();
+        return view('frontend.contact',[ 'categories' => $categories, 'about' => $about]);
 
     }
 

@@ -95,7 +95,7 @@
 				<nav class="limiter-menu-desktop container">
 
 					<!-- Logo desktop -->
-					<a href="#" class="logo">
+					<a href="/" class="logo">
 						<img src="{{asset('cozastore')}}/images/icons/logo-01.png" alt="IMG-LOGO">
 					</a>
 
@@ -518,12 +518,12 @@
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<div class="col-sm-6 col-lg-3 p-b-50 filter-tope-group">
 					<h4 class="stext-301 cl0 p-b-30">
 						Categories
 					</h4>
 					@foreach($categories as $category)
-						@php $classname = str_replace(' ','-', $category->name);@endphp
+						@php $classname = str_replace(' ','-', $category->name); @endphp
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
 						{{$category->name}}
 					</button>
@@ -568,20 +568,29 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at St123,Phompenh,Cambodia
- or call us on (+855) 12345678
+						Any questions? Let us know in store at {{$about->address}} 
+					</p>
+					<p>
+						Tel : {{$about->phone}}
+					</p>					
+					
+					<p>
+						Email : {{$about->email}}
+					</p>
+					<p>
+						Website : {{$about->website}}
 					</p>
 
 					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<a href="https://www.facebook.com" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-facebook"></i>
 						</a>
 
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<a href="https://www.instagram.com/" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-instagram"></i>
 						</a>
 
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<a href="https://www.pinterest.com" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-pinterest-p"></i>
 						</a>
 					</div>
