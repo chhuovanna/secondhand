@@ -254,8 +254,8 @@
 					@php
 						$category = "";
 						$category_name = "";
-						$categories = $product->category;
-						foreach ($categories as $ele){
+						$product_categories = $product->category;
+						foreach ($product_categories as $ele){
 							$category .= str_replace(' ','-',$ele->name). " ";
 							$category_name .= $ele->name. ", ";
 						}

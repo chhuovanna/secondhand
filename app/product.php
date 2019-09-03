@@ -51,8 +51,8 @@ class Product extends Model
         $sql = <<<EOT
         select date(start_date_time) as start_date, date(end_date_time) as end_date
         from featured_product
-        where product_id = $product_id and (date(end_date_time) > curdate()
-            or date(end_date_time) = '9999-01-01')
+        where product_id = $product_id and (date(end_date_time) >= curdate())
+            
         order by updated_at desc
         limit 0, 1;
 EOT;
@@ -92,6 +92,7 @@ EOT;
             ,'updated_at',  'file_name', 'location'])
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
                 ,'product.image_id', '=', 'temp.image_id')
+            ->where('status','Available')
             ->with('category')
             ->offset($offset)
             ->take(20)
@@ -113,6 +114,7 @@ EOT;
             ,'updated_at',  'file_name', 'location'])
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
                 ,'product.image_id', '=', 'temp.image_id')
+            ->where('status','Available')
             ->with('category')
             ->with('like')
             ->offset($offset)
@@ -128,10 +130,11 @@ EOT;
         $products = Product::select(['product.product_id', 'product.name', 'price'
             , 'description','view_number','status','pickup_address','pickup_time','created_at'
             ,'updated_at',  'file_name', 'location'])
-            ->join(DB::raw('(select product_id from featured_product where (date(end_date_time) > curdate() or date(end_date_time) = "9999-01-01") group by product_id ) as temp1')
+            ->join(DB::raw('(select product_id from featured_product where (date(end_date_time) >= curdate() and date(start_date_time) <= curdate()) group by product_id ) as temp1')
                 , 'temp1.product_id','product.product_id')
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
                 ,'product.image_id', '=', 'temp.image_id')
+            ->where('status','Available')
             ->with('category')
             ->with('like')
             ->offset($offset)
@@ -147,10 +150,11 @@ EOT;
         $products = Product::select(['product.product_id', 'product.name', 'price'
             , 'description','view_number','status','pickup_address','pickup_time','created_at'
             ,'updated_at',  'file_name', 'location'])
-            ->join(DB::raw('(select product_id from featured_product where (date(end_date_time) > curdate() or date(end_date_time) = "9999-01-01") group by product_id ) as temp1')
+            ->join(DB::raw('(select product_id from featured_product where (date(end_date_time) >= curdate() and date(start_date_time) <= curdate()) group by product_id ) as temp1')
                 , 'temp1.product_id','product.product_id')
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
                 ,'product.image_id', '=', 'temp.image_id')
+            ->where('status','Available')
             ->with('category')
             ->offset($offset)
             ->take(20)

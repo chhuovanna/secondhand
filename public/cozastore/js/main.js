@@ -34,6 +34,7 @@
         } else {
             $("#myBtn").css('display','none');
         }
+        $('.isotope-grid').isotope('layout');
     });
 
     $('#myBtn').on("click", function(){
@@ -531,8 +532,8 @@
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
+                                $('.isotope-grid').append( $content )
+                                                    .isotope( 'insert', $content );
                             }
 
                             offset = offset  +items.length;
@@ -565,8 +566,8 @@
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
+                                $('.isotope-grid').append( $content )
+                                                .isotope( 'insert', $content );
                             }
 
                             offset = offset  +items.length;
@@ -599,8 +600,8 @@
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
+                                $('.isotope-grid').append( $content )
+                                                .isotope( 'insert', $content );
                             }
 
                             offset = offset  +items.length;
@@ -655,7 +656,10 @@
     $topeContainer.isotope({
         getSortData: {
             product_id: '[data-product_id] parseInt',
-            name: '.pname',
+            name: function (itemElem){
+                var name = $(itemElem).find('.pname').text();
+                return name.toLowerCase();
+            },
             price:function( itemElem ) { // function
                 var price = $(itemElem).find('.price').text();
                 return parseFloat(price);

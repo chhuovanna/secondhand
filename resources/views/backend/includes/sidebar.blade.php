@@ -79,11 +79,13 @@
                 </a>
             </li>
 
+
             {{--<li class="nav-item">--}}
                 {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/product/create')) }}" href="{{ url('admin/product/create') }}">--}}
                     {{--Create Product--}}
                 {{--</a>--}}
             {{--</li>--}}
+
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product')) }}" href="{{ url('admin/product') }}">
