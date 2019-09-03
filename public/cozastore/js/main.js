@@ -656,7 +656,10 @@
     $topeContainer.isotope({
         getSortData: {
             product_id: '[data-product_id] parseInt',
-            name: '.pname',
+            name: function (itemElem){
+                var name = $(itemElem).find('.pname').text();
+                return name.toLowerCase();
+            },
             price:function( itemElem ) { // function
                 var price = $(itemElem).find('.price').text();
                 return parseFloat(price);
