@@ -225,14 +225,14 @@
                     console.log(data);
                     if(data[0] == 1){
                         $('.operation').empty();
-                        $('.operation').append('<h5>Update</h5>');
+                        $('.operation').append('<h5 class="text-info">Update</h5><h6 class="text-info"> Product ID : '+$('#modal_product_id').val()+'</h6>');
                         var mydate = data[1][0];
                         $('#start_date').val(mydate.start_date);
                         $('#end_date').val(mydate.end_date);
 
                     }else if (data[0]==0){
                         $('.operation').empty();
-                        $('.operation').append('<h5>Add</h5>');
+                        $('.operation').append('<h5 class="text-success">Add</h5><h6 class="text-success"> Product ID : '+$('#modal_product_id').val()+'</h6>');
                         var today = new Date();
                         var dd = String(today.getDate()).padStart(2, '0');
                         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -264,10 +264,10 @@
                 success: function (data) {
                     console.log(data);
                     if (data[0] == 1){
-                        $('.col').prepend('</div><div class="alert alert-success alert-dismissible fade show success-msg" role="alert" >Featured Product Saved<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                        $('.col').prepend('</div><div class="alert alert-success alert-dismissible fade show success-msg" role="alert" >Featured Product '+data[2]+' Saved<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 
                     }else if (data[0]==0){
-                        $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to save featured product. '+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                        $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >Fail to save featured product '+data[2]+'. '+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                     }else if (data[0] == 2){
                         $('.col').prepend('<div class="alert alert-warning alert-dismissible fade show fail-msg" role="alert" >'+data[1]+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                     }

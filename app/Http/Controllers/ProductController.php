@@ -574,22 +574,22 @@ class ProductController extends Controller
 
                 try {
                     Product::updatefeatured($product_id, $start_date, $end_date);
-                    return [1];
+                    return [1,1,$product_id];
                 } catch (\Exception $e) {
-                    return [0, $e->getMessage()];
+                    return [0, $e->getMessage(),$product_id];
                 }
 
             } else {
                 try {
                     Product::savefeatured($product_id, $start_date, $end_date);
-                    return [1];
+                    return [1,1,$product_id];
                 } catch (\Exception $e) {
-                    return [0, $e->getMessage()];
+                    return [0, $e->getMessage(),$product_id];
                 }
 
             }
         }else{
-            return [2,"You don't have the permission. "];
+            return [2,"You don't have the permission. ", $product_id];
         }
     }
     /*public function home(){

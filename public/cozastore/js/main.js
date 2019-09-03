@@ -531,8 +531,9 @@
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
+                                $('.isotope-grid').append( $content )
+                                                    .isotope( 'insert', $content )
+                                                    .isotope('layout');
                             }
 
                             offset = offset  +items.length;
@@ -565,8 +566,9 @@
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
+                                $('.isotope-grid').append( $content )
+                                                .isotope( 'insert', $content )
+                                                .isotope('layout');
                             }
 
                             offset = offset  +items.length;
@@ -599,8 +601,9 @@
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
+                                $('.isotope-grid').append( $content )
+                                                .isotope( 'insert', $content )
+                                                .isotope('layout');
                             }
 
                             offset = offset  +items.length;
