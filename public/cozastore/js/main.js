@@ -680,7 +680,8 @@
             });
         }else if(sort_by == 'name'){
             $topeContainer.isotope({
-                sortBy: 'name'
+                sortBy: 'name',
+                sortAscending: true
             });
         }else if(sort_by == 'newness'){
             $topeContainer.isotope({
