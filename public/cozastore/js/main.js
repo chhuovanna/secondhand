@@ -34,6 +34,7 @@
         } else {
             $("#myBtn").css('display','none');
         }
+        $('.isotope-grid').isotope('layout');
     });
 
     $('#myBtn').on("click", function(){
@@ -532,8 +533,7 @@
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
                                 $('.isotope-grid').append( $content )
-                                                    .isotope( 'insert', $content )
-                                                    .isotope('layout');
+                                                    .isotope( 'insert', $content );
                             }
 
                             offset = offset  +items.length;
@@ -567,8 +567,7 @@
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
                                 $('.isotope-grid').append( $content )
-                                                .isotope( 'insert', $content )
-                                                .isotope('layout');
+                                                .isotope( 'insert', $content );
                             }
 
                             offset = offset  +items.length;
@@ -602,8 +601,7 @@
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
                                 $('.isotope-grid').append( $content )
-                                                .isotope( 'insert', $content )
-                                                .isotope('layout');
+                                                .isotope( 'insert', $content );
                             }
 
                             offset = offset  +items.length;
