@@ -91,7 +91,7 @@
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 sort-by" data-sort="lowtohigh">
 										<!-- Price: High to Low -->
-										Price: Low to High
+										Price: High to low
 									</a>
 								</li>
 							</ul>
