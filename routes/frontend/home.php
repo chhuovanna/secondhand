@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
@@ -19,6 +20,7 @@ Route::get('shop','HomeController@shop');
 Route::get('features','HomeController@features');
 Route::get('about','HomeController@about');
 Route::get('contact','HomeController@contact');
+Route::get('shop/{seller_id}',[ProductController::class,'showProductByShop'])->name('product.showbyshop');
 
 
 

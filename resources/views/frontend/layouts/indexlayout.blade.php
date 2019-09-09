@@ -115,7 +115,7 @@
 								<a href="{{url('/shop')}}">Shop</a>
 							</li>
 
-							<li class="label1" data-label1="hot">
+							<li class="label1 menu-features" data-label1="hot">
 								<a href="{{url('/features')}}">Features</a>
 							</li>
 
@@ -908,7 +908,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                         if (data == 1){
                             //console.log(data);
-                            $(ele).addClass('js-addedwish-b2');
+							$(ele).addClass('js-addedwish-b2');
+							
+							var number_like = parseInt($(ele).parent().find('span').text());
+							if (isNaN(number_like))
+								number_like = 0;
+							number_like ++;
+							$(ele).parent().find('span').text(number_like);
 
                         }else if (data == 2){
                             alert('You have to login to like the product');
@@ -932,7 +938,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         if (data == 1){
                             //console.log(data);
 
-                            $(ele).removeClass('js-addedwish-b2');
+							$(ele).removeClass('js-addedwish-b2');
+							var number_like = parseInt($(ele).parent().find('span').text());
+							if (isNaN(number_like))
+								number_like = 0;
+							number_like --;
+							$(ele).parent().find('span').text(number_like);
 
                         }else if(data == 2){
                             alert('You have to login to like the product');

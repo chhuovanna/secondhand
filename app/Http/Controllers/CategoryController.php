@@ -48,7 +48,7 @@ class CategoryController extends Controller
             $file = $request->file('image_id');
             $image = new Image();
             $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-            $image->location = 'images\category'; //category is stored in public/images/category
+            $image->location = 'images/category'; //category is stored in public/images/category
 
             try {
                 $image->save();
@@ -109,7 +109,7 @@ class CategoryController extends Controller
                     $file = $request->file('image_id');
                     $image = new Image();
                     $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-                    $image->location = 'images\category';
+                    $image->location = 'images/category';
 
                     $file->move(public_path($image->location), $image->file_name);
                     $image->save();//save new image
@@ -124,7 +124,7 @@ class CategoryController extends Controller
                 if (isset($old_image)) {
                     $old_image = Image::find($old_image);
                     //remove old image from harddisk
-                    $file = public_path($old_image->location) . '\\' . $old_image->file_name;
+                    $file = public_path($old_image->location) . '/' . $old_image->file_name;
                     if (File::exists($file)) {
                         File::delete($file);
                     }
@@ -158,7 +158,7 @@ class CategoryController extends Controller
                 $res['category'] = Category::destroy($id);
                 if ($image) {
 
-                    $file = public_path($image->location) . '\\' . $image->file_name;
+                    $file = public_path($image->location) . '/' . $image->file_name;
 
 
                     //test if the image file exists or not

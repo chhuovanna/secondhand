@@ -71,7 +71,7 @@ class SellerController extends Controller
             $file = $request->file('image_id');
             $image = new Image();
             $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-            $image->location = 'images\seller'; //seller is stored in public/images/seller
+            $image->location = 'images/seller'; //seller is stored in public/images/seller
             try {
 
                 $image->save();
@@ -175,7 +175,7 @@ class SellerController extends Controller
                     $file = $request->file('image_id');
                     $image = new Image();
                     $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-                    $image->location = 'images\seller';
+                    $image->location = 'images/seller';
 
                     $file->move(public_path($image->location), $image->file_name);
                     $image->save();//save new image
@@ -193,7 +193,7 @@ class SellerController extends Controller
                 if (isset($old_image)) {
                     $old_image = Image::find($old_image);
                     //remove old image from harddisk
-                    $file = public_path($old_image->location) . '\\' . $old_image->file_name;
+                    $file = public_path($old_image->location) . '/' . $old_image->file_name;
                     if (File::exists($file)) {
                         File::delete($file);
                     }
@@ -380,7 +380,9 @@ eot;
                 }
                 $location = asset('cozastore');
                 $html .= <<<eot
-                            
+                            <a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 show-product-shop" data-seller_id="$seller->seller_id">
+                                Show Products
+                            </a>
                         </div>
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">

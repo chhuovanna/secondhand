@@ -26,9 +26,9 @@ class HomeController extends Controller
         $about = About::first();
 
         if (Auth::check()){
-            $products = Product::getProductsWithThumbnailCategoryLike();
+            $products = Product::getProductsWithThumbnailCategory(0,0,0,1);
         }else{
-            $products = Product::getProductsWithThumbnailCategory();
+            $products = Product::getProductsWithThumbnailCategory(0,0,0,0);
         }
         return view('frontend.index2', ['categories' => $categories, 'products' => $products , 'about' => $about]);
     }
@@ -55,10 +55,10 @@ class HomeController extends Controller
         $categories = Category::all();
         $about = About::first();
         if(Auth::check()){
-            $products = Product::getProductsWithThumbnailCategoryLikeFeatured();
+            $products = Product::getProductsWithThumbnailCategory(0,0,1,1);
 
         }else{
-            $products = Product::getProductsWithThumbnailCategoryFeatured();
+            $products = Product::getProductsWithThumbnailCategory(0,0,1,0);
 
         }
 

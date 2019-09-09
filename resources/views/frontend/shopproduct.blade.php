@@ -5,11 +5,11 @@
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-140">
 		<div class="container">
-			<!-- <div class="p-b-10">
-				<h3 class="ltext-103 cl5">
-					Product Overview
+			<div class="p-b-10">
+				<h3 class="ltext-103 cl5" style="font-size:22px">
+					{{$seller->name}}
 				</h3>
-			</div> -->
+			</div>
 
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
@@ -371,7 +371,7 @@
 				@php $num_product = sizeof($products);@endphp
 
 				<input id="offset" value="{{$num_product}}" type='hidden'>
-				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore">
+				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore" data-seller_id='{{$seller->seller_id}}'>
 					Load More
 				</a>
 			</div>
@@ -381,3 +381,9 @@
 
 
 @endsection
+@push('after-scripts')
+    <script>
+        $('.active-menu').removeClass('active-menu');
+        $('.menu-shop').addClass('active-menu');
+    </script>
+@endpush

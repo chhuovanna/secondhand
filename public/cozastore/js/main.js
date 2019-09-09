@@ -337,7 +337,7 @@
         $('.js-modal1').addClass('show-modal1');
         $.ajax({
             type:"GET",
-            url:"admin/product/getproductdetail",
+            url:window.location.protocol +'//'+window.location.host+"/admin/product/getproductdetail",
             data:{ product_id:$(this).data('product_id')  }   ,
             success: function (data) {
                 //console.log(data);
@@ -365,7 +365,7 @@
                                         +location+'">';
                             html = html + '<i class="fa fa-expand"></i></a>';
 */
-                            location = product['photo'][i]['location']+'\\'+product['photo'][i]['file_name'];
+                            location = '/'+product['photo'][i]['location']+'/'+product['photo'][i]['file_name'];
                             html = html + '<div class="item-slick3" data-thumb="'+location+'">';
                             html = html + '<div class="wrap-pic-w pos-relative">';
                             html = html + '<img src="'+location+'" alt="IMG-PRODUCT">';
@@ -380,10 +380,10 @@
 
 
                     if (product['thumbnail'] !== null){
-                        location = product['thumbnail']['location']+'\\'+product['thumbnail']['file_name'];
+                        location ='/'+ product['thumbnail']['location']+'/'+product['thumbnail']['file_name'];
 
                     }else{
-                        location = product['thumbnail_id'];
+                        location ='/'+product['thumbnail_id'];
                     }
 
                     html = '<div class="item-slick3" data-thumb="'+location+'">';
@@ -518,12 +518,21 @@
     $(document).on('click', '#loadmore', function(){
 
         var offset = parseInt($('#offset').val());
+        var seller_id = $(this).data('seller_id');
+        var features = $(this).data('features');
+        if (seller_id === undefined){
+            seller_id =0;
+        }
 
-        //alert(offset);
+        if (features === undefined){
+            features = 0;
+        }
+
+        //alert(window.location.protocol +'//'+window.location.host+"/admin/product/getproductmore/");
         $.ajax({
                     type:"GET",
-                    url:"admin/product/getproductmore/",
-                    data:{ offset: offset  }   ,
+                    url:window.location.protocol +'//'+window.location.host+"/admin/product/getproductmore/",
+                    data:{ offset: offset ,  seller : seller_id , features:features}   ,
                     success: function (data) {
                         console.log(data);
                         if(data[0] == 1){
@@ -582,76 +591,8 @@
     });
 
 
-    $(document).off('click','#loadmore_feature');
-    $(document).on('click', '#loadmore_feature', function(){
-
-        var offset = parseInt($('#offset').val());
-
-        //alert(offset);
-        $.ajax({
-                    type:"GET",
-                    url:"admin/product/getproductmorefeature/",
-                    data:{ offset: offset  }   ,
-                    success: function (data) {
-                        console.log(data);
-                        if(data[0] == 1){
-                            var i;
-                            var items = data[1];
-                            var $content;
-                            for (i=0; i< items.length; i ++){
-                                $content = $(items[i]);
-                                $('.isotope-grid').append( $content )
-                                                .isotope( 'insert', $content );
-                            }
-
-                            offset = offset  +items.length;
-                            $('#offset').val(offset);
-                        }
-                    },
-                    error: function(data){
-                        console.log(data);
-                    }
-            });
-
-    });
  /*===================================================================[ sort by ]*/
 
- // for seller
-
- $(document).off('click','#loadmore');
-    $(document).on('click', '#loadmore', function(){
-
-        var offset = parseInt($('#offset').val());
-
-        //alert(offset);
-        $.ajax({
-                    type:"GET",
-                    url:"admin/product/getproductmore/",
-                    data:{ offset: offset  }   ,
-                    success: function (data) {
-                        console.log(data);
-                        if(data[0] == 1){
-                            var i;
-                            var items = data[1];
-                            var $content;
-                            for (i=0; i< items.length; i ++){
-                                $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
-                            }
-
-                            offset = offset  +items.length;
-                            $('#offset').val(offset);
-                        }
-                    },
-                    error: function(data){
-                        console.log(data);
-                    }
-            });
-
-    });
-
-    // ------------------------------------------------------------------
 
     $topeContainer.isotope({
         getSortData: {
@@ -760,6 +701,5 @@
 
     })
 
-
-
+   
 })(jQuery);

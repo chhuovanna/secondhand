@@ -21,7 +21,7 @@
 
                             <th>Price</th>
                             <th>Description</th>
-                            <th>View Number</th>
+                            <th>Like Number</th>
                             <th>Status</th>
 
                             <th>Pickup Time</th>
@@ -104,7 +104,7 @@
                             return type === 'display' && data && data.length > 50 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data;
                         }
                     },
-                    {data: 'view_number', name: 'view_number'},
+                    {data: 'like_number', name: 'like_number'},
                     {data: 'status', name: 'status',
                         render:function ( data, type, row ) {
                             return type === 'display' && data && data.length > 50 ? '<span title="'+data+'">'+data.substr( 0, 20 )+'...</span>' : data;

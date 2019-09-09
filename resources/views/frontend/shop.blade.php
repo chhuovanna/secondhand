@@ -59,9 +59,9 @@
                             @else
                             <img src="{{asset('images/thumbnail')}}/default.png" alt="IMG-SELLER">
                             @endif
-                            <!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-seller_id="{{$seller->seller_id}}">
-                                Quick View
-                            </a> -->
+                            <a href="{{route('frontend.product.showbyshop', $seller->seller_id)}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 show-product-shop" data-seller_id="{{$seller->seller_id}}">
+                                Show Products
+                            </a>
                         </div>
 
                         <div class="block2-txt flex-w flex-t p-t-14">

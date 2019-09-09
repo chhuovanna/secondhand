@@ -86,20 +86,36 @@ EOT;
 
     }
 
-    public static function getProductsWithThumbnailCategory($offset=0){
+    public static function getProductsWithThumbnailCategory($offset=0,$seller_id=0, $features = 0, $like =0){
         $products = Product::select(['product.product_id', 'product.name', 'price'
-            , 'description','view_number','status','pickup_address','pickup_time','created_at'
-            ,'updated_at',  'file_name', 'location'])
-            ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
-                ,'product.image_id', '=', 'temp.image_id')
-            ->where('status','Available')
-            ->with('category')
-            ->offset($offset)
+        , 'description','like_number','status','pickup_address','pickup_time','created_at'
+        ,'updated_at',  'file_name', 'location'])
+        ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
+            ,'product.image_id', '=', 'temp.image_id')
+        ->where('status','Available')
+        ->with('category');
+        
+        if ($seller_id != 0){
+            $products = $products->leftJoin(DB::raw('(select post_id, seller_id from post) as temp1')
+            ,'product.post_id', '=', 'temp1.post_id')
+            ->where('temp1.seller_id',$seller_id);
+        }
+
+        if($like ==1){
+            $products = $products->with('like');
+        }
+        if($features == 1){
+            $products = $products->join(DB::raw('(select product_id from featured_product where (date(end_date_time) >= curdate() and date(start_date_time) <= curdate()) group by product_id ) as temp2')
+            , 'temp2.product_id','product.product_id');
+        }
+
+        $products = $products->offset($offset)
             ->take(4)
             ->orderBy('product.product_id','desc')
             ->get();
 
         return $products;
+
 
     }
 
@@ -108,62 +124,6 @@ EOT;
         return $this->hasMany('App\Like','product_id', 'product_id'); //belong to many category
     }
 
-    public static function getProductsWithThumbnailCategoryLike($offset=0){
-        $products = Product::select(['product.product_id', 'product.name', 'price'
-            , 'description','view_number','status','pickup_address','pickup_time','created_at'
-            ,'updated_at',  'file_name', 'location'])
-            ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
-                ,'product.image_id', '=', 'temp.image_id')
-            ->where('status','Available')
-            ->with('category')
-            ->with('like')
-            ->offset($offset)
-            ->take(4)
-            ->orderBy('product.product_id','desc')
-            ->get();
-
-        return $products;
-
-    }
-
-    public static function getProductsWithThumbnailCategoryLikeFeatured($offset=0){
-        $products = Product::select(['product.product_id', 'product.name', 'price'
-            , 'description','view_number','status','pickup_address','pickup_time','created_at'
-            ,'updated_at',  'file_name', 'location'])
-            ->join(DB::raw('(select product_id from featured_product where (date(end_date_time) >= curdate() and date(start_date_time) <= curdate()) group by product_id ) as temp1')
-                , 'temp1.product_id','product.product_id')
-            ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
-                ,'product.image_id', '=', 'temp.image_id')
-            ->where('status','Available')
-            ->with('category')
-            ->with('like')
-            ->offset($offset)
-            ->take(4)
-            ->orderBy('product.product_id','desc')
-            ->get();
-
-        return $products;
-
-    }
-
-    public static function getProductsWithThumbnailCategoryFeatured($offset=0){
-        $products = Product::select(['product.product_id', 'product.name', 'price'
-            , 'description','view_number','status','pickup_address','pickup_time','created_at'
-            ,'updated_at',  'file_name', 'location'])
-            ->join(DB::raw('(select product_id from featured_product where (date(end_date_time) >= curdate() and date(start_date_time) <= curdate()) group by product_id ) as temp1')
-                , 'temp1.product_id','product.product_id')
-            ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp')
-                ,'product.image_id', '=', 'temp.image_id')
-            ->where('status','Available')
-            ->with('category')
-            ->offset($offset)
-            ->take(4)
-            ->orderBy('product.product_id','desc')
-            ->get();
-
-        return $products;
-
-    }
-
+    
 
 }

@@ -26,7 +26,7 @@ class Seller extends Model
     }
     public static function getSellersWithImage($offset=0){
         $sellers = Seller::select(['seller_id', 'name', 'address', 'email','phone','message_account','type','seller.image_id','seller.created_at','seller.updated_at','location','file_name'])
-            ->leftJoin('image','seller.image_id', '=', 'image.image_id')->orderBy('seller.seller_id','desc')->offset($offset)
+            ->leftJoin('image','seller.image_id', '=', 'image.image_id')->orderBy('seller.name')->offset($offset)
             ->limit(04)
             ->get();
         return $sellers;
