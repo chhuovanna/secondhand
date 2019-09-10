@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\view;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; // for deleting file
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Frontend\Auth\UserRepository;
 use App\Seller;
 use App\Image; //need to use it to call new Image();
-use App\Category;
 use Datatables;
 
 
@@ -37,11 +35,11 @@ class SellerController extends Controller
     }
 
     public function index() {
-        return view('category.sellerindex');
+        return view('scrud.sellerindex');
     }
     public function create() {
         if (Auth::user()->hasRole('administrator')) {
-            return view('category.sellercreate');
+            return view('scrud.sellercreate');
         }else{
             return redirect()
                 ->back()
@@ -118,13 +116,13 @@ class SellerController extends Controller
     public function edit($id) {
         if(Auth::user()->hasRole('administrator')){
             $seller = Seller::with('image')->find($id);
-            return view('category.selleredit', ['seller' => $seller]);
+            return view('scrud.selleredit', ['seller' => $seller]);
         }else{
             $user = Auth::id();
             $seller = Seller::where('user_id',$user)->first();
             if ($seller->seller_id == $id){
                 $seller = Seller::with('image')->find($id);
-                return view('category.selleredit', ['seller' => $seller]);
+                return view('scrud.selleredit', ['seller' => $seller]);
             }else{
                 return redirect()->back()->withFlashDanger("You dont have the permission");
             }
@@ -247,80 +245,6 @@ class SellerController extends Controller
         }
     }
 
-//    public function getform(){
-//        $sellers = seller::all();
-//        $views = view::all();
-//        return view('sellersign_up', [ 'sellers' => $sellers, 'views' => $views  ]);
-//    }
-
-//    public function savesign_up(Request $request){
-//
-//        $sign_up = new Sign_up();
-//        $sign_up->seller_ID = $request->get('seller_id');
-//        $sign_up->username_or_email = $request->get('username_or_email');
-//        $sign_up-> phone= $request->get('phone');
-//        $sign_up-> password= $request->get('password');
-//        $sign_up->sign_upDate = date('Y-m-d');
-//        try {
-//            $sign_up->save();
-//            return redirect()->route('seller.sign_up')->withFlashSuccess('sign_up is added');
-//        }
-//        catch (\Exception $e) {
-//            return redirect()
-//                ->back()
-//                ->withInput($request->all())
-//                ->withFlashDanger("Sign_up can't be added. ". $e->getMessage());
-//        }
-//    }
-
-
-
-//    public function showsign_up(){
-//        $sellers = seller::all();
-//        return view('sellersign_up', [ 'sellers' => $sellers]);
-//    }
-//
-//    public function getsign_up(Request $request){
-//        $seller_id = $request->input('seller_id');
-//        $sign_ups = Sign_up::getRating($seller_id);
-//        if (sizeof($sign_ups) > 0){
-//            $stars = 0;
-//            $body = "";
-//
-//            foreach ($sign_ups as $sign_up) {
-//                $stars += $sign_up->stars;
-//                $body .= <<<EOF
-//	<tr>
-//
-//		<td>$sign_up->username</td>
-//		<td>$sign_up->stars</td>
-//		<td>$sign_up->sign_upDate</td>
-//	</tr>
-//EOF;
-//            }
-//
-//            $stars = $stars/sizeof($sign_ups);
-//            $html = <<<EOF
-//<br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
-//<table clas="table">
-//	<thead>
-//		<tr>
-//			<th scope="col">view</th>
-//			<th scope="col">stars</th>
-//			<th scope="col">sign_upDate</th>
-//		</tr>
-//	</thead>
-//	<tbody>
-//	$body
-//	</tdbody>
-//</table>
-//
-//EOF;
-//            return $html;
-//        }else{
-//            return "No Sign_up";
-//        }
-//    }
 
     public function getseller(){
         if(Auth::user()->hasRole('administrator')) {
@@ -420,104 +344,5 @@ eot;
         else
             return [0];
     }
-//    //phan moi them
-//
-//    public function home(){
-//
-//        $sellers = Seller::getSellersWithImage();
-//        return view('frontend.index',['sellers'=>$sellers]);
-//    }
-//
-//    public function getsellermore(Request $request){
-//
-//        $sellers = Seller::getSellersWithImage($request->get('offset'));
-//
-//        if(sizeof($sellers) > 0){
-//            //$items = array();
-//            $html = "";
-//
-//            foreach ($sellers as $seller){
-//                //$html = "";
-//                $html .= <<<eot
-//				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-//					<!-- Block2 -->
-//					<div class="block2">
-//						<div class="block2-pic hov-img0">
-//eot;
-//                if($seller->file_name){
-//                    $location = asset($seller->location);
-//                    $html .= <<<eot
-//
-//							<img src="$location/$seller->file_name" alt="IMG-PRODUCT">
-//eot;
-//                }else{
-//                    $location = asset('images/seller');
-//                    $html .= <<<eot
-//
-//							<img src="$location/default.png" alt="IMG-PRODUCT">
-//eot;
-//                }
-//                $location = asset('cozastore');
-//                $html .= <<<eot
-//							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-//								Quick View
-//							</a>
-//						</div>
-//
-//						<div class="block2-txt flex-w flex-t p-t-14">
-//							<div class="block2-txt-child1 flex-col-l ">
-//								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-//									$seller->seller_id
-//								</a>
-//
-//								<span class="stext-105 cl3">
-//									$seller->Image
-//								</span>
-//
-//								<span class="stext-105 cl3">
-//									$seller->Name
-//								</span>
-//								<span class="stext-105 cl3">
-//									$seller->Address
-//								</span>
-//								<span class="stext-105 cl3">
-//									$seller->Email
-//								</span>
-//								<span class="stext-105 cl3">
-//									$seller->Phone
-//								</span>
-//								<span class="stext-105 cl3">
-//									$seller->Message_account
-//								</span>
-//								<span class="stext-105 cl3">
-//									$seller->Type
-//								</span>
-//								<span class="stext-105 cl3">
-//									$seller->Created_at
-//								</span>
-//								<span class="stext-105 cl3">
-//									$seller->Updated_at
-//								</span>
-//							</div>
-//
-// 							<div class="block2-txt-child2 flex-r p-t-3">
-//								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-//									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
-//									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
-//								</a>
-//							</div>
-// 						</div>
-//					</div>
-//				</div>
-//eot;
-//                //$items[] = $html;
-//            }
-//
-//
-//            return [1,$html];
-//            //return [1,$items];
-//        }
-//        else
-//            return [0];
-//    }
+
 }

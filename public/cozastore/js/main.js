@@ -143,47 +143,57 @@
 */
 
     /////////////////////edited by vanna
+
+    function perform_filter($this){
+        var price = Number($this.find('.price').text());
+        var filter_by = $('.filter-price').val();
+        var active_category = $('.how-active1').data('filter').substring(1);
+        var filter_by_name = $('#search_name').val().toLowerCase();
+        var product_name = $this.find('.pname').val().toLowerCase();
+        // alert('imaher');
+
+        //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
+
+
+
+        if (isNaN(filter_by)){
+            if (filter_by  == 'all'){
+                if ( active_category === ''){
+                    return !(product_name.indexOf(filter_by_name) === -1);
+                }
+                else{
+                    return ($this.hasClass(active_category) && !(product_name.indexOf(filter_by_name) === -1 ));
+                }
+                    
+            }else{
+                if ( active_category === '')
+                    return ((price >= 200 ) && !(product_name.indexOf(filter_by_name) === -1));
+                else
+                    return ( (price >= 200 ) && $this.hasClass(active_category) && !(product_name.indexOf(filter_by_name) === -1)) ;
+            }
+
+        }else{
+            filter_by = Number(filter_by);
+
+            if (price >= (filter_by - 50) &&  price <= filter_by){
+
+                if ( active_category === '')
+                    return true && !(product_name.indexOf(filter_by_name) === -1);
+                else
+                    return $this.hasClass(active_category) && !(product_name.indexOf(filter_by_name) === -1);
+            }
+            else
+                return false;
+        }
+    }
+
     $filter.each(function () {
         $filter.on('click', 'button', function () {
             //var filterValue = $(this).attr('data-filter');
 
             $topeContainer.isotope({
                 filter: function(){
-                    var price = Number($(this).find('.price').text());
-                    var filter_by = $('.filter-price').val();
-                    var active_category = $('.how-active1').data('filter').substring(1);
-                   // alert('imaher');
-
-                    //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
-
-
-
-                    if (isNaN(filter_by)){
-                        if (filter_by  == 'all'){
-                            if ( active_category === '')
-                                return true;
-                            else
-                                return $(this).hasClass(active_category);
-                        }else{
-                            if ( active_category === '')
-                                return (price >= 200 );
-                            else
-                                return (price >= 200 ) && $(this).hasClass(active_category);
-                        }
-
-                    }else{
-                        filter_by = Number(filter_by);
-
-                        if (price >= (filter_by - 50) &&  price <= filter_by){
-
-                            if ( active_category === '')
-                                return true;
-                            else
-                                return $(this).hasClass(active_category);
-                        }
-                        else
-                            return false;
-                    }
+                    return perform_filter($(this));
                 }
             });
         });
@@ -659,47 +669,20 @@
 
         $topeContainer.isotope({
 
-          filter: function() {
-              var price = Number($(this).find('.price').text());
-              var filter_by = $('.filter-price').val();
-              var active_category = $('.how-active1').data('filter').substring(1);
-              // alert('imaher');
+            filter: function() {
+                return perform_filter($(this));
+            }
 
-              //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
-
-
-
-              if (isNaN(filter_by)){
-                  if (filter_by  == 'all'){
-                      if ( active_category === '')
-                          return true;
-                      else
-                          return $(this).hasClass(active_category);
-                  }else{
-                      if ( active_category === '')
-                          return (price >= 200 );
-                      else
-                          return (price >= 200 ) && $(this).hasClass(active_category);
-                  }
-
-              }else{
-                  filter_by = Number(filter_by);
-
-                  if (price >= (filter_by - 50) &&  price <= filter_by){
-
-                      if ( active_category === '')
-                          return true;
-                      else
-                          return $(this).hasClass(active_category);
-                  }
-                  else
-                      return false;
-              }
-          }
         });
 
 
     })
 
-   
+    /*===================================================================[ search by name ]*/
+
+   $(document).off('keyup','#search_name');
+   $(document).on('keyup','#search_name', function(){
+       console.log($(this).val());
+   });
+
 })(jQuery);

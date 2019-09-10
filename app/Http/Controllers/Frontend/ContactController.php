@@ -21,15 +21,12 @@ class ContactController extends Controller
         return view('frontend.contact');
     }
 
-    public function shop()
-    {
-        return view('frontend.shop');
-    }
 
-    public function contact()
-    {
-        return view('frontend.contact');
-    }
+
+    // public function contact()
+    // {
+    //     return view('frontend.contact');
+    // }
 
     /**
      * @param SendContactRequest $request
@@ -39,6 +36,8 @@ class ContactController extends Controller
     public function send(SendContactRequest $request)
     {
         //Mail::send(new SendContact($request));
+
+        //added by vanna
         $message = new Message();
         $message->full_name = $request->get('name');
         $message->email = $request->get('email');

@@ -7,7 +7,7 @@
 		<div class="container">
 			<div class="p-b-10">
 				<h3 class="ltext-103 cl5" style="font-size:22px">
-					{{$seller->name}}
+					WELCOME TO {{$seller->name}}
 				</h3>
 			</div>
 

@@ -24,13 +24,13 @@ class ProductController extends Controller
     public function index()
     {
 
-        return view('category.productindex');
+        return view('scrud.productindex');
     }
 
     public function create()
     {
         $categories = Category::getSelectOptions();
-        return view('category.productcreate', ['categories' => $categories]);
+        return view('scrud.productcreate', ['categories' => $categories]);
     }
 
     public function createwitholdpost($post_id)
@@ -38,7 +38,7 @@ class ProductController extends Controller
         $categories = Category::getSelectOptions();
         $product = Product::where('post_id', '=', $post_id)->first();
 
-        return view('category.productcreate', ['categories' => $categories
+        return view('scrud.productcreate', ['categories' => $categories
             , 'post_id' => $post_id
             , 'pickup_time' => $product->pickup_time
             , 'pickup_address' => $product->pickup_address]);
@@ -144,9 +144,9 @@ class ProductController extends Controller
 
 
         if (Auth::user()->hasRole('administrator')) {
-            return view('category.productedit', ['categories' => $categories, 'product' => $product]);
+            return view('scrud.productedit', ['categories' => $categories, 'product' => $product]);
         } elseif ($seller->user_id == Auth::id()) {
-            return view('category.productedit', ['categories' => $categories, 'product' => $product]);
+            return view('scrud.productedit', ['categories' => $categories, 'product' => $product]);
         } else {
             return redirect()->back()->withFlashDanger("You don't have the permission");
         }

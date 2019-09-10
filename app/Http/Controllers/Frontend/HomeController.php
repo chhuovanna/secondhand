@@ -30,17 +30,10 @@ class HomeController extends Controller
         }else{
             $products = Product::getProductsWithThumbnailCategory(0,0,0,0);
         }
-        return view('frontend.index2', ['categories' => $categories, 'products' => $products , 'about' => $about]);
+        return view('frontend.index', ['categories' => $categories, 'products' => $products , 'about' => $about]);
     }
 
-    public function test()
-    {
-    	$categories = Category::get();
-    	$products = Product::with('thumbnail')->with('category')->skip(0)->take(10)->get();
-        return view('frontend.index2',['products' => $products, 'categories' => $categories]);
-    }
-
-
+   
 
     public function shop(){
             $sellers = Seller::getSellersWithImage();
@@ -73,8 +66,8 @@ class HomeController extends Controller
 
             $about = new About();
             $about->phone = '012 123 456';
-            $about->email = 'secondhand.gmail.com';
-            $about->website = 'www.secondhand.com';
+            $about->email = 'shop.gmail.com';
+            $about->website = 'www.shop.com';
             $about->address = '#12, Happy Ave. Phnom Penh Cambodia';
             $about->save();
 

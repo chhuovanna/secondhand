@@ -55,10 +55,7 @@
 							<li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>
 						@endauth
 
-						@guest
-							<a href="#" class="flex-c-m trans-04 p-lr-25">
-								Sign Up
-							</a>
+						@guest							
 							<li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
 
 							@if(config('access.registration'))
@@ -80,9 +77,7 @@
 							</li>
 						@endguest
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Language
-						</a>
+						
 
 <!-- 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							USD
@@ -155,7 +150,7 @@
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->
 			<div class="logo-mobile">
-				<a href="index.html"><img src="{{asset('cozastore')}}/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+				<a href="/"><img src="{{asset('cozastore')}}/images/icons/logo-01.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -193,54 +188,75 @@
  -->
 				<li>
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Sign Up
-						</a>
+						@auth
+							<a href="{{route('frontend.user.dashboard')}}" class="flex-c-m p-lr-10 trans-04">
+								@lang('navs.frontend.dashboard')
+							</a>
+							
+						@endauth
+						@guest
+							<a href="{{route('frontend.auth.login')}}" class="flex-c-m p-lr-10 trans-04">
+								@lang('navs.frontend.login')
+							</a>							
+							
+							@if(config('access.registration'))
+								<a href="{{route('frontend.auth.register')}}" class="flex-c-m p-lr-10 trans-04">
+									@lang('navs.frontend.register')
+								</a>
+							@endif
+						@else
 
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Login
-						</a>
+								<a href="#" class="dropdown-toggle flex-c-m p-lr-10 trans-04" id="navbarDropdownMenuUser" data-toggle="dropdown"
+								   aria-haspopup="true" aria-expanded="false">{{ $logged_in_user->name }}</a>
 
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser" style="position: absolute">
+									@can('view backend')
+										<a href="{{ route('admin.dashboard') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
+									@endcan
+
+									<a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Active::checkRoute('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
+									<a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">@lang('navs.general.logout')</a>
+								</div>
+						@endguest
+						
+
+						
+
+<!-- 						
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							Language
 						</a>
-
-<!-- 						<a href="#" class="flex-c-m p-lr-10 trans-04">
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							USD
 						</a> -->
+
+
 					</div>
 				</li>
 			</ul>
 
 			<ul class="main-menu-m">
 				<li class="menu-home active-menu">
-								<a href="{{url('/')}}">Home</a>
-								<!-- <ul class="sub-menu">
-									<li><a href="{{url('/')}}">Homepage 1</a></li>
-									<li><a href="{{url('/')}}">Homepage 2</a></li>
-									<li><a href="{{url('/')}}">Homepage 3</a></li>
-								</ul> -->
-							</li>
+					<a href="{{url('/')}}">Home</a>
+				</li>
 
-							<li class="menu-shop">
-								<a href="{{url('/shop')}}">Shop</a>
-							</li>
+				<li class="menu-shop">
+					<a href="{{url('/shop')}}">Shop</a>
+				</li>
 
-							<li class="label1" data-label1="hot">
-								<a href="{{url('/features')}}">Features</a>
-							</li>
+				<li>
+					<a href="{{url('/features')}}">Features</a>
+					<sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
+				</li>
 
-							<!-- <li>
-								<a href="blog.html">Blog</a>
-							</li> -->
 
-							<li class='menu-about'>
-								<a href="{{url('/about')}}">About</a>
-							</li>
+				<li class='menu-about'>
+					<a href="{{url('/about')}}">About</a>
+				</li>
 
-							<li class="menu-contact">
-								<a href="{{url('/contact')}}">Contact</a>
-							</li>
+				<li class="menu-contact">
+					<a href="{{url('/contact')}}">Contact</a>
+				</li>	
 			</ul>
 		</div>
 
@@ -429,7 +445,8 @@
 
  -->
 	<!-- Banner -->
-	<div class="sec-banner bg0 p-t-80 p-b-50">
+	<!-- <div class="sec-banner bg0 p-t-80 p-b-50"> -->
+	<div class="sec-banner bg0 p-b-50">
 		<div class="container">
 			<div class="row">
 <!-- 				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto"> -->

@@ -14,7 +14,7 @@ class MessageController extends Controller
     public function index() {
 
         if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
-            return view('category.messageindex');
+            return view('scrud.messageindex');
         }else{
             return redirect()->back()->withFlashDanger("You don't have the permission");
         }
