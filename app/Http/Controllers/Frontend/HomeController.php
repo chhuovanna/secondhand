@@ -30,8 +30,9 @@ class HomeController extends Controller
         }else{
             $products = Product::getProductsWithThumbnailCategory(0,0,0,0);
         }
-        return view('frontend.index', ['categories' => $categories, 'products' => $products , 'about' => $about]);
-    }
+        $totalSize = Product::getSize(0,0);
+        return view('frontend.index', ['categories' => $categories, 'products' => $products , 'about' => $about, 'totalSize' =>$totalSize]);
+    } 
 
    
 
@@ -47,6 +48,8 @@ class HomeController extends Controller
     public function features(){
         $categories = Category::all();
         $about = About::first();
+        $totalSize = Product::getSize(0,1);
+
         if(Auth::check()){
             $products = Product::getProductsWithThumbnailCategory(0,0,1,1);
 
@@ -55,7 +58,8 @@ class HomeController extends Controller
 
         }
 
-        return view('frontend.features', ['categories' => $categories, 'products' => $products, 'about' => $about]);
+        return view('frontend.features', ['categories' => $categories, 'products' => $products
+            , 'about' => $about , 'totalSize' => $totalSize]);
 
     }
 

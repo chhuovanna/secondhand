@@ -34,11 +34,11 @@
 						 Filter
 					</div>
 
-					<!-- <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
 						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
 						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
 						Search
-					</div> -->
+					</div> 
 				</div>
 
 				<!-- Search product -->
@@ -47,7 +47,7 @@
 						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</button>
-						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" id="search_name" placeholder="Search By Name">
 					</div>
 				</div>
 
@@ -367,10 +367,15 @@
 
 
 			<!-- Load more -->
-			<div class="flex-c-m flex-w w-full p-t-45">
-				@php $num_product = sizeof($products);@endphp
+			@php $num_product = sizeof($products);@endphp
+			<div class="alert alert-info">
+				<p class='loaded-report font-weight-bold text-xl-left'>{{$num_product}} out of {{$totalSize}} products loaded.</p>
+			</div>
 
+			<div class="flex-c-m flex-w w-full p-t-45">
+			
 				<input id="offset" value="{{$num_product}}" type='hidden'>
+				<input id="totalSize" value="{{$totalSize}}" type='hidden'>
 				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore" data-features='1'>
 					Load More
 				</a>

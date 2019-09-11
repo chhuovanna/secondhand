@@ -124,6 +124,23 @@ EOT;
         return $this->hasMany('App\Like','product_id', 'product_id'); //belong to many category
     }
 
-    
+    public static function getSize($seller_id, $features){
+        $products = Product::where('status','Available');
+        
+        if ($seller_id != 0){
+            $products = $products->leftJoin(DB::raw('(select post_id, seller_id from post) as temp1')
+            ,'product.post_id', '=', 'temp1.post_id')
+            ->where('temp1.seller_id',$seller_id);
+        }
+
+        if($features == 1){
+            $products = $products->join(DB::raw('(select product_id from featured_product where (date(end_date_time) >= curdate() and date(start_date_time) <= curdate()) group by product_id ) as temp2')
+            , 'temp2.product_id','product.product_id');
+        }
+
+        $size = $products->count();
+
+        return $size;
+    }
 
 }

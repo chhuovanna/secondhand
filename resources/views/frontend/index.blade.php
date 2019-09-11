@@ -282,13 +282,20 @@
 
 
 			<!-- Load more -->
-			<div class="flex-c-m flex-w w-full p-t-45">
-				@php $num_product = sizeof($products);@endphp
+			@php $num_product = sizeof($products);@endphp
+			<div class="alert alert-info">
+				<p class='loaded-report font-weight-bold text-xl-left'>{{$num_product}} out of {{$totalSize}} products loaded.</p>
+			</div>
 
+			<div class="flex-c-m flex-w w-full p-t-45">
+			
 				<input id="offset" value="{{$num_product}}" type='hidden'>
+				<input id="totalSize" value="{{$totalSize}}" type='hidden'>
+				
 				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore">
 					Load More
 				</a>
+				
 			</div>
 
 		</div>

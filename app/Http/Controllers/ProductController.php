@@ -663,10 +663,13 @@ eot;
 
 
             //return [1,$html];
-            return [1,$items];
+            $totalSize = Product::getSize( $request->get('seller'),$request->get('features'));
+            return [1, $totalSize,$items];
         }
-        else
-            return [0];
+        else{
+            $totalSize = Product::getSize( $request->get('seller'),$request->get('features'));
+            return [0, $totalSize];
+        }
     }
 
 
@@ -745,6 +748,7 @@ eot;
         $categories = Category::all();
         $about = About::first();
         $seller = Seller::find($seller_id);
+        $totalSize = Product::getSize($seller_id,0);
 
 
         if (Auth::check()){
@@ -752,7 +756,8 @@ eot;
         }else{
             $products = Product::getProductsWithThumbnailCategory(0,$seller_id,0,0);
         }
-        return view('frontend.shopproduct', ['categories' => $categories, 'products' => $products , 'about' => $about , 'seller' =>$seller]);
+        return view('frontend.shopproduct', ['categories' => $categories, 'products' => $products 
+            , 'about' => $about , 'seller' =>$seller, 'totalSize' =>$totalSize]);
 
     }
 }
