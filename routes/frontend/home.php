@@ -21,6 +21,7 @@ Route::get('features','HomeController@features');
 Route::get('about','HomeController@about');
 Route::get('contact','HomeController@contact');
 Route::get('shop/{seller_id}',[ProductController::class,'showProductByShop'])->name('product.showbyshop');
+Route::get('product/{product_id}',[ProductController::class,'showProductDetail'])->name('product.detail');
 
 
 

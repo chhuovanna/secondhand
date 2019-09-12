@@ -445,8 +445,8 @@
 
  -->
 	<!-- Banner -->
-	<!-- <div class="sec-banner bg0 p-t-80 p-b-50"> -->
-	<div class="sec-banner bg0 p-b-50">
+	<div class="sec-banner bg0 p-t-80 p-b-50">
+	<!-- <div class="sec-banner bg0 p-b-50"> -->
 		<div class="container">
 			<div class="row">
 <!-- 				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto"> -->
@@ -832,14 +832,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 							</div> -->
 
 							<!--  -->
-							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+							<div class="flex-w flex-m p-l-100 p-t-40 respon7 facebookshare">
 								<!-- <div class="flex-m bor9 p-r-10 m-r-11">
 									<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
 										<i class="zmdi zmdi-favorite"></i>
 									</a>
 								</div> -->
 
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
+								<!-- <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
 									<i class="fa fa-facebook"></i>
 								</a>
 
@@ -849,7 +849,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
 									<i class="fa fa-google-plus"></i>
-								</a>
+								</a> -->
+								
+                                
 							</div>
 						</div>
 					</div>

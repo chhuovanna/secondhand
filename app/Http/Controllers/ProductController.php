@@ -760,5 +760,19 @@ eot;
             , 'about' => $about , 'seller' =>$seller, 'totalSize' =>$totalSize]);
 
     }
+
+    public function showProductDetail($product_id){
+        
+        
+        $categories = Category::all();
+        $about = About::first();
+        $request = new Request();
+        $request->setMethod('get');
+        $request->request->add(['product_id' => $product_id]);
+        $data = $this->getproductdetail($request);
+        
+        return view('frontend.productdetail',['categories' => $categories
+                    , 'about' => $about, 'product' => $data[1], 'seller'=>$data[2]]);
+    }
 }
 

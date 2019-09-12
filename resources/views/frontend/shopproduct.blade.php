@@ -7,8 +7,12 @@
 		<div class="container">
 			<div class="p-b-10">
 				<h3 class="ltext-103 cl5" style="font-size:22px">
-					WELCOME TO {{$seller->name}}
+					<a href="{{route('frontend.product.showbyshop', [$seller->seller_id])}}">WELCOME TO {{$seller->name}}</a>
 				</h3>
+				<h5 class='stext-301'><strong>Address : {{$seller->address}}</strong></h5>
+				<h5 class='stext-301'><strong>Email: </strong>{{$seller->email}}</h5>
+				<h5 class='stext-301'><strong>Phone: </strong>{{$seller->phone}}</h5>
+				<h5 class='stext-301'><strong>Message Account: </strong>{{$seller->message_account}}</h5>
 			</div>
 
 			<div class="flex-w flex-sb-m p-b-52">
@@ -271,7 +275,7 @@
 							@else
 							<img src="{{asset('images/thumbnail')}}/default.png" alt="IMG-PRODUCT">
 							@endif
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="{{$product->product_id}}">
+							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="{{$product->product_id}}">
 								Quick View
 							</a>
 						</div>
