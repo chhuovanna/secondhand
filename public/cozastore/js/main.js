@@ -148,7 +148,7 @@
         var price = Number($this.find('.price').text());
         var filter_by = $('.filter-price').val();
         var active_category = $('.how-active1').data('filter').substring(1);
-        var filter_by_name = $('#search_name').val().toLowerCase().split(' ');
+        var filter_by_name = $('#search_name').val().trim().toLowerCase().split(' ');
         var product_name = $this.find('.pname').text().toLowerCase();
         var is_in_price;
         var is_in_category;
@@ -452,13 +452,14 @@
                     html = html + '<span class="mtext-106 cl2">Price : '+product.price+'</span>';
                     html = html + '<p class="stext-102 cl3 p-t-23">Description : '+product.description+'</p>';
                     html = html + '<p class="stext-102 cl3 p-t-23">Availability : '+product.status+'</p>';
-                    html = html + '<p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">'
-                            +category_name+'</a></p>';
+                    html = html + '<p class="stext-102 cl3 p-t-23">Like : '+product.like_number+'</p>';
+                    html = html + '<p class="stext-102 cl3 p-t-23"><b>Category : </b>'
+                            +category_name+'</p>';
                     html = html
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Seller : </b>'
+                             +   '<b>Seller : </b><a href="/shop/'+seller.seller_id+'">'
                             +seller.name
-                            +'</p>'
+                            +'</a></p>'
 
 
                             +'<p class="stext-102 cl3 p-t-23">'
@@ -467,8 +468,8 @@
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Email : </b><a href="#">'
-                            +seller.email+'</a>'
+                             +   '<b>Email : </b>'
+                            +seller.email
                             +'</p>'
                             +'<p class="stext-102 cl3 p-t-23">'
                              +   '<b>Phone : </b>'

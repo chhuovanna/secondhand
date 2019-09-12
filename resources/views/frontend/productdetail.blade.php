@@ -15,7 +15,7 @@
 						<div class="p-l-25 p-r-30 p-lr-0-lg">
 							<div class="wrap-slick3 flex-sb flex-w">
 								<div class="wrap-slick3-dots"></div>
-								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+								<div class="wrap-slick3-arrows flex-sb-m flex-w" style="top:200px"></div>
 
 								<div class="slick3 gallery-lb">
                                     @php
@@ -35,7 +35,7 @@
 										</div>
                                     </div>
                                     @foreach($product->photo as $ele)
-                                        @php	
+                                        @php
                                             $location = '/'.$ele->location.'/'.$ele->file_name;
                                         @endphp
 
@@ -49,16 +49,16 @@
 										</div>
                                     </div>
                                     @endforeach
-                                    
+
 								</div>
 							</div>
 						</div>
 					</div>
 
 					<div class="col-md-6 col-lg-5 p-b-30">
-						
+
 						<div class="p-r-50 p-t-5 p-lr-0-lg detail-text">
-							
+
                             @php
                                 $category_list = "";
                                 foreach($product->category as $ele){
@@ -70,15 +70,18 @@
                             <span class="mtext-106 cl2">Price : {{$product->price}}</span>
                             <p class="stext-102 cl3 p-t-23">Description : {{$product->description}}</p>
                             <p class="stext-102 cl3 p-t-23">Availability : {{$product->status}}</p>
-                            <p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">{{$category_list}}</a></p>
-                            <p class="stext-102 cl3 p-t-23"><b>Seller : </b>{{$seller->name}}</p>
+                            <p class="stext-102 cl3 p-t-23">Like : {{$product->like_number}}</p>
+                            <p class="stext-102 cl3 p-t-23"><b>Category : </b>{{$category_list}}</p>
+                            <p class="stext-102 cl3 p-t-23"><b>Seller : </b>
+                                <a href="{{route('frontend.product.showbyshop',[$seller->seller_id])}}">{{$seller->name}}</a>
+                            </p>
                             <p class="stext-102 cl3 p-t-23"><b>Address : </b>{{$seller->address}}</p>
-                            <p class="stext-102 cl3 p-t-23"><b>Email : </b><a href="javascript:void(0);">{{$seller->email}}</a></p>
+                            <p class="stext-102 cl3 p-t-23"><b>Email : </b>{{$seller->email}}</p>
                             <p class="stext-102 cl3 p-t-23"><b>Phone : </b>{{$seller->phone}}</p>
                             <p class="stext-102 cl3 p-t-23"><b>Message_Account : </b>{{$seller->message_account}}</p>
                             <p class="stext-102 cl3 p-t-23"><b>Type : </b>{{$seller->type}}</p>
                             <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                                @php    
+                                @php
                                 $url = urlencode(route('frontend.product.detail',[$product->product_id]));
                                 @endphp
                                 <iframe src="https://www.facebook.com/plugins/share_button.php?href={{$url}}&layout=button&size=small&width=59&height=20&appId" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>

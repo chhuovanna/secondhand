@@ -689,7 +689,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 						<div class="p-l-25 p-r-30 p-lr-0-lg">
 							<div class="wrap-slick3 flex-sb flex-w">
 								<div class="wrap-slick3-dots"></div>
-								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+								<div class="wrap-slick3-arrows flex-sb-m flex-w" style="top:200px"></div>
 
 								<div class="slick3 gallery-lb">
 									 <!-- <div id='to-be-hide' class="item-slick3" data-thumb="{{asset('cozastore')}}/images/product-detail-01.jpg">
@@ -921,7 +921,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                 $.ajax({
                     method: 'GET',
-                    url: "admin/product/likeUnlike",
+                    url: window.location.protocol +'//'+window.location.host+"/admin/product/likeUnlike",
                     data: {product_id: $(ele).data('product_id'),operation:'like'},
                     success: function (data) {
 
