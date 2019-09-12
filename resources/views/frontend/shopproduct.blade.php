@@ -275,7 +275,7 @@
 							@else
 							<img src="{{asset('images/thumbnail')}}/default.png" alt="IMG-PRODUCT">
 							@endif
-							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="{{$product->product_id}}">
+							<a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="{{$product->product_id}}">
 								Quick View
 							</a>
 						</div>
@@ -331,30 +331,30 @@
 									}
 								@endphp
 
-								
+
 
 							</div>
 
  							<div class="block2-txt-child2 flex-r p-t-3">
 
-							 
+
 								<span class="number-like">{{$number_like}}</span>
-								
+
 
 								@if($is_like)
 								<a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="{{$product->product_id}}">
-									
+
 									<img class="icon-heart1 dis-block trans-04" src="{{asset('cozastore')}}/images/icons/icon-heart-01.png" alt="ICON">
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('cozastore')}}/images/icons/icon-heart-02.png" alt="ICON">
 
-									
+
 								</a>
 								@else
 								<a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="{{$product->product_id}}">
-									
+
 									<img class="icon-heart1 dis-block trans-04" src="{{asset('cozastore')}}/images/icons/icon-heart-01.png" alt="ICON">
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('cozastore')}}/images/icons/icon-heart-02.png" alt="ICON">
-									
+
 								</a>
 								@endif
 
@@ -377,7 +377,7 @@
 			</div>
 
 			<div class="flex-c-m flex-w w-full p-t-45">
-			
+
 				<input id="offset" value="{{$num_product}}" type='hidden'>
 				<input id="totalSize" value="{{$totalSize}}" type='hidden'>
 				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore" data-seller_id='{{$seller->seller_id}}'>

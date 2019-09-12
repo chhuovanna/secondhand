@@ -161,12 +161,12 @@
         // selected price
         // console.log(filter_by_name);
         // console.log(product_name);
-        is_in_price = ( filter_by === 'all' 
-                    || (filter_by === 'after200' && price >= 200) 
-                    || (price >= (Number(filter_by) - 50) &&  price <= Number(filter_by) ) 
+        is_in_price = ( filter_by === 'all'
+                    || (filter_by === 'after200' && price >= 200)
+                    || (price >= (Number(filter_by) - 50) &&  price <= Number(filter_by) )
                     );
-        is_in_category = ( active_category === '' 
-                            ||  $this.hasClass(active_category) 
+        is_in_category = ( active_category === ''
+                            ||  $this.hasClass(active_category)
                         );
         if (filter_by_name.length == 0)
             is_in_name = true;
@@ -176,12 +176,12 @@
                     is_in_name = true;
                     break;
                 }
-            }    
+            }
         }
 
         return is_in_name && is_in_price && is_in_category;
 
-        
+
 
         // if (isNaN(filter_by)){
         //     if (filter_by  == 'all'){
@@ -191,7 +191,7 @@
         //         else{
         //             return ($this.hasClass(active_category) && !(product_name.indexOf(filter_by_name) === -1 ));
         //         }
-                    
+
         //     }else{
         //         if ( active_category === '')
         //             return ((price >= 200 ) && !(product_name.indexOf(filter_by_name) === -1));
@@ -713,7 +713,7 @@
 
         updateSize();
 
-        
+
 
 
     })
@@ -736,7 +736,7 @@
        var loaded = $('#offset').val() ;
        var displayed = $('.isotope-grid').data('isotope').filteredItems.length;
         $('.loaded-report').text( loaded
-            + ' out of ' + totalSize + ' products loaded. ' 
+            + ' out of ' + totalSize + ' products loaded. '
              + ((displayed<loaded)?  displayed + ' products displayed after filtered.' : '')
         );
    }
