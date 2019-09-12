@@ -486,13 +486,11 @@
                             +'</p>';
 
                     text_container.prepend(html);
-
                     temp  =  encodeURIComponent(window.location.protocol+'//'
                                 + window.location.hostname+(window.location.port ? ':'+window.location.port: '')
                                 + '/product/' + product['product_id'] );
                     html = '<iframe src="https://www.facebook.com/plugins/share_button.php?href='+temp+'&layout=button&size=small&width=59&height=20&appId" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>';
                     $('.facebookshare').append(html);
-
                     $('.gallery-lb').each(function() { // the containers for all your galleries
                         $(this).magnificPopup({
                             delegate: 'a', // the selector for gallery item
@@ -533,7 +531,6 @@
 
                         }
                     });
-                    
 
                 }
             },
@@ -551,7 +548,6 @@
         $('.gallery-lb').slick('unslick');
         $('.gallery-lb').empty();
         $('.detail-text').empty();
-        $('.facebookshare').empty();
 
     });
 
