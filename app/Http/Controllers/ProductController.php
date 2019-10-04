@@ -403,7 +403,7 @@ class ProductController extends Controller
                         ->addColumn('action', function ($product) {
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
-                                                
+
                                                 return $html;
                                             })
                         ->make(true);
@@ -416,7 +416,7 @@ class ProductController extends Controller
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-info btn-sm product-featured" data-toggle="modal" data-target="#featured_product_modal"><i class="fas fa-cog"></i></a>' ;
-                                                
+
                                                 return $html;
                                             })
                         ->make(true);
@@ -719,7 +719,7 @@ eot;
 
                     $like->save();
                     $product = Product::find($product_id);
-                    $product->like_number ++;
+                    $product->like_number = $product->like()->count();
                     $product->save();
                     return 1;
                 }elseif ($operation == 'unlike'){
@@ -731,7 +731,7 @@ eot;
                         ->where('user_id',$user_id)
                         ->delete();
                         $product = Product::find($product_id);
-                        $product->like_number --;
+                        $product->like_number = $product->like()->count();
                         $product->save();
                     }
                     return 1;
@@ -756,21 +756,21 @@ eot;
         }else{
             $products = Product::getProductsWithThumbnailCategory(0,$seller_id,0,0);
         }
-        return view('frontend.shopproduct', ['categories' => $categories, 'products' => $products 
+        return view('frontend.shopproduct', ['categories' => $categories, 'products' => $products
             , 'about' => $about , 'seller' =>$seller, 'totalSize' =>$totalSize]);
 
     }
 
     public function showProductDetail($product_id){
-        
-        
+
+
         $categories = Category::all();
         $about = About::first();
         $request = new Request();
         $request->setMethod('get');
         $request->request->add(['product_id' => $product_id]);
         $data = $this->getproductdetail($request);
-        
+
         return view('frontend.productdetail',['categories' => $categories
                     , 'about' => $about, 'product' => $data[1], 'seller'=>$data[2]]);
     }

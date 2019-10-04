@@ -55,7 +55,7 @@
 							<li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>
 						@endauth
 
-						@guest							
+						@guest
 							<li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
 
 							@if(config('access.registration'))
@@ -77,7 +77,7 @@
 							</li>
 						@endguest
 
-						
+
 
 <!-- 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							USD
@@ -192,13 +192,13 @@
 							<a href="{{route('frontend.user.dashboard')}}" class="flex-c-m p-lr-10 trans-04">
 								@lang('navs.frontend.dashboard')
 							</a>
-							
+
 						@endauth
 						@guest
 							<a href="{{route('frontend.auth.login')}}" class="flex-c-m p-lr-10 trans-04">
 								@lang('navs.frontend.login')
-							</a>							
-							
+							</a>
+
 							@if(config('access.registration'))
 								<a href="{{route('frontend.auth.register')}}" class="flex-c-m p-lr-10 trans-04">
 									@lang('navs.frontend.register')
@@ -218,11 +218,11 @@
 									<a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">@lang('navs.general.logout')</a>
 								</div>
 						@endguest
-						
 
-						
 
-<!-- 						
+
+
+<!--
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							Language
 						</a>
@@ -256,7 +256,7 @@
 
 				<li class="menu-contact">
 					<a href="{{url('/contact')}}">Contact</a>
-				</li>	
+				</li>
 			</ul>
 		</div>
 
@@ -585,12 +585,12 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at {{$about->address}} 
+						Any questions? Let us know in store at {{$about->address}}
 					</p>
 					<p>
 						Tel : {{$about->phone}}
-					</p>					
-					
+					</p>
+
 					<p>
 						Email : {{$about->email}}
 					</p>
@@ -675,10 +675,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</div>
 
 	<!-- Modal1 -->
-	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
 		<div class="overlay-modal1 js-hide-modal1"></div>
 
-		<div class="container">
+		<div class="container" >
 			<div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
 				<button class="how-pos3 hov3 trans-04 js-hide-modal1">
 					<img src="{{asset('cozastore')}}/images/icons/icon-close.png" alt="CLOSE">
@@ -689,7 +689,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 						<div class="p-l-25 p-r-30 p-lr-0-lg">
 							<div class="wrap-slick3 flex-sb flex-w">
 								<div class="wrap-slick3-dots"></div>
-								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+								<div class="wrap-slick3-arrows flex-sb-m flex-w" style="top:200px"></div>
 
 								<div class="slick3 gallery-lb">
 									 <!-- <div id='to-be-hide' class="item-slick3" data-thumb="{{asset('cozastore')}}/images/product-detail-01.jpg">
@@ -850,8 +850,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
 									<i class="fa fa-google-plus"></i>
 								</a> -->
-								
-                                
+
+
 							</div>
 						</div>
 					</div>
@@ -921,14 +921,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                 $.ajax({
                     method: 'GET',
-                    url: "admin/product/likeUnlike",
+                    url: window.location.protocol +'//'+window.location.host+"/admin/product/likeUnlike",
                     data: {product_id: $(ele).data('product_id'),operation:'like'},
                     success: function (data) {
 
                         if (data == 1){
                             //console.log(data);
 							$(ele).addClass('js-addedwish-b2');
-							
+
 							var number_like = parseInt($(ele).parent().find('span').text());
 							if (isNaN(number_like))
 								number_like = 0;
