@@ -133,6 +133,7 @@ class SellerController extends Controller
 
     public function update(Request $request, $id) { // add access control
         $permit = false;
+        $changeemail = false;
         if (Auth::user()->hasRole('administrator')) {
             $permit = true;
         }else{
