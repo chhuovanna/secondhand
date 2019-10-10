@@ -16,7 +16,7 @@ class SellerTableSeeder extends Seeder
      */
     public function run()
     {
-        App\Seller::truncate();
+        //App\Seller::truncate();
         DB::table('seller')->insert([
             "name" => "Admin Seller"
             ,'phone' => '012345678'
