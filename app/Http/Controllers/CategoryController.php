@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\File;//for deleting file
 use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Image; //need to use it to call new Image();
-use App\Seller;
-use App\Product;
 use Datatables;
 use DB;
 
@@ -16,13 +14,13 @@ use DB;
 class CategoryController extends Controller
 {
     public function index() {
-        return view('category.categoryindex');
+        return view('scrud.categoryindex');
     }
     public function create()
     {
         if (Auth::user()->hasRole('administrator')) {
 
-            return view('category.categorycreate');
+            return view('scrud.categorycreate');
 
         }else{
             return redirect()
@@ -48,7 +46,7 @@ class CategoryController extends Controller
             $file = $request->file('image_id');
             $image = new Image();
             $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-            $image->location = 'images\category'; //category is stored in public/images/category
+            $image->location = 'images/category'; //category is stored in public/images/category
 
             try {
                 $image->save();
@@ -80,7 +78,7 @@ class CategoryController extends Controller
         if (Auth::user()->hasRole('administrator')) {
             //we dont have image function in model category, we only have thumbnail()
             $category = Category::with('thumbnail')->find($id);
-            return view('category.categoryedit', ['category' => $category]);
+            return view('scrud.categoryedit', ['category' => $category]);
         }else{
             return redirect()
                 ->back()
@@ -109,7 +107,7 @@ class CategoryController extends Controller
                     $file = $request->file('image_id');
                     $image = new Image();
                     $image->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-                    $image->location = 'images\category';
+                    $image->location = 'images/category';
 
                     $file->move(public_path($image->location), $image->file_name);
                     $image->save();//save new image
@@ -124,7 +122,7 @@ class CategoryController extends Controller
                 if (isset($old_image)) {
                     $old_image = Image::find($old_image);
                     //remove old image from harddisk
-                    $file = public_path($old_image->location) . '\\' . $old_image->file_name;
+                    $file = public_path($old_image->location) . '/' . $old_image->file_name;
                     if (File::exists($file)) {
                         File::delete($file);
                     }
@@ -158,7 +156,7 @@ class CategoryController extends Controller
                 $res['category'] = Category::destroy($id);
                 if ($image) {
 
-                    $file = public_path($image->location) . '\\' . $image->file_name;
+                    $file = public_path($image->location) . '/' . $image->file_name;
 
 
                     //test if the image file exists or not
@@ -188,87 +186,6 @@ class CategoryController extends Controller
 
 
 
-// /*   public function getform(){
-//        $category = category::all();
-//        $sellers = seller::all();
-//        return view('categoryrate', [ 'category' => $category, 'sellers' => $sellers  ]);
-//    }*/
-
-//    public function saveseller_signup(Request $request){
-//
-//        $seller_signup = new product();
-//        $seller_signup->seller_signup_ID = $request->get('seller_signup_ID');
-//        $seller_signup->name = $request->get('name');
-//        $seller_signup->address = $request->get('address');
-//        $seller_signup->email = $request->get('email');
-//        $seller_signup->phone = $request->get('phone');
-//        $seller_signup->instant_massage_account = $request->get('instant_message_account');
-//        $seller_signup->type = $request->get('type');
-//        $seller_signup->image = $request->get('image');
-//        $seller_signup->created_at = $request->get('created_at');
-//        $seller_signup->updated_at = $request->get('updated_at');
-//        $seller_signup->image = $request->get('image');
-//        $seller_signup->sellerDate = date('Y-m-d');
-//        try {
-//            $seller_signup->save();
-//            return redirect()->route('category.rate')->withFlashSuccess('Seller is added');
-//        }
-//        catch (\Exception $e) {
-//            return redirect()
-//                ->back()
-//                ->withInput($request->all())
-//                ->withFlashDanger("Seller can't be added. ". $e->getMessage());
-//        }
-//    }
-
-//
-//    public function showrate(){
-//        $category = category::all();
-//        return view('categoryshowrate', [ 'category' => $category]);
-//    }
-
-//    public function getseller_signup(Request $request){
-//        $add = $request->input('add');
-//        $sellers_signup = seller::getSeller_signup($add);
-//        if (sizeof($sellers_signup) > 0){
-//            $stars = 0;
-//            $body = "";
-//
-//            foreach ($sellers_signup as $seller_signup) {
-//                $stars += $seller_signup->stars;
-//                $body .= <<<EOF
-//	<tr>
-//
-//		<td>$seller_signup->name</td>
-//		<td>$seller_signup->stars</td>
-//		<td>$seller_signup->sellerDate</td>
-//	</tr>
-//EOF;
-//            }
-
-//            $stars = $stars/sizeof($sellers_signup);
-//            $html = <<<EOF
-//<br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
-//<table clas="table">
-//	<thead>
-//		<tr>
-//			<th scope="col">seller</th>
-//			<th scope="col">stars</th>
-//			<th scope="col">sellerDate</th>
-//		</tr>
-//	</thead>
-//	<tbody>
-//	$body
-//	</tdbody>
-//</table>
-//
-//EOF;
-//            return $html;
-//        }else{
-//            return "No Seller_signup";
-//        }
-//    }
-
     public function getcategory(){
         $categorys = Category::select(['category_id', 'name', 'description'
             ,'category.image_id','category.created_at','category.updated_at'
@@ -293,94 +210,6 @@ class CategoryController extends Controller
         }
     }
 
-    //phan moi them
 
-//    public function home(){
-//
-//        $categorys = Category::getCategorysWithImage();
-//        return view('frontend.index',['categorys'=>$categorys]);
-//    }
-
-//    public function getcategorymore(Request $request){
-//
-//        $categorys = Category::getCategorysWithImage($request->get('offset'));
-//
-//        if(sizeof($categorys) > 0){
-//            //$items = array();
-//            $html = "";
-//
-//            foreach ($categorys as $category){
-//                //$html = "";
-//                $html .= <<<eot
-//				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-//					<!-- Block2 -->
-//					<div class="block2">
-//						<div class="block2-pic hov-img0">
-//eot;
-//                if($category->file_name){
-//                    $location = asset($category->location);
-//                    $html .= <<<eot
-//
-//							<img src="$location/$category->file_name" alt="IMG-PRODUCT">
-//eot;
-//                }else{
-//                    $location = asset('images/category');
-//                    $html .= <<<eot
-//
-//							<img src="$location/default.png" alt="IMG-PRODUCT">
-//eot;
-//                }
-//                $location = asset('cozastore');
-//                $html .= <<<eot
-//							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-//								Quick View
-//							</a>
-//						</div>
-//
-//						<div class="block2-txt flex-w flex-t p-t-14">
-//							<div class="block2-txt-child1 flex-col-l ">
-//								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-//									$category->category_id
-//								</a>
-//
-//								<span class="stext-105 cl3">
-//									$category->Image
-//								</span>
-//
-//								<span class="stext-105 cl3">
-//									$category->Name
-//								</span>
-//								<span class="stext-105 cl3">
-//									$category->Description
-//								</span>
-//								<span class="stext-105 cl3">
-//									$category->Created_at
-//								</span>
-//								<span class="stext-105 cl3">
-//									$category->Updated_at
-//								</span>
-//							</div>
-//
-// 							<div class="block2-txt-child2 flex-r p-t-3">
-//								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-//									<img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
-//									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
-//								</a>
-//							</div>
-// 						</div>
-//					</div>
-//				</div>
-//eot;
-//                //$items[] = $html;
-//            }
-//
-//
-//            return [1,$html];
-//            //return [1,$items];
-//        }
-//        else
-//            return [0];
-//    }
-//
 
 }

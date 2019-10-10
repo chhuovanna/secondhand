@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Events\Frontend\Auth\UserConfirmed;
 use App\Events\Frontend\Auth\UserProviderRegistered;
 use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
+use App\Seller;
 
 /**
  * Class UserRepository.
@@ -107,7 +108,24 @@ class UserRepository extends BaseRepository
                 /*
                  * Add the default site role to the new user
                  */
-                $user->assignRole(config('access.users.default_role'));
+                //added by vanna
+                if(isset($data['is_seller'])){
+
+                    $user->assignRole('executive');
+                    //create seller for the user
+                    $seller = new Seller();
+                    $seller->name = $data['first_name']. ' ' .$data['last_name'] ;
+                    $seller->email = $data['email'];
+                    $seller->message_account = $data['email'];
+                    $seller->user_id = $user->id;
+                    $seller->save();
+
+                }elseif(isset($data['backend'])){
+                    $user->assignRole('executive');
+                }
+                else{
+                    $user->assignRole(config('access.users.default_role'));
+                }
             }
 
             /*

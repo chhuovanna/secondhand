@@ -5,16 +5,20 @@
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-140">
 		<div class="container">
-			<!-- <div class="p-b-10">
-				<h3 class="ltext-103 cl5">
-					Product Overview
+			<div class="p-b-10">
+				<h3 class="ltext-103 cl5" style="font-size:22px">
+					<a href="{{route('frontend.product.showbyshop', [$seller->seller_id])}}">WELCOME TO {{$seller->name}}</a>
 				</h3>
-			</div> -->
+				<h5 class='stext-301'><strong>Address : {{$seller->address}}</strong></h5>
+				<h5 class='stext-301'><strong>Email: </strong>{{$seller->email}}</h5>
+				<h5 class='stext-301'><strong>Phone: </strong>{{$seller->phone}}</h5>
+				<h5 class='stext-301'><strong>Message Account: </strong>{{$seller->message_account}}</h5>
+			</div>
 
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-						All Category
+						All Products
 					</button>
 
 					@foreach($categories as $category)
@@ -91,7 +95,7 @@
 								<li class="p-b-6">
 									<a href="javascript:void(0)" class="filter-link stext-106 trans-04 sort-by" data-sort="lowtohigh">
 										<!-- Price: High to Low -->
-										Price: High to low
+										Price: Low to High
 									</a>
 								</li>
 							</ul>
@@ -146,7 +150,73 @@
 							</ul>
 						</div>
 
-						
+						<!-- <div class="filter-col3 p-r-15 p-b-27">
+							<div class="mtext-102 cl2 p-b-15">
+								Color
+							</div>
+
+							<ul>
+								<li class="p-b-6">
+									<span class="fs-15 lh-12 m-r-6" style="color: #222;">
+										<i class="zmdi zmdi-circle"></i>
+									</span>
+
+									<a href="#" class="filter-link stext-106 trans-04">
+										Black
+									</a>
+								</li>
+
+								<li class="p-b-6">
+									<span class="fs-15 lh-12 m-r-6" style="color: #4272d7;">
+										<i class="zmdi zmdi-circle"></i>
+									</span>
+
+									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
+										Blue
+									</a>
+								</li>
+
+								<li class="p-b-6">
+									<span class="fs-15 lh-12 m-r-6" style="color: #b3b3b3;">
+										<i class="zmdi zmdi-circle"></i>
+									</span>
+
+									<a href="#" class="filter-link stext-106 trans-04">
+										Grey
+									</a>
+								</li>
+
+								<li class="p-b-6">
+									<span class="fs-15 lh-12 m-r-6" style="color: #00ad5f;">
+										<i class="zmdi zmdi-circle"></i>
+									</span>
+
+									<a href="#" class="filter-link stext-106 trans-04">
+										Green
+									</a>
+								</li>
+
+								<li class="p-b-6">
+									<span class="fs-15 lh-12 m-r-6" style="color: #fa4251;">
+										<i class="zmdi zmdi-circle"></i>
+									</span>
+
+									<a href="#" class="filter-link stext-106 trans-04">
+										Red
+									</a>
+								</li>
+
+								<li class="p-b-6">
+									<span class="fs-15 lh-12 m-r-6" style="color: #aaa;">
+										<i class="zmdi zmdi-circle-o"></i>
+									</span>
+
+									<a href="#" class="filter-link stext-106 trans-04">
+										White
+									</a>
+								</li>
+							</ul>
+						</div> -->
 
 						<div class="filter-col4 p-b-27">
 							<div class="mtext-102 cl2 p-b-15 testoutput">
@@ -155,6 +225,25 @@
 
 							<div class="flex-w p-t-4 m-r--5">
 
+								<!-- <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Cloth
+								</a>
+
+								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Electronic
+								</a>
+
+								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									House hold
+								</a>
+
+								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Toy
+								</a>
+
+								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Book
+								</a> -->
 							</div>
 						</div>
 					</div>
@@ -242,30 +331,30 @@
 									}
 								@endphp
 
-								
+
 
 							</div>
 
  							<div class="block2-txt-child2 flex-r p-t-3">
 
-							 
+
 								<span class="number-like">{{$number_like}}</span>
-								
+
 
 								@if($is_like)
 								<a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="{{$product->product_id}}">
-									
+
 									<img class="icon-heart1 dis-block trans-04" src="{{asset('cozastore')}}/images/icons/icon-heart-01.png" alt="ICON">
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('cozastore')}}/images/icons/icon-heart-02.png" alt="ICON">
 
-									
+
 								</a>
 								@else
 								<a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="{{$product->product_id}}">
-									
+
 									<img class="icon-heart1 dis-block trans-04" src="{{asset('cozastore')}}/images/icons/icon-heart-01.png" alt="ICON">
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{asset('cozastore')}}/images/icons/icon-heart-02.png" alt="ICON">
-									
+
 								</a>
 								@endif
 
@@ -288,14 +377,12 @@
 			</div>
 
 			<div class="flex-c-m flex-w w-full p-t-45">
-			
+
 				<input id="offset" value="{{$num_product}}" type='hidden'>
 				<input id="totalSize" value="{{$totalSize}}" type='hidden'>
-				
-				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore">
+				<a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore" data-seller_id='{{$seller->seller_id}}'>
 					Load More
 				</a>
-				
 			</div>
 
 		</div>
@@ -303,3 +390,9 @@
 
 
 @endsection
+@push('after-scripts')
+    <script>
+        $('.active-menu').removeClass('active-menu');
+        $('.menu-shop').addClass('active-menu');
+    </script>
+@endpush

@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\About;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
@@ -8,6 +10,7 @@ use App\Image;
 use App\Category;
 use App\Post;
 use App\Seller;
+use App\Like;
 use Datatables;
 use DB;
 
@@ -21,13 +24,13 @@ class ProductController extends Controller
     public function index()
     {
 
-        return view('category.productindex');
+        return view('scrud.productindex');
     }
 
     public function create()
     {
         $categories = Category::getSelectOptions();
-        return view('category.productcreate', ['categories' => $categories]);
+        return view('scrud.productcreate', ['categories' => $categories]);
     }
 
     public function createwitholdpost($post_id)
@@ -35,7 +38,7 @@ class ProductController extends Controller
         $categories = Category::getSelectOptions();
         $product = Product::where('post_id', '=', $post_id)->first();
 
-        return view('category.productcreate', ['categories' => $categories
+        return view('scrud.productcreate', ['categories' => $categories
             , 'post_id' => $post_id
             , 'pickup_time' => $product->pickup_time
             , 'pickup_address' => $product->pickup_address]);
@@ -48,7 +51,7 @@ class ProductController extends Controller
         $product->name = $request->get('name');
         $product->price = $request->get('price');
         $product->description = $request->get('description');
-        $product->view_number = $request->get('view_number');
+        $product->like_number = $request->get('like_number');
         $product->status = $request->get('status');
         $product->pickup_address = $request->get('pickup_address');
         $product->pickup_time = $request->get('pickup_time');
@@ -63,7 +66,7 @@ class ProductController extends Controller
         $file = $request->file('thumbnail_id');
         $thumbnail = new Image();
         $thumbnail->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-        $thumbnail->location = 'images\thumbnail'; //thumbnail is stored in public/images/thumbnail
+        $thumbnail->location = 'images/thumbnail'; //thumbnail is stored in public/images/thumbnail
 
         try {
             $thumbnail->save();
@@ -94,7 +97,7 @@ class ProductController extends Controller
                     $photo = new Image();
                     $photo->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
                     //photos are stored on server in folder public/images/photos
-                    $photo->location = 'images\photos';
+                    $photo->location = 'images/photos';
 
                     //photo belongs to product
                     $photo->product_id = $product->product_id; //not (id) product_id
@@ -141,9 +144,9 @@ class ProductController extends Controller
 
 
         if (Auth::user()->hasRole('administrator')) {
-            return view('category.productedit', ['categories' => $categories, 'product' => $product]);
+            return view('scrud.productedit', ['categories' => $categories, 'product' => $product]);
         } elseif ($seller->user_id == Auth::id()) {
-            return view('category.productedit', ['categories' => $categories, 'product' => $product]);
+            return view('scrud.productedit', ['categories' => $categories, 'product' => $product]);
         } else {
             return redirect()->back()->withFlashDanger("You don't have the permission");
         }
@@ -156,7 +159,7 @@ class ProductController extends Controller
 
         $permit = false;
         if (Auth::user()->hasRole('administrator')) {
-            $permit = false;
+            $permit = true;
         } else {
             $post = $product->post;
             $seller = Seller::find($post->seller_id);
@@ -176,7 +179,7 @@ class ProductController extends Controller
             $product->name = $request->get('name');
             $product->price = $request->get('price');
             $product->description = $request->get('description');
-            //$product->view_number = $request->get('view_number');
+            //$product->like_number = $request->get('like_number');
             $product->status = $request->get('status');
             $product->pickup_address = $request->get('pickup_address');
             $product->pickup_time = $request->get('pickup_time');
@@ -196,7 +199,7 @@ class ProductController extends Controller
                     $file = $request->file('thumbnail_id');
                     $thumbnail = new Image();
                     $thumbnail->file_name = rand(1111, 9999) . time() . '.' . $file->getClientOriginalExtension();
-                    $thumbnail->location = 'images\thumbnail';
+                    $thumbnail->location = 'images/thumbnail';
 
                     $file->move(public_path($thumbnail->location), $thumbnail->file_name);
                     $thumbnail->save();//save new thumbnail
@@ -213,7 +216,7 @@ class ProductController extends Controller
 
                 if (isset($old_thumbnail)) {
                     //remove old thumbnail from harddisk
-                    $file = public_path($old_thumbnail->location) . '\\' . $old_thumbnail->file_name;
+                    $file = public_path($old_thumbnail->location) . '/' . $old_thumbnail->file_name;
                     if (File::exists($file)) {
                         File::delete($file);
                     }
@@ -236,7 +239,7 @@ class ProductController extends Controller
 
                             if ($db_old_photo->delete()) {
                                 //remove old thumbnail from harddisk
-                                $file = public_path($db_old_photo->location) . '\\' . $db_old_photo->file_name;
+                                $file = public_path($db_old_photo->location) . '/' . $db_old_photo->file_name;
                                 if (File::exists($file)) {
                                     File::delete($file);
                                 }
@@ -269,6 +272,22 @@ class ProductController extends Controller
 
                     }
                 }
+                $category = $request->get('category_id');
+                $old_category = $product->category;
+                $array_old_category = $old_category->pluck('category_id')->toArray();
+                print_r($array_old_category);
+
+                foreach ($old_category as $ele){
+                    if (!in_array ( $ele->category_id, $category )){
+                        $product->category()->detach($ele->category_id);
+                    }
+                }
+
+                foreach ($category as $ele){
+                    if (!in_array ( $ele, $array_old_category )){
+                        $product->category()->attach($ele);
+                    }
+                }
 
 
                 return redirect()->route('product.index')->withFlashSuccess('product is updated');
@@ -282,156 +301,87 @@ class ProductController extends Controller
     }
 
     public function destroy($id){
-                $product = Product::with('thumbnail')->with('photo')->with('post')->find($id);
-                $permit = false;
-                if (Auth::user()->hasRole('administrator')) {
-                    $permit = false;
-                } else {
-                    $post = $product->post;
-                    $seller = Seller::find($post->seller_id);
-                    // $user = Auth::id();
-                    //$seller = Seller::where('user_id', $user)->first();
-                    if ($seller->user_id == Auth::id()) {
-                        $permit = true;
-                    } else {
-                        return redirect()
-                            ->back()
-                            ->withFlashDanger("You dont have the permission ");
-                    }
-                }
-                if ($permit) {
-                try {
-
-                    //to get the array of photos of the product
-                    $product = Product::with('photo')->with('thumbnail')->find($id);
-                    $photos = $product->photo;
-                    $res['photos'] = true;
-                    if ($photos) {
-                        foreach ($photos as $photo) {
-                            $file = public_path($photo->location) . '\\' . $photo->file_name;
-                            if (File::exists($file)) {
-
-                                if (File::delete($file)) {//delete the file from the folder
-                                    $res['photos'] = $res['photos'] && $photo->delete(); //delete the file from database
-                                }
-
-                            }
-                        }
-
-                    }
-
-
-                    //to get thumbnail of the product to be deleted. in product model, there is function called thumbnail
-                    $thumbnail = $product->thumbnail;
-
-                    $post = $product->post;
-
-                    //delete product from database
-                    $res['product'] = Product::destroy($id);
-
-                    $otherproduct = $post->product;
-                    if (sizeof($otherproduct) == 0) {
-                        $post->delete();
-                    }
-
-                    if ($thumbnail) {
-                        $file = $file = public_path($thumbnail->location) . '\\' . $thumbnail->file_name;
-                        //test if the thumbnail file exists or not
-                        if (File::exists($file)) {
-                            //delete the file from the folder
-                            if (File::delete($file)) {
-                                //delete the thumbnail of the product from database;
-                                $res['thumbnail'] = $thumbnail->delete();
-                            }
-                        }
-                    }
-
-
-                    if ($res['product'])
-                        return [1];
-                    else
-                        return [0];
-                } catch (\Exception $e) {
-                    return [0, $e->getMessage()];
-                }
+        $product = Product::with('thumbnail')->with('photo')->with('post')->find($id);
+        $permit = false;
+        if (Auth::user()->hasRole('administrator')) {
+            $permit = false;
+        } else {
+            $post = $product->post;
+            $seller = Seller::find($post->seller_id);
+            // $user = Auth::id();
+            //$seller = Seller::where('user_id', $user)->first();
+            if ($seller->user_id == Auth::id()) {
+                $permit = true;
+            } else {
+                return redirect()
+                    ->back()
+                    ->withFlashDanger("You dont have the permission ");
             }
-}
+        }
+        if ($permit) {
+            try {
+
+                //to get the array of photos of the product
+                $product = Product::with('photo')->with('thumbnail')->find($id);
+                $photos = $product->photo;
+                $res['photos'] = true;
+                if ($photos) {
+                    foreach ($photos as $photo) {
+                        $file = public_path($photo->location) . '\\' . $photo->file_name;
+                        if (File::exists($file)) {
+
+                            if (File::delete($file)) {//delete the file from the folder
+                                $res['photos'] = $res['photos'] && $photo->delete(); //delete the file from database
+                            }
+
+                        }
+                    }
+
+                }
 
 
+                //to get thumbnail of the product to be deleted. in product model, there is function called thumbnail
+                $thumbnail = $product->thumbnail;
 
-//    public function getform(){
-//        $products = product::all();
-//        //$reviewers = reviewer::all();//???
-//        return view('productrate', [ 'products' => $products  ]);
-//    }
-    // public function saverating(Request $request){
+                $post = $product->post;
 
-    //     $rating = new Rating();
-    //     $rating->product_id = $request->get('product_id');
-    //     $rating->rID = $request->get('rid');
-    //     $rating->stars = $request->get('stars');
-    //     $rating->ratingDate = date('Y-m-d');
-    //     try {
-    //         $rating->save();
-    //         return redirect()->route('product.rate')->withFlashSuccess('Rating is added');
-    //     }
-    //     catch (\Exception $e) {
-    //         return redirect()
-    //         ->back()
-    //         ->withInput($request->all())
-    //         ->withFlashDanger("Rating can't be added. ". $e->getMessage());
-    //     }
-    // }
+                //delete product from database
+                $res['product'] = Product::destroy($id);
 
+                $otherproduct = $post->product;
+                if (sizeof($otherproduct) == 0) {
+                    $post->delete();
+                }
 
+                if ($thumbnail) {
+                    $file = $file = public_path($thumbnail->location) . '\\' . $thumbnail->file_name;
+                    //test if the thumbnail file exists or not
+                    if (File::exists($file)) {
+                        //delete the file from the folder
+                        if (File::delete($file)) {
+                            //delete the thumbnail of the product from database;
+                            $res['thumbnail'] = $thumbnail->delete();
+                        }
+                    }
+                }
 
 
+                if ($res['product'])
+                    return [1];
+                else
+                    return [0];
+            } catch (\Exception $e) {
+                return [0, $e->getMessage()];
+            }
+        }
+    }
 
-//             return $html;
-//         }else{
-//             return "No Rating";
-//         }}public function showrate(){
-//         $products = product::all();
-//         return view('productshowrate', [ 'products' => $products]);
-//     }
-//     public function getrating(Request $request){
-//         $Product_id = $request->input('product_id');
-//         $ratings = Rating::getRating($product_id);
-//         if (sizeof($ratings) > 0){
-//             $stars = 0;
-//             $body = "";
-//             foreach ($ratings as $rating) {
-//                 $stars += $rating->stars;
-//                 $body .= <<<EOF
-//     <tr>
 
-//         <td>$rating->name</td>
-//         <td>$rating->stars</td>
-//         <td>$rating->ratingDate</td>
-//     </tr>
-// EOF;
-//             }
-//             $stars = $stars/sizeof($ratings);
-//             $html = <<<EOF
-// <br><label class='col-md-4 form-control-label'>Average stars : $stars</label><br><br>
-// <table clas="table">
-//     <thead>
-//         <tr>
-//             <th scope="col">reviewer</th>
-//             <th scope="col">stars</th>
-//             <th scope="col">ratingDate</th>
-//         </tr>
-//     </thead>
-//     <tbody>
-//     $body
-//     </tdbody>
-// </table>
-// EOF;
     public function getproduct(){
 
         if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
             $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
-                                    , 'description','view_number','status','pickup_address','pickup_time','created_at'
+                                    , 'description','like_number','status','pickup_address','pickup_time','created_at'
                                     ,'updated_at',  'file_name', 'location'])
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp'),'product.image_id', '=', 'temp.image_id')
             ->with('category')
@@ -441,7 +391,7 @@ class ProductController extends Controller
             $seller = Seller::where('user_id',$user)->first();
 
             $products = Product::select(['product.product_id', 'product.name'/*DB::raw('product.name as pname')*/, 'price'
-                                    , 'description','view_number','status','pickup_address','pickup_time','created_at'
+                                    , 'description','like_number','status','pickup_address','pickup_time','created_at'
                                     ,'updated_at',  'file_name', 'location', 'temp1.seller_id'])
             ->leftJoin(DB::raw('(select image_id, file_name, location from image) as temp'),'product.image_id', '=', 'temp.image_id')
             ->leftJoin(DB::raw('(select seller.seller_id, post.post_id  from seller join post on post.seller_id = seller.seller_id) as temp1')
@@ -453,8 +403,6 @@ class ProductController extends Controller
                         ->addColumn('action', function ($product) {
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
-                                                //$html .= '<a data-id="'.$product->product_id.'" class="btn btn-info btn-sm product-featured" data-toggle="modal" data-target="#featured_product_modal"><i class="fas fa-cog"></i></a>' ;
-                                                /*$html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;*/
 
                                                 return $html;
                                             })
@@ -468,7 +416,6 @@ class ProductController extends Controller
                                                 $html = '<a href="'.route('product.edit', ['id' => $product->product_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-danger btn-sm product-delete"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;' ;
                                                 $html .= '<a data-id="'.$product->product_id.'" class="btn btn-info btn-sm product-featured" data-toggle="modal" data-target="#featured_product_modal"><i class="fas fa-cog"></i></a>' ;
-                                                /*$html .= '<a data-id="'.$product->product_id.'"  class="btn btn-info btn-sm product-rate-info"><i class="fa fa-search" aria-hidden="true"></i></i></a>' ;*/
 
                                                 return $html;
                                             })
@@ -557,22 +504,275 @@ class ProductController extends Controller
 
                 try {
                     Product::updatefeatured($product_id, $start_date, $end_date);
-                    return [1];
+                    return [1,1,$product_id];
                 } catch (\Exception $e) {
-                    return [0, $e->getMessage()];
+                    return [0, $e->getMessage(),$product_id];
                 }
 
             } else {
                 try {
                     Product::savefeatured($product_id, $start_date, $end_date);
-                    return [1];
+                    return [1,1,$product_id];
                 } catch (\Exception $e) {
-                    return [0, $e->getMessage()];
+                    return [0, $e->getMessage(),$product_id];
                 }
 
             }
         }else{
-            return [2,"You don't have the permission. "];
+            return [2,"You don't have the permission. ", $product_id];
         }
     }
+
+    public function getproductmore(Request $request){
+
+        if(Auth::check()){
+            $products = Product::getProductsWithThumbnailCategory($request->get('offset'), $request->get('seller')
+                , $request->get('features'), 1);
+
+        }else{
+            $products = Product::getProductsWithThumbnailCategory($request->get('offset'), $request->get('seller')
+                ,$request->get('features'),0);
+
+        }
+
+
+        if(sizeof($products) > 0){
+            $items = array();
+
+            foreach ($products as $product){
+                $category = "";
+                $category_name = "";
+                $categories = $product->category;
+                foreach ($categories as $ele){
+                    $category .= str_replace(' ','-',$ele->name). " ";
+                    $category_name .= $ele->name. ", ";
+                }
+                $category_name = substr($category_name,0,strlen($category_name )-2);
+                $html = "";
+                $html .= <<<eot
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item $category"  data-product_id="$product->product_id">
+					<!-- Block2 -->
+					<div class="block2" style="height:100%">
+						<div class="block2-pic hov-img0" >
+eot;
+                if($product->file_name){
+                    $location = asset($product->location);
+                    $html .= <<<eot
+
+							<img src="$location/$product->file_name" alt="IMG-PRODUCT">
+eot;
+                }else{
+                    $location = asset('images/thumbnail');
+                    $html .= <<<eot
+
+							<img src="$location/default.png" alt="IMG-PRODUCT">
+eot;
+                }
+
+
+
+                $location = asset('cozastore');
+                $html .= <<<eot
+							<a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-product_id="$product->product_id">
+								Quick View
+							</a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+
+
+                                <span class="stext-105 cl3">
+eot;
+                $active_featured_product = Product::getactivefeatured($product->product_id);
+                if (sizeof($active_featured_product) == 1){
+                    $html .= <<<eot
+
+
+                                    <b class='pname'>$product->name</b>
+                                    <sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
+
+eot;
+
+                }else{
+                    $html .= <<<eot
+                    <b class='pname'>$product->name</b>
+eot;
+                }
+
+                $html .= <<<eot
+								</span>
+
+								<span class="stext-105 cl3 price">
+									$product->price
+								</span>
+
+								<span class="stext-105 cl3 category">
+									$category_name
+								</span>
+							</div>
+
+                             <div class="block2-txt-child2 flex-r p-t-3">
+eot;
+                $like = $product->like;
+                $location = asset('cozastore');
+                $number_like = sizeof($like);
+                if($number_like > 0){
+
+                    $user_id = optional(auth()->user())->id;
+                    $number_like = sizeof($like);
+                    foreach($like as $ele){
+                        if($user_id && $user_id == $ele->user_id){
+                            $html .= <<<eot
+                            <span class="number-like">$number_like</span>
+                            <a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2 js-addedwish-b2" data-product_id="$product->product_id">
+                                <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+                            </a>
+eot;
+                        }else{
+                            $html .= <<<eot
+                            <span class="number-like">$number_like</span>
+                            <a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
+                                <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+                            </a>
+eot;
+                        }
+                    }
+
+                }else{
+                    $html .= <<<eot
+                    <span class="number-like">$number_like</span>
+                    <a href="javascript:void(0);" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-product_id="$product->product_id">
+                    <img class="icon-heart1 dis-block trans-04" src="$location/images/icons/icon-heart-01.png" alt="ICON">
+                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="$location/images/icons/icon-heart-02.png" alt="ICON">
+                </a>
+eot;
+                }
+
+
+                $html .= <<<eot
+							</div>
+ 						</div>
+					</div>
+				</div>
+eot;
+                $items[] = $html;
+            }
+
+
+            //return [1,$html];
+            $totalSize = Product::getSize( $request->get('seller'),$request->get('features'));
+            return [1, $totalSize,$items];
+        }
+        else{
+            $totalSize = Product::getSize( $request->get('seller'),$request->get('features'));
+            return [0, $totalSize];
+        }
+    }
+
+
+
+    public function getproductdetail(Request $request){
+        $product = Product::with('photo')->with('thumbnail')->with('category')->find($request->get('product_id'));
+
+        $post = Post::where('post_id',$product->post_id)->first();
+        $seller = Seller::where('seller_id',$post->seller_id)->first();
+
+        if(isset($product->thumbnail)){
+            $location = str_replace('\\','/',$product->thumbnail->location);
+            $product->thumbnail->location = $location;
+        }else{
+            $product->thumbnail_id = asset('images/thumbnail').'/default.png';
+        }
+
+        if(isset($product->photos)){
+            $size = sizeof($product->photo);
+            for($i = 0 ; $i < $size; $i ++){
+                $location = asset(str_replace('\\','/',$product->photos[$i]->location));
+                $product->photos[$i]->location = $location;
+            }
+
+        }
+        return [1,$product, $seller];
+    }
+
+
+    public function likeUnlike(Request $request)
+       {
+           if(Auth::check()){
+                $product_id = $request->get('product_id');
+                $operation = $request->get('operation');
+
+
+                $product = Product::find($product_id);
+                if (!$product) {
+                    return 0;
+                }
+
+                $user_id = Auth::id();
+                if($operation == 'like'){
+                    $like = new Like();
+                    $like->user_id = $user_id;
+                    $like->product_id = $product_id;
+
+                    $like->save();
+                    $product = Product::find($product_id);
+                    $product->like_number = $product->like()->count();
+                    $product->save();
+                    return 1;
+                }elseif ($operation == 'unlike'){
+                    $like = Like::where('product_id',$product_id)
+                    ->where('user_id',$user_id)->first();
+                    if($like){
+                        DB::table('like')
+                        ->where('product_id',$product_id)
+                        ->where('user_id',$user_id)
+                        ->delete();
+                        $product = Product::find($product_id);
+                        $product->like_number = $product->like()->count();
+                        $product->save();
+                    }
+                    return 1;
+                }
+           }else{
+               return 2;
+
+           }
+
+       }
+
+    public function showProductByShop($seller_id){
+
+        $categories = Category::all();
+        $about = About::first();
+        $seller = Seller::find($seller_id);
+        $totalSize = Product::getSize($seller_id,0);
+
+
+        if (Auth::check()){
+            $products = Product::getProductsWithThumbnailCategory(0,$seller_id,0,1);
+        }else{
+            $products = Product::getProductsWithThumbnailCategory(0,$seller_id,0,0);
+        }
+        return view('frontend.shopproduct', ['categories' => $categories, 'products' => $products
+            , 'about' => $about , 'seller' =>$seller, 'totalSize' =>$totalSize]);
+
+    }
+
+    public function showProductDetail($product_id){
+
+
+        $categories = Category::all();
+        $about = About::first();
+        $request = new Request();
+        $request->setMethod('get');
+        $request->request->add(['product_id' => $product_id]);
+        $data = $this->getproductdetail($request);
+
+        return view('frontend.productdetail',['categories' => $categories
+                    , 'about' => $about, 'product' => $data[1], 'seller'=>$data[2]]);
+    }
 }
+

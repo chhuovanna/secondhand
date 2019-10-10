@@ -56,9 +56,6 @@
 						@endauth
 
 						@guest
-							<a href="#" class="flex-c-m trans-04 p-lr-25">
-								Sign Up
-							</a>
 							<li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
 
 							@if(config('access.registration'))
@@ -80,9 +77,7 @@
 							</li>
 						@endguest
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Language
-						</a>
+
 
 <!-- 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							USD
@@ -95,7 +90,7 @@
 				<nav class="limiter-menu-desktop container">
 
 					<!-- Logo desktop -->
-					<a href="#" class="logo">
+					<a href="/" class="logo">
 						<img src="{{asset('cozastore')}}/images/icons/logo-01.png" alt="IMG-LOGO">
 					</a>
 
@@ -115,8 +110,8 @@
 								<a href="{{url('/shop')}}">Shop</a>
 							</li>
 
-							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
+							<li class="label1 menu-features" data-label1="hot">
+								<a href="{{url('/features')}}">Features</a>
 							</li>
 
 							<!-- <li>
@@ -124,11 +119,11 @@
 							</li> -->
 
 							<li class='menu-about'>
-								<a href="about.html">About</a>
+								<a href="{{url('/about')}}">About</a>
 							</li>
 
 							<li class="menu-contact">
-								<a href="contact.html">Contact</a>
+								<a href="{{url('/contact')}}">Contact</a>
 							</li>
 						</ul>
 					</div>
@@ -155,7 +150,7 @@
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->
 			<div class="logo-mobile">
-				<a href="index.html"><img src="{{asset('cozastore')}}/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+				<a href="/"><img src="{{asset('cozastore')}}/images/icons/logo-01.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -193,56 +188,74 @@
  -->
 				<li>
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Sign Up
-						</a>
+						@auth
+							<a href="{{route('frontend.user.dashboard')}}" class="flex-c-m p-lr-10 trans-04">
+								@lang('navs.frontend.dashboard')
+							</a>
 
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Login
-						</a>
+						@endauth
+						@guest
+							<a href="{{route('frontend.auth.login')}}" class="flex-c-m p-lr-10 trans-04">
+								@lang('navs.frontend.login')
+							</a>
 
+							@if(config('access.registration'))
+								<a href="{{route('frontend.auth.register')}}" class="flex-c-m p-lr-10 trans-04">
+									@lang('navs.frontend.register')
+								</a>
+							@endif
+						@else
+
+								<a href="#" class="dropdown-toggle flex-c-m p-lr-10 trans-04" id="navbarDropdownMenuUser" data-toggle="dropdown"
+								   aria-haspopup="true" aria-expanded="false">{{ $logged_in_user->name }}</a>
+
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser" style="position: absolute">
+									@can('view backend')
+										<a href="{{ route('admin.dashboard') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
+									@endcan
+
+									<a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Active::checkRoute('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
+									<a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">@lang('navs.general.logout')</a>
+								</div>
+						@endguest
+
+
+
+
+<!--
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							Language
 						</a>
-
-<!-- 						<a href="#" class="flex-c-m p-lr-10 trans-04">
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							USD
 						</a> -->
+
+
 					</div>
 				</li>
 			</ul>
 
 			<ul class="main-menu-m">
-				<li>
-					<a href="index.html">Home</a>
-<!-- 					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
-						<li><a href="home-03.html">Homepage 3</a></li>
-					</ul>
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
- -->				</li>
+				<li class="menu-home active-menu">
+					<a href="{{url('/')}}">Home</a>
+				</li>
 
-				<li>
-					<a href="product.html">Shop</a>
+				<li class="menu-shop">
+					<a href="{{url('/shop')}}">Shop</a>
 				</li>
 
 				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+					<a href="{{url('/features')}}">Features</a>
+					<sup style="color:white;background-color:red;border-radius: 10px;">&nbsp;&nbsp;Hot&nbsp;&nbsp;</sup>
 				</li>
 
-				<!-- <li>
-					<a href="blog.html">Blog</a>
-				</li> -->
 
-				<li>
-					<a href="about.html">About</a>
+				<li class='menu-about'>
+					<a href="{{url('/about')}}">About</a>
 				</li>
 
-				<li>
-					<a href="contact.html">Contact</a>
+				<li class="menu-contact">
+					<a href="{{url('/contact')}}">Contact</a>
 				</li>
 			</ul>
 		</div>
@@ -433,6 +446,7 @@
  -->
 	<!-- Banner -->
 	<div class="sec-banner bg0 p-t-80 p-b-50">
+	<!-- <div class="sec-banner bg0 p-b-50"> -->
 		<div class="container">
 			<div class="row">
 <!-- 				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto"> -->
@@ -521,43 +535,23 @@
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<div class="col-sm-6 col-lg-3 p-b-50 filter-tope-group">
 					<h4 class="stext-301 cl0 p-b-30">
 						Categories
 					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
-							</a>
-						</li>
-					</ul>
+					@foreach($categories as $category)
+						@php $classname = str_replace(' ','-', $category->name); @endphp
+					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
+						{{$category->name}}
+					</button>
+					@endforeach
 				</div>
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
+					<!-- <h4 class="stext-301 cl0 p-b-30">
 						Help
 					</h4>
-
+ -->
 					<ul>
 					<!-- 	<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
@@ -577,11 +571,11 @@
 							</a>
 						</li> -->
 
-						<li class="p-b-10">
+						<!-- <li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
 								FAQs
 							</a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 
@@ -591,25 +585,35 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+						Any questions? Let us know in store at {{$about->address}}
+					</p>
+					<p>
+						Tel : {{$about->phone}}
+					</p>
+
+					<p>
+						Email : {{$about->email}}
+					</p>
+					<p>
+						Website : {{$about->website}}
 					</p>
 
 					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<a href="https://www.facebook.com" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-facebook"></i>
 						</a>
 
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<a href="https://www.instagram.com/" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-instagram"></i>
 						</a>
 
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<a href="https://www.pinterest.com" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-pinterest-p"></i>
 						</a>
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<!-- <div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
 						Newsletter
 					</h4>
@@ -626,7 +630,7 @@
 							</button>
 						</div>
 					</form>
-				</div>
+				</div> -->
 			</div>
 
 			<div class="p-t-40">
@@ -671,10 +675,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</div>
 
 	<!-- Modal1 -->
-	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
 		<div class="overlay-modal1 js-hide-modal1"></div>
 
-		<div class="container">
+		<div class="container" >
 			<div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
 				<button class="how-pos3 hov3 trans-04 js-hide-modal1">
 					<img src="{{asset('cozastore')}}/images/icons/icon-close.png" alt="CLOSE">
@@ -685,7 +689,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 						<div class="p-l-25 p-r-30 p-lr-0-lg">
 							<div class="wrap-slick3 flex-sb flex-w">
 								<div class="wrap-slick3-dots"></div>
-								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+								<div class="wrap-slick3-arrows flex-sb-m flex-w" style="top:200px"></div>
 
 								<div class="slick3 gallery-lb">
 									 <!-- <div id='to-be-hide' class="item-slick3" data-thumb="{{asset('cozastore')}}/images/product-detail-01.jpg">
@@ -828,14 +832,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 							</div> -->
 
 							<!--  -->
-							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+							<div class="flex-w flex-m p-l-100 p-t-40 respon7 facebookshare">
 								<!-- <div class="flex-m bor9 p-r-10 m-r-11">
 									<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
 										<i class="zmdi zmdi-favorite"></i>
 									</a>
 								</div> -->
 
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
+								<!-- <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
 									<i class="fa fa-facebook"></i>
 								</a>
 
@@ -845,7 +849,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
 									<i class="fa fa-google-plus"></i>
-								</a>
+								</a> -->
+
+
 							</div>
 						</div>
 					</div>
@@ -901,18 +907,77 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!--===============================================================================================-->
 	<script src="{{asset('cozastore')}}/vendor/sweetalert/sweetalert.min.js"></script>
 	<script>
-		$('.js-addwish-b2').on('click', function(e){
-			e.preventDefault();
-		});
+		// $('.js-addwish-b2').on('click', function(e){
+		// 	e.preventDefault();
+		// });
 
-		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
+		$(document).off('click','.js-addwish-b2');
+		$(document).on('click','.js-addwish-b2',function(e){
 
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
+            var ele = e.target.parentElement;
+           // console.log(ele);
+            if(!$(ele).hasClass('js-addedwish-b2')){
+
+
+                $.ajax({
+                    method: 'GET',
+                    url: window.location.protocol +'//'+window.location.host+"/admin/product/likeUnlike",
+                    data: {product_id: $(ele).data('product_id'),operation:'like'},
+                    success: function (data) {
+
+                        if (data == 1){
+                            //console.log(data);
+							$(ele).addClass('js-addedwish-b2');
+
+							var number_like = parseInt($(ele).parent().find('span').text());
+							if (isNaN(number_like))
+								number_like = 0;
+							number_like ++;
+							$(ele).parent().find('span').text(number_like);
+
+                        }else if (data == 2){
+                            alert('You have to login to like the product');
+                        }else{
+                            alert('Fail to like');
+                        }
+
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                })
+
+
+            }else{
+                $.ajax({
+                    method: 'GET',
+                    url: "admin/product/likeUnlike",
+                    data: {product_id: $(ele).data('product_id'),operation:'unlike'},
+                    success: function (data) {
+                        if (data == 1){
+                            //console.log(data);
+
+							$(ele).removeClass('js-addedwish-b2');
+							var number_like = parseInt($(ele).parent().find('span').text());
+							if (isNaN(number_like))
+								number_like = 0;
+							number_like --;
+							$(ele).parent().find('span').text(number_like);
+
+                        }else if(data == 2){
+                            alert('You have to login to like the product');
+                        }else{
+                            alert('Fail to like');
+                        }
+
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                })
+            }
+
+
 		});
 
 		$('.js-addwish-detail').each(function(){

@@ -69,28 +69,30 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/category')) }}" href="{{ url('admin/category') }}">
-                    List Category
+                    <i class="fas fa-grip-horizontal"></i>&nbsp;&nbsp;&nbsp;List Category
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/seller')) }}" href="{{ url('admin/seller') }}">
-                    List Seller
+                <i class="fas fa-store-alt"></i>&nbsp;&nbsp;&nbsp;List Seller
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product/create')) }}" href="{{ url('admin/product/create') }}">
-                    Create Product
-                </a>
-            </li>
+
+           
+
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/product')) }}" href="{{ url('admin/product') }}">
-                    List Product
+                    <i class="fas fa-barcode"></i>&nbsp;&nbsp;&nbsp;List Product
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/message/listmessage')) }}" href="{{ url('admin/message/listmessage') }}">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;List Message
+                </a>
+            </li>
 
         </ul>
     </nav>

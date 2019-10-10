@@ -66,7 +66,7 @@
                         render:function ( data, type, row, meta ) {
                             if (data){
                                 var source = "{{ asset('images/category') }}"+"/"+data;
-                                return '<img src="'+source+'" height="42" width="42" class="thumbnail img-thumbnail" data-id="'+row.category_id+'" style="cursor:pointer">';
+                                return '<img src="'+source+'" height="42" width="42" class="thumbnail img-thumbnail" data-id="'+row.category_id+'" >';
                             }else{
                                 return '<i class="fa fa-film fa-3x" aria-hidden="true"></i>';
                             }

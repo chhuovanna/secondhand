@@ -6,7 +6,7 @@ if (isset($product)){
     $name = $product->name;
     $price = $product->price;
     $description = $product->description;
-    $view_number = $product->view_number;
+    $like_number = $product->like_number;
     $status = $product->status;
     $pickup_address = $product->pickup_address;
     $pickup_time = $product->pickup_time;
@@ -35,7 +35,7 @@ if (isset($product)){
     $name = null;
     $price = null;
     $description = null;
-    $view_number = null;
+    $like_number = null;
     $status = null;
     $created_at = null;
     $updated_at = null;
@@ -113,13 +113,13 @@ if (isset($product)){
             </div><!--col-->
         </div><!--form-group-->
         <div class="form-group row">
-            {{ html()->label('Number of View')
+            {{ html()->label('Number of Like')
             ->class('col-md-2 form-control-label')
-            ->for('view_number') }}
+            ->for('like_number') }}
             <div class="col-md-3">
-                {{ html()->input('number','view_number',$view_number)
+                {{ html()->input('number','like_number',$like_number)
                 ->class('form-control')
-                ->placeholder('view_number')
+                ->placeholder('like_number')
                 ->readonly() }}
             </div><!--col-->
         </div><!--form-group-->

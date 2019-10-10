@@ -14,7 +14,7 @@ class CreateProductTable extends Migration
             $table->string('name');
             $table->decimal('price');
             $table->text('description')->nullable();
-            $table->integer('view_number')->nullable();
+            $table->integer('like_number')->nullable();
             $table->text('status')->nullable();
             $table->text('pickup_address')->nullable();
             $table->text('pickup_time')->nullable();

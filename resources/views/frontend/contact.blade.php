@@ -1,8 +1,7 @@
-@extends('frontend.layouts.app')
-
-@section('title', app_name() . ' | ' . __('labels.frontend.contact.box_title'))
-
+@extends('frontend.layouts.indexlayout')
 @section('content')
+
+
     <div class="row justify-content-center">
         <div class="col col-sm-8 align-self-center">
             <div class="card">
@@ -83,3 +82,12 @@
         </div><!--col-->
     </div><!--row-->
 @endsection
+
+
+
+@push('after-scripts')
+    <script>
+        $('.active-menu').removeClass('active-menu');
+        $('.menu-contact').addClass('active-menu');
+    </script>
+@endpush

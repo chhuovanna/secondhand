@@ -528,18 +528,6 @@
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
 						All Products
 					</button>
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Women--}}
-                    {{--</button>--}}
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Men--}}
-                    {{--</button>--}}
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Shoes--}}
-                    {{--</button>--}}
-                    {{--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">--}}
-                        {{--Watches--}}
-                    {{--</button>--}}
 					@foreach($categories as $category)
 						@php /*$classname = str_replace(' ','-', $category->category);*/$classname='test';@endphp
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{$classname}}">
@@ -547,19 +535,6 @@
 					</button>
 					@endforeach
 
-					
-<!-- 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-						Bag
-					</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-						Shoes
-					</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-						Watches
-					</button> -->
 					<input type="hidden" class="filter-price" value='all'>
 				</div>
 
@@ -583,9 +558,9 @@
 						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</button>
-
 						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-						
+
+
 					</div>
 				</div>
 
@@ -791,8 +766,6 @@
 					</div>
 				</div>
 			</div>
-
-
 			
 			<div class="row isotope-grid">
 				@foreach ($products as $product)

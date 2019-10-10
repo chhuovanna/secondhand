@@ -54,6 +54,17 @@ Route::get('admin/product/createwithpost/{post}', 'ProductController@createwitho
 Route::get('admin/product/getphotos', 'ProductController@getphotos');
 Route::get('admin/product/getactivefeatured','ProductController@getactivefeatured');
 Route::get('admin/product/savefeatured','ProductController@savefeatured');
+Route::get('admin/product/getproductmore','ProductController@getproductmore');
+Route::get('admin/seller/getsellermore','SellerController@getsellermore');
+Route::get('admin/product/getproductdetail','ProductController@getproductdetail');
+Route::get('admin/message/listmessage', 'MessageController@index')->name('message.listmessage');
+Route::get('admin/message/getmessage', 'MessageController@getmessage')->name('message.getmessage');
+Route::get('admin/message/markread', 'MessageController@markread')->name('message.markread');
+Route::get('admin/message/getUnread', 'MessageController@getUnread');
+Route::get('admin/product/likeUnlike', 'ProductController@likeUnlike');
+Route::get('admin/product/getproductmorefeature','ProductController@getproductmorefeature');
+
+
 
 
 Route::resource('admin/category','CategoryController');

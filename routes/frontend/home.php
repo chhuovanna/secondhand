@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
@@ -12,10 +13,16 @@ use App\Http\Controllers\Frontend\User\DashboardController;
  */
 Route::get('/', [HomeController::class, 'index'])->name('index');
 //added by vanna
-//Route::get('test', [HomeController::class, 'test'])->name('test');
-Route::get('contact', [ContactController::class, 'index'])->name('contact');
+
+//Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
 Route::get('shop','HomeController@shop');
+Route::get('features','HomeController@features');
+Route::get('about','HomeController@about');
+Route::get('contact','HomeController@contact');
+Route::get('shop/{seller_id}',[ProductController::class,'showProductByShop'])->name('product.showbyshop');
+Route::get('product/{product_id}',[ProductController::class,'showProductDetail'])->name('product.detail');
+
 
 
 /*

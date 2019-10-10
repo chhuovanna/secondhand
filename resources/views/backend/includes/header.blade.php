@@ -32,12 +32,12 @@
 
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item d-md-down-none">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{route('message.listmessage')}}">
                 <i class="icon-bell"></i>
-                <span class="badge badge-pill badge-danger">5</span>
+                <span class="badge badge-pill badge-danger unread"></span>
             </a>
         </li>
-        <li class="nav-item d-md-down-none">
+        <!-- <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
                 <i class="icon-list"></i>
             </a>
@@ -46,14 +46,14 @@
             <a class="nav-link" href="#">
                 <i class="icon-location-pin"></i>
             </a>
-        </li>
+        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <img src="{{ $logged_in_user->picture }}" class="img-avatar" alt="{{ $logged_in_user->email }}">
             <span class="d-md-down-none">{{ $logged_in_user->full_name }}</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-header text-center">
+            <!-- <div class="dropdown-header text-center">
               <strong>Account</strong>
             </div>
             <a class="dropdown-item" href="#">
@@ -71,20 +71,20 @@
             <a class="dropdown-item" href="#">
               <i class="fa fa-comments"></i> Comments
               <span class="badge badge-warning">42</span>
-            </a>
+            </a> -->
             <div class="dropdown-header text-center">
               <strong>Settings</strong>
             </div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{url('/account')}}">
               <i class="fa fa-user"></i> Profile
             </a>
-            <a class="dropdown-item" href="#">
+            <!-- <a class="dropdown-item" href="#">
               <i class="fa fa-wrench"></i> Settings
             </a>
             <a class="dropdown-item" href="#">
               <i class="fa fa-file"></i> Projects
               <span class="badge badge-primary">42</span>
-            </a>
+            </a> -->
             <div class="divider"></div>
             <a class="dropdown-item" href="{{ route('frontend.auth.logout') }}">
                 <i class="fas fa-lock"></i> @lang('navs.general.logout')
@@ -92,11 +92,12 @@
           </div>
         </li>
     </ul>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-    <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
+    <!-- <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
         <span class="navbar-toggler-icon"></span>
     </button>
     <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
         <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
 </header>

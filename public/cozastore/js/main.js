@@ -34,6 +34,7 @@
         } else {
             $("#myBtn").css('display','none');
         }
+        $('.isotope-grid').isotope('layout');
     });
 
     $('#myBtn').on("click", function(){
@@ -142,49 +143,87 @@
 */
 
     /////////////////////edited by vanna
+
+    function perform_filter($this){
+        var price = Number($this.find('.price').text());
+        var filter_by = $('.filter-price').val();
+        var active_category = $('.how-active1').data('filter').substring(1);
+        var filter_by_name = $('#search_name').val().trim().toLowerCase().split(' ');
+        var product_name = $this.find('.pname').text().toLowerCase();
+        var is_in_price;
+        var is_in_category;
+        var is_in_name = false;
+        var i;
+        // alert('imaher');
+
+        //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
+
+        // selected price
+        // console.log(filter_by_name);
+        // console.log(product_name);
+        is_in_price = ( filter_by === 'all'
+                    || (filter_by === 'after200' && price >= 200)
+                    || (price >= (Number(filter_by) - 50) &&  price <= Number(filter_by) )
+                    );
+        is_in_category = ( active_category === ''
+                            ||  $this.hasClass(active_category)
+                        );
+        if (filter_by_name.length == 0)
+            is_in_name = true;
+        else {
+            for (i =0; i < filter_by_name.length ; i++){
+                if (product_name.indexOf(filter_by_name[i] ) != -1){
+                    is_in_name = true;
+                    break;
+                }
+            }
+        }
+
+        return is_in_name && is_in_price && is_in_category;
+
+
+
+        // if (isNaN(filter_by)){
+        //     if (filter_by  == 'all'){
+        //         if ( active_category === ''){
+        //             return !(product_name.indexOf(filter_by_name) === -1);
+        //         }
+        //         else{
+        //             return ($this.hasClass(active_category) && !(product_name.indexOf(filter_by_name) === -1 ));
+        //         }
+
+        //     }else{
+        //         if ( active_category === '')
+        //             return ((price >= 200 ) && !(product_name.indexOf(filter_by_name) === -1));
+        //         else
+        //             return ( (price >= 200 ) && $this.hasClass(active_category) && !(product_name.indexOf(filter_by_name) === -1)) ;
+        //     }
+
+        // }else{
+        //     filter_by = Number(filter_by);
+
+        //     if (price >= (filter_by - 50) &&  price <= filter_by){
+
+        //         if ( active_category === '')
+        //             return true && !(product_name.indexOf(filter_by_name) === -1);
+        //         else
+        //             return $this.hasClass(active_category) && !(product_name.indexOf(filter_by_name) === -1);
+        //     }
+        //     else
+        //         return false;
+        // }
+    }
+
     $filter.each(function () {
         $filter.on('click', 'button', function () {
             //var filterValue = $(this).attr('data-filter');
 
             $topeContainer.isotope({
                 filter: function(){
-                    var price = parseInt($(this).find('.price').text());
-                    var filter_by = $('.filter-price').val();
-                    var active_name = $('.how-active1').data('filter').substring(1);
-                   // alert('imaher');
-
-                    //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
-
-
-
-                    if (isNaN(filter_by)){
-                        if (filter_by  == 'all'){
-                            if ( active_name === '')
-                                return true;
-                            else
-                                return $(this).hasClass(active_name);
-                        }else{
-                            if ( active_name === '')
-                                return (price >= 200 );
-                            else
-                                return (price >= 200 ) && $(this).hasClass(active_name);
-                        }
-
-                    }else{
-                        filter_by = parseInt(filter_by);
-
-                        if (price >= (filter_by - 50) &&  price <= filter_by){
-
-                            if ( active_name === '')
-                                return true;
-                            else
-                                return $(this).hasClass(active_name);
-                        }
-                        else
-                            return false;
-                    }
+                    return perform_filter($(this));
                 }
             });
+            updateSize();
         });
 
     })
@@ -330,16 +369,16 @@
 */
 
     //added by vanna
-
+    // Quick View
     $(document).off('click', '.js-show-modal1');
     $(document).on('click', '.js-show-modal1',function(e){
         $('.js-modal1').addClass('show-modal1');
         $.ajax({
             type:"GET",
-            url:"admin/product/getproductdetail",
+            url:window.location.protocol +'//'+window.location.host+"/admin/product/getproductdetail",
             data:{ product_id:$(this).data('product_id')  }   ,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 if(data[0] == 1){
                     var gl_container = $('.gallery-lb');
                     var text_container = $('.detail-text');
@@ -349,11 +388,14 @@
                     var size;
                     var i;
                     var temp;
+                    var category_name;
+                    var category;
+                    var seller = data[2];
 
 
-                    if (product['photos'].length > 0){
+                    if (product['photo'].length > 0){
                         //alert('hter');
-                        size = product['photos'].length;
+                        size = product['photo'].length;
                         for (i = 0; i< size ; i++){
 /*
                             location = movie['photos'][i]['location']+'\\'+movie['photos'][i]['file_name'];
@@ -361,7 +403,7 @@
                                         +location+'">';
                             html = html + '<i class="fa fa-expand"></i></a>';
 */
-                            location = product['photos'][i]['location']+'\\'+product['photos'][i]['file_name'];
+                            location = '/'+product['photo'][i]['location']+'/'+product['photo'][i]['file_name'];
                             html = html + '<div class="item-slick3" data-thumb="'+location+'">';
                             html = html + '<div class="wrap-pic-w pos-relative">';
                             html = html + '<img src="'+location+'" alt="IMG-PRODUCT">';
@@ -376,10 +418,10 @@
 
 
                     if (product['thumbnail'] !== null){
-                        location = product['thumbnail']['location']+'\\'+product['thumbnail']['file_name'];
+                        location ='/'+ product['thumbnail']['location']+'/'+product['thumbnail']['file_name'];
 
                     }else{
-                        location = product['thumbnail_id'];
+                        location ='/'+product['thumbnail_id'];
                     }
 
                     html = '<div class="item-slick3" data-thumb="'+location+'">';
@@ -396,37 +438,60 @@
                     gl_container.prepend(html);
                     html = "";
 
+                    category_name = "";
+                    category = product['category'];
+                    //alert(category);
+                    for (i = 0 ; i < category.length; i++){
+
+                        category_name = category_name + category[i].name +  ", ";
+                    }
+                    category_name = category_name.substring(0, category_name.length - 2);
+
+
                     html = '<h4 class="mtext-105 cl2 js-name-detail p-b-14">'+product.name+'</h4>';
-                    html = html + '<span class="mtext-106 cl2">'+product.price+'</span>';
-                    html = html + '<p class="stext-102 cl3 p-t-23">Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.</p>';
-                    html = html + '<p class="stext-102 cl3 p-t-23"><b>Category:</b> <a href="javascript:void(0);">'
-                            +product.name+'</a></p>';
+                    html = html + '<span class="mtext-106 cl2">Price : '+product.price+'</span>';
+                    html = html + '<p class="stext-102 cl3 p-t-23">Description : '+product.description+'</p>';
+                    html = html + '<p class="stext-102 cl3 p-t-23">Availability : '+product.status+'</p>';
+                    html = html + '<p class="stext-102 cl3 p-t-23">Like : '+product.like_number+'</p>';
+                    html = html + '<p class="stext-102 cl3 p-t-23"><b>Category : </b>'
+                            +category_name+'</p>';
                     html = html
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Pick up address:</b> 12, sangkat Phnom penh, kan phnom penh, city phnom penh'
-                            +'</p>'
+                             +   '<b>Seller : </b><a href="/shop/'+seller.seller_id+'">'
+                            +seller.name
+                            +'</a></p>'
 
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Pick up time:</b> Weekend from 9 am to 4 pm'
+                             +   '<b>Address : </b>'
+                            +seller.address
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Seller name:</b> <a href="#">Dara Sok</a>'
+                             +   '<b>Email : </b>'
+                            +seller.email
                             +'</p>'
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Tel:</b> 0121234569'
+                             +   '<b>Phone : </b>'
+                            +seller.phone
                             +'</p>'
 
                             +'<p class="stext-102 cl3 p-t-23">'
-                             +   '<b>Email:</b> seller@gmail.com'
+                             +   '<b>Message_Account : </b>'
+                            +seller.message_account
                             +'</p>'
 
                            + '<p class="stext-102 cl3 p-t-23">'
-                            +    '<b>Instant Message:</b> seller (kakao)'
+                            +    '<b>Type : </b>'
+                            +seller.type
                             +'</p>';
 
                     text_container.prepend(html);
+                    temp  =  encodeURIComponent(window.location.protocol+'//'
+                                + window.location.hostname+(window.location.port ? ':'+window.location.port: '')
+                                + '/product/' + product['product_id'] );
+                    html = '<iframe src="https://www.facebook.com/plugins/share_button.php?href='+temp+'&layout=button&size=small&width=59&height=20&appId" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>';
+                    $('.facebookshare').append(html);
                     $('.gallery-lb').each(function() { // the containers for all your galleries
                         $(this).magnificPopup({
                             delegate: 'a', // the selector for gallery item
@@ -487,7 +552,7 @@
 
     });
 
-
+    //end quick view
     //added by vanna
 
     /*===================================================================[ Load more ]*/
@@ -497,25 +562,39 @@
     $(document).on('click', '#loadmore', function(){
 
         var offset = parseInt($('#offset').val());
-        offset = offset + 20;
-        //alert(offset);
+        var seller_id = $(this).data('seller_id');
+        var features = $(this).data('features');
+        if (seller_id === undefined){
+            seller_id =0;
+        }
+
+        if (features === undefined){
+            features = 0;
+        }
+
+        //alert(window.location.protocol +'//'+window.location.host+"/admin/product/getproductmore/");
         $.ajax({
                     type:"GET",
-                    url:"admin/product/getproductmore",
-                    data:{ offset: offset  }   ,
+                    url:window.location.protocol +'//'+window.location.host+"/admin/product/getproductmore/",
+                    data:{ offset: offset ,  seller : seller_id , features:features}   ,
                     success: function (data) {
                         console.log(data);
                         if(data[0] == 1){
                             var i;
-                            var items = data[1];
+                            var items = data[2];
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
-                                $('.isotope-grid').append( $content );
-                                $('.isotope-grid').isotope( 'insert', $content );
+                                $('.isotope-grid').append( $content )
+                                                    .isotope( 'insert', $content );
                             }
+
+                            offset = offset  +items.length;
                             $('#offset').val(offset);
                         }
+
+                        $('.totalSize').val(data[1]);
+                        updateSize();
                     },
                     error: function(data){
                         console.log(data);
@@ -523,13 +602,57 @@
             });
 
     });
+
+
+    $(document).off('click','#loadmore_shop');
+    $(document).on('click', '#loadmore_shop', function(){
+
+        var offset = parseInt($('#offset').val());
+
+        //alert(offset);
+        $.ajax({
+                    type:"GET",
+                    url:"admin/seller/getsellermore/",
+                    data:{ offset: offset  }   ,
+                    success: function (data) {
+                        console.log(data);
+                        if(data[0] == 1){
+                            var i;
+                            var items = data[2];
+                            var $content;
+                            for (i=0; i< items.length; i ++){
+                                $content = $(items[i]);
+                                $('.isotope-grid').append( $content )
+                                                .isotope( 'insert', $content );
+                            }
+
+                            offset = offset  +items.length;
+                            $('#offset').val(offset);
+                        }
+                        updateSizeShop();
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+            });
+
+    });
+
+
  /*===================================================================[ sort by ]*/
+
 
     $topeContainer.isotope({
         getSortData: {
-            product_id: '[data-mid] parseInt',
-            name: '.name',
-            price: '.price parseInt'
+            product_id: '[data-product_id] parseInt',
+            name: function (itemElem){
+                var name = $(itemElem).find('.pname').text();
+                return name.toLowerCase();
+            },
+            price:function( itemElem ) { // function
+                var price = $(itemElem).find('.price').text();
+                return parseFloat(price);
+            }
         },
     });
 
@@ -546,7 +669,8 @@
             });
         }else if(sort_by == 'name'){
             $topeContainer.isotope({
-                sortBy: 'name'
+                sortBy: 'name',
+                sortAscending: true
             });
         }else if(sort_by == 'newness'){
             $topeContainer.isotope({
@@ -569,6 +693,8 @@
 /*===================================================================[ filter by ]*/
     $(document).off('click','.filter-by');
     $(document).on('click','.filter-by', function(){
+
+
         var old_active = $('.filter-link-active.filter-by');
 
 
@@ -581,46 +707,74 @@
 
         $topeContainer.isotope({
 
-          filter: function() {
-            var price = parseInt($(this).find('.price').text());
-            var filter_by = $('.filter-price').val();
-            var active_name = $('.how-active1').data('filter').substring(1);
-
-            //$('.testoutput').append('<p>'+active_director+'</p>'+'<p>'+filter_by+'</p>');
-
-
-            if (isNaN(filter_by)){
-                if (filter_by  == 'all'){
-                    if ( active_name === '')
-                        return true;
-                    else
-                        return $(this).hasClass(active_name);
-                }else{
-                    if ( active_name ==='')
-                        return (price >= 200 );
-                    else
-                        return (price >= 200 ) && $(this).hasClass(active_name);
-                }
-
-            }else{
-                filter_by = parseInt(filter_by);
-
-                if (price >= (filter_by - 50) &&  price <= filter_by){
-
-                    if ( active_name === '')
-                        return true;
-                    else
-                        return $(this).hasClass(active_name);
-                }
-                else
-                    return false;
+            filter: function() {
+                return perform_filter($(this));
             }
-          }
+
         });
+
+        updateSize();
+
+
 
 
     })
 
+    /*===================================================================[ search by name ]*/
 
+   $(document).off('keyup','#search_name');
+   $(document).on('keyup','#search_name', function(){
+        $topeContainer.isotope({
+
+            filter: function() {
+                return perform_filter($(this));
+            }
+
+        });
+        updateSize();
+   });
+   function updateSize(){
+       var totalSize = $('#totalSize').val();
+       var loaded = $('#offset').val() ;
+       var displayed = $('.isotope-grid').data('isotope').filteredItems.length;
+        $('.loaded-report').text( loaded
+            + ' out of ' + totalSize + ' products loaded. '
+             + ((displayed<loaded)?  displayed + ' products displayed after filtered.' : '')
+        );
+   }
+
+
+   $(document).off('keyup','#search_shop_name');
+   $(document).on('keyup','#search_shop_name', function(){
+        $topeContainer.isotope({
+
+            filter: function() {
+                var filter_by_name = $('#search_shop_name').val().trim().toLowerCase().split(' ');
+                var shop_name = $(this).find('.sname').text().toLowerCase();
+                var i;
+                if (filter_by_name.length == 0)
+                    return true;
+                else {
+                    for (i =0; i < filter_by_name.length ; i++){
+                        if (shop_name.indexOf(filter_by_name[i] ) != -1){
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+        });
+        updateSizeShop();
+   });
+   function updateSizeShop(){
+       var totalSize = $('#totalSize').val();
+       var loaded = $('#offset').val() ;
+       var displayed = $('.isotope-grid').data('isotope').filteredItems.length;
+        $('.loaded-report').text( loaded
+            + ' out of ' + totalSize + ' shops loaded. '
+             + ((displayed<loaded)?  displayed + ' shops displayed after filtered.' : '')
+        );
+   }
 
 })(jQuery);
