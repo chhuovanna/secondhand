@@ -7,16 +7,31 @@
                 <h3 class="ltext-103 cl5">
                     Product Overview
                 </h3>
-            </div> -->
+            </div> --> 
 
             <div class="flex-w flex-sb-m p-b-52">
+                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+					<!-- filter by button  -->
 
-                </div>
+				</div>
+
+                <div class="flex-w flex-c-m m-tb-10">
+					
+
+					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+						Search
+					</div>
+				</div>
 
                 <!-- Search product -->
                 <div class="dis-none panel-search w-full p-t-10 p-b-15">
                     <div class="bor8 dis-flex p-l-15">
-
+                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+							<i class="zmdi zmdi-search"></i>
+						</button>
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-shop" id="search_shop_name" placeholder="Search By Shop Name">
                     </div>
                 </div>
 
@@ -29,7 +44,7 @@
 
                         <div class="filter-col2 p-r-15 p-b-27">
 
-
+                        </div>
                         <div class="filter-col4 p-b-27">
                             <div class="mtext-102 cl2 p-b-15 testoutput">
                                 <!-- Director -->
@@ -104,12 +119,17 @@
                 @endforeach
             </div>
 
+            @php $num_seller = sizeof($sellers);@endphp
+                
+            <div class="alert alert-info">
+                <p class='loaded-report font-weight-bold text-xl-left'>{{$num_seller}} out of {{$totalSize}} shops loaded.</p>
+            </div>
 
             <!-- Load more -->
            <div class="flex-c-m flex-w w-full p-t-45">
-                @php $num_seller = sizeof($sellers);@endphp
 
                 <input id="offset" value="{{$num_seller}}" type='hidden'>
+                <input id="totalSize" value="{{$totalSize}}" type='hidden'>
                 <a href="javascript:void(0);" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="loadmore_shop">
                     Load More
                 </a>

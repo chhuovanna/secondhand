@@ -304,9 +304,10 @@ eot;
 eot;
                 }
                 $location = asset('cozastore');
+                $url = route('frontend.product.showbyshop', $seller->seller_id);
                 $html .= <<<eot
-                            <a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 show-product-shop" data-seller_id="$seller->seller_id">
-                                Show Products
+                            <a href="$url" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 show-product-shop" data-seller_id="$seller->seller_id">
+                                View Store
                             </a>
                         </div>
                         <div class="block2-txt flex-w flex-t p-t-14">
@@ -340,10 +341,15 @@ eot;
                 $items[] = $html;
             }
             //return [1,$html];
-            return [1,$items];
+            $totalSize = Seller::count();
+            return [1,$totalSize,$items];
         }
-        else
-            return [0];
+        else{
+            $totalSize = Seller::count();
+            return [0,$totalSize];
+
+        }
+
     }
 
 }

@@ -55,7 +55,27 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+    <script>
+        $(document).ready( function (){
+            $.ajax({
+                    type:"GET",
+                    url:"/admin/message/getUnread",
+                    success: function (data) {
+                        if (parseInt(data) >0 )
+                            $('.unread').text(data);
+                        else
+                            $('.unread').text("");
+
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+        }) ;      
+    </script>
+
     @stack('after-scripts')
     @yield('most-bottom')
+    
 </body>
 </html>

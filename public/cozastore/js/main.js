@@ -618,7 +618,7 @@
                         console.log(data);
                         if(data[0] == 1){
                             var i;
-                            var items = data[1];
+                            var items = data[2];
                             var $content;
                             for (i=0; i< items.length; i ++){
                                 $content = $(items[i]);
@@ -629,6 +629,7 @@
                             offset = offset  +items.length;
                             $('#offset').val(offset);
                         }
+                        updateSizeShop();
                     },
                     error: function(data){
                         console.log(data);
@@ -739,6 +740,40 @@
         $('.loaded-report').text( loaded
             + ' out of ' + totalSize + ' products loaded. '
              + ((displayed<loaded)?  displayed + ' products displayed after filtered.' : '')
+        );
+   }
+
+
+   $(document).off('keyup','#search_shop_name');
+   $(document).on('keyup','#search_shop_name', function(){
+        $topeContainer.isotope({
+
+            filter: function() {
+                var filter_by_name = $('#search_shop_name').val().trim().toLowerCase().split(' ');
+                var shop_name = $(this).find('.sname').text().toLowerCase();
+                var i;
+                if (filter_by_name.length == 0)
+                    return true;
+                else {
+                    for (i =0; i < filter_by_name.length ; i++){
+                        if (shop_name.indexOf(filter_by_name[i] ) != -1){
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+        });
+        updateSizeShop();
+   });
+   function updateSizeShop(){
+       var totalSize = $('#totalSize').val();
+       var loaded = $('#offset').val() ;
+       var displayed = $('.isotope-grid').data('isotope').filteredItems.length;
+        $('.loaded-report').text( loaded
+            + ' out of ' + totalSize + ' shops loaded. '
+             + ((displayed<loaded)?  displayed + ' shops displayed after filtered.' : '')
         );
    }
 

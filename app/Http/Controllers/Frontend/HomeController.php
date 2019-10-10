@@ -40,7 +40,8 @@ class HomeController extends Controller
             $sellers = Seller::getSellersWithImage();
             $categories = Category::all();
             $about = About::first();
-        return view('frontend.shop', ['sellers' => $sellers, 'categories' => $categories, 'about' => $about]);
+            $totalSize = Seller::count();
+        return view('frontend.shop', ['sellers' => $sellers, 'categories' => $categories, 'about' => $about , 'totalSize' => $totalSize]);
         //return view('frontend.shop');
     }
 

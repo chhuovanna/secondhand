@@ -30,7 +30,7 @@ class MessageController extends Controller
             return Datatables::of($messages)
              
                  ->addColumn('action', function ($message) {
-                                                $html = '<a href="'.route('message.markread', ['id' => $message->message_id]).'" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
+                                                $html = '<a href="'.route('message.markread', ['id' => $message->message_id]).'" class="btn btn-primary btn-sm"><i class="far fa-envelope-open"></i></a>';
                                                 
 
                                                 return $html;
@@ -45,6 +45,9 @@ class MessageController extends Controller
         $message->status = 1;
         $message->save();
         return redirect()->back();
+    }
+    public function getUnread(){
+        return Message::where('status',0)->count();
     }
 
 }

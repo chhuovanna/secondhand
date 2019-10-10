@@ -1,0 +1,3 @@
+error : 
+1. update password
+2. create seller for admin in the seeding
