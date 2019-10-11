@@ -75,7 +75,7 @@
                                 var source = "{{ asset('images/seller') }}"+"/"+data;
                                 return '<img src="'+source+'" height="42" width="42" class="thumbnail img-thumbnail" data-id="'+row.seller_id+'" style="cursor:pointer">';
                             }else{
-                                return '<i class="fa fa-film fa-3x" aria-hidden="true"></i>';
+                                return '<i class="fas fa-store-alt"></i>';
                             }
                         }
                     },
