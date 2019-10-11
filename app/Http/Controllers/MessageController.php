@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Datatables;
-use DB;
+
 use App\Message;
 
 
@@ -28,10 +28,10 @@ class MessageController extends Controller
        // if(Auth::user()->hasRole('administrator')){ //is admin, but need to modify
             //return Datatables::of($messages)
             return Datatables::of($messages)
-             
+
                  ->addColumn('action', function ($message) {
                                                 $html = '<a href="'.route('message.markread', ['id' => $message->message_id]).'" class="btn btn-primary btn-sm"><i class="far fa-envelope-open"></i></a>';
-                                                
+
 
                                                 return $html;
                                             })
@@ -47,7 +47,10 @@ class MessageController extends Controller
         return redirect()->back();
     }
     public function getUnread(){
-        return Message::where('status',0)->count();
+        if (Auth::user()->hasRole('administrator'))
+            return Message::where('status',0)->count();
+        else
+            return 0;
     }
 
 }

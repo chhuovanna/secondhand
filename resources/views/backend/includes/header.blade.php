@@ -31,12 +31,14 @@
     </ul>
 
     <ul class="nav navbar-nav ml-auto">
+        @if (Auth::user()->hasRole('administrator'))
         <li class="nav-item d-md-down-none">
             <a class="nav-link" href="{{route('message.listmessage')}}">
                 <i class="icon-bell"></i>
                 <span class="badge badge-pill badge-danger unread"></span>
             </a>
         </li>
+        @endif
         <!-- <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
                 <i class="icon-list"></i>

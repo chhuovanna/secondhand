@@ -65,17 +65,19 @@
                             $('.unread').text(data);
                         else
                             $('.unread').text("");
+                        console.log(data);
+
 
                     },
                     error: function(data){
                         console.log(data);
                     }
                 });
-        }) ;      
+        }) ;
     </script>
 
     @stack('after-scripts')
     @yield('most-bottom')
-    
+
 </body>
 </html>
