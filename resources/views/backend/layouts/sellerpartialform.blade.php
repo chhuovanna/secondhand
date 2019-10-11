@@ -37,7 +37,7 @@
 
             <div class="col-md-3">
                 {{ html()->input('number','seller_id', $seller_id)
-                    ->class('form-control')
+                    ->class('form-control text-black')
                     ->placeholder('seller_id')
                     ->readonly() }}
             </div><!--col-->
@@ -50,7 +50,7 @@
 
             <div class="col-md-3">
                 {{ html()->text('name',$name)
-                    ->class('form-control')
+                    ->class('form-control text-black')
                     ->placeholder('name')
                     ->required() }}
             </div><!--col-->
@@ -62,7 +62,7 @@
 
             <div class="col-md-3">
                 {{ html()->input('text','address',$address)
-                    ->class('form-control')
+                    ->class('form-control text-black')
                     ->placeholder('address')
                     ->required()
                      }}
@@ -75,7 +75,7 @@
 
             <div class="col-md-3">
                 {{ html()->email('email',$email)
-                    ->class('form-control')
+                    ->class('form-control text-black')
                     ->placeholder('Email')
                     ->required() }}
             </div><!--col-->
@@ -87,7 +87,7 @@
 
             <div class="col-md-3">
                 {{ html()->input('tel','phone',$phone)
-                    ->class('form-control')
+                    ->class('form-control text-black')
                     ->placeholder('phone')
                      ->required() }}
             </div><!--col-->
@@ -99,7 +99,7 @@
 
             <div class="col-md-3">
                 {{ html()->text('message_account',$message_account)
-                    ->class('form-control')
+                    ->class('form-control text-black')
                     ->placeholder('message_account')
                      ->required() }}
             </div><!--col-->
@@ -112,7 +112,7 @@
 
             <div class="col-md-3">
                 @php $options = ['Individual'=>'Individual','Shop'=>'Shop']; @endphp
-                {{html()->select('type',$options)->class('form-control browser-default custom-select')}}
+                {{html()->select('type',$options)->class('form-control browser-default custom-select text-black')}}
 
             </div><!--col-->
         </div><!--form-group-->

@@ -1,4 +1,12 @@
 @extends('backend.layouts.app')
+@push('after-styles')
+    <style>
+        .text-black{
+            color: blue;
+        }
+    </style>
+
+@endpush
 
 @section('title', 'Edit Seller')
 

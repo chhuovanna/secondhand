@@ -30,7 +30,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::getSelectOptions();
-        return view('scrud.productcreate', ['categories' => $categories]);
+        $seller = Seller::where('user_id', Auth::id())->first();
+        return view('scrud.productcreate', ['categories' => $categories, 'pickup_address' => $seller->address]);
     }
 
     public function createwitholdpost($post_id)

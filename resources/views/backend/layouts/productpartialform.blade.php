@@ -44,7 +44,9 @@ if (isset($product)){
 
         // form is called by create operation to add more product in the same post
         if(!isset($post_id)){
-            $pickup_address = null;
+            //suggest seller address as the pickup address
+            if(!isset($pickup_address))
+                $pickup_address = null;
             $pickup_time = null;
             $post_id = null;
         }

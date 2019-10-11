@@ -1,5 +1,7 @@
 @extends('backend.layouts.app')
 
+
+
 @section('title', 'Add Seller')
 
 @section('content')
