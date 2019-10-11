@@ -31,7 +31,7 @@
     </ul>
 
     <ul class="nav navbar-nav ml-auto">
-        @if (Auth::user()->hasRole('administrator'))
+        @if ($logged_in_user->isAdmin())
         <li class="nav-item d-md-down-none">
             <a class="nav-link" href="{{route('message.listmessage')}}">
                 <i class="icon-bell"></i>

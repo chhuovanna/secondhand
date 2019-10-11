@@ -88,12 +88,15 @@
                     <i class="fas fa-barcode"></i>&nbsp;&nbsp;&nbsp;List Product
                 </a>
             </li>
+            
+            @if ($logged_in_user->isAdmin())
+
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/message/listmessage')) }}" href="{{ url('admin/message/listmessage') }}">
                     <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;List Message
                 </a>
             </li>
-
+            @endif
         </ul>
     </nav>
 
