@@ -9,7 +9,7 @@
         $location = url($location);
     @endphp
 <meta property="og:image"           content="{{$location}}" /> 
-<meta property="og:title"           content="{{$product->name}}" /> 
+
 @endsection
 @section('content')
 

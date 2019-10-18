@@ -391,6 +391,7 @@
                     var category_name;
                     var category;
                     var seller = data[2];
+                    $('.detail-text').empty();
 
 
                     if (product['photo'].length > 0){
@@ -485,6 +486,8 @@
                             +    '<b>Type : </b>'
                             +seller.type
                             +'</p>';
+
+                    html = html + '<div class="flex-w flex-m p-l-100 p-t-40 respon7 facebookshare"></div>'
 
                     text_container.prepend(html);
                     temp  =  encodeURIComponent(window.location.protocol+'//'
