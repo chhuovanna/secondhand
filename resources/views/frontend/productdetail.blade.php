@@ -1,4 +1,15 @@
 @extends('frontend.layouts.indexlayout')
+@section('metaimage')
+    @php
+        if(isset($product->thumbnail)){
+            $location = '/'.$product->thumbnail->location.'/'.$product->thumbnail->file_name;
+        }else{
+            $location = '/'.$product->thumbnail_id;
+        }
+        $location = url($location);
+    @endphp
+<meta property="og:image"           content="{{$location}}" /> 
+@endsection
 @section('content')
 
 <!-- <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
