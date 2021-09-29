@@ -56,7 +56,7 @@
     }
   },
   "dependencies": {
-    "datatables.net": "^1.10.19",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.19",
     "decimal.js": "^10.1.1",
     "lg-autoplay": "^1.0.4",
